@@ -9,14 +9,17 @@ float accelerationX = 0;
 float accelerationY = 0;
 
 float gravity = 1;
+// This was to see if I could fix something, couldn't :( (it doesnt do anything now)
+bool isJumping = false;
+
 
 void updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
     // Add gravity
-    if (y < 500) {
+    if (y < 600) {
         velocityY += gravity;
     }
-    else if (y > 500) {
-        y = 500;
+    else if (y > 600) {
+        y = 600;
         velocityY = 0;  // Stop vertical movement when the sprite hits the ground
     }
 
@@ -64,9 +67,10 @@ int main() {
     sf::Sprite sprite(texture);
 
     // Set the scale of the sprite to resize it (e.g., 0.1 for 10% of the original size)
-    sprite.setScale(0.1f, 0.1f); // Adjust this scale as needed
+    sprite.setScale(0.1f, 0.1f);
 
     // Calculate the initial position to ensure the sprite is within the window bounds
+    // This can be removed but might need it later
     float initialX = (window.getSize().x - sprite.getLocalBounds().width * 0.1f) / 2.0f;
     float initialY = window.getSize().y - sprite.getLocalBounds().height * 0.1f;
     sprite.setPosition(initialX, initialY);
@@ -82,10 +86,12 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            // change this velocity to make him jump higher
+            // Change this velocity to make him jump higher
             else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
                 velocityY = -20;
+                isJumping = true;
             }
+
             else if (event.type == sf::Event::KeyReleased) {
                 if (event.key.code == sf::Keyboard::Left) {
                     isMovingLeft = false;
