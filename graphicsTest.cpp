@@ -12,7 +12,8 @@ float gravity = 1;
 // This was to see if I could fix something, couldn't :( (it doesnt do anything now)
 bool isJumping = false;
 
-
+// ----------------- MARIO CAN CURRENTLY SPAM JUMP IDK HOW TO CHANGE IT ------------------
+ 
 void updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
     // Add gravity
     if (y < 600) {
