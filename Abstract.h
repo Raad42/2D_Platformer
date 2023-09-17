@@ -2,7 +2,7 @@
 #define ABSTRACT_H
 
 class Abstract{
-
+    
 };
 
 #endif
