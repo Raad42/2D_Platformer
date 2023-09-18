@@ -133,9 +133,9 @@ int main() {
 
     // Calculate the initial position to ensure the sprite is within the window bounds
     // This can be removed but might need it later
-    float initialX = (window.getSize().x - Mario.getLocalBounds().width * 0.1f) / 2.0f;
-    float initialY = window.getSize().y - Mario.getLocalBounds().height * 0.1f;
-    Mario.setPosition(initialX, initialY);
+    // float initialX = (window.getSize().x - Mario.getLocalBounds().width * 0.1f) / 2.0f;
+    // float initialY = window.getSize().y - Mario.getLocalBounds().height * 0.1f;
+    // Mario.setPosition(initialX, initialY);
 
     bool isMovingLeft = false;
     bool isMovingRight = false;
