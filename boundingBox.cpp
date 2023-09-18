@@ -214,7 +214,7 @@ int main() {
         //check collision with another box (like the bounding box of another entity)
         if (boundingBoxMario.intersects(boundingBoxBricks))
         {
-            velocityY = 0;
+            velocityY = -gravity;
         }
 
         // Render
