@@ -68,10 +68,19 @@ int main() {
 
     sf::Text text1;
     text1.setFont(font1);
-    text1.setString("I'm Gay");
+    text1.setString("MARIO 2D PLATFORMER");
     text1.setCharacterSize(24);
     text1.setFillColor(sf::Color::Red);
     text1.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    text1.setPosition(250.f, 0.f);
+
+    sf::Text text2;
+    text2.setFont(font2);
+    text2.setString("this is a test to see how this shit will look");
+    text2.setCharacterSize(24);
+    text2.setFillColor(sf::Color::Blue);
+    //text2.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    text2.setPosition(150.f, 50.f);
 
 
 
@@ -156,6 +165,7 @@ int main() {
         window.clear();
         window.draw(sprite);
         window.draw(text1);
+        window.draw(text2);
         window.display();
     }
 
