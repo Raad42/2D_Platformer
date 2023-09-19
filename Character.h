@@ -3,9 +3,9 @@
 
 #include <cstring>
 #include <iostream>
-#include "Abstract.h"
+#include "Entity.h"
 
-class Character: public Abstract{
+class Character: public Entity{
     private: 
         int health;
         int damage; 

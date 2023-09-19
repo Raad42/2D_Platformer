@@ -1,9 +1,8 @@
 #ifndef Entity_H
 #define Entity_H
 
-#include "Abstract.h"
 
-class Entity: public Abstract{
+class Entity {
     private: 
         int x_position;
         int y_position;
