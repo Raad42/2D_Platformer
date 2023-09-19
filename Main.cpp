@@ -11,5 +11,9 @@ int main() {
     Game game;
     game.run();
 
+    Player player(0.0f, 0.0f);
+    player.loadTexture("8bitMario.png");
+
+
     return 0;
 }
