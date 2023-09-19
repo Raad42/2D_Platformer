@@ -20,11 +20,11 @@ bool isGrounded = false;
  
 void updateMovement(sf::Sprite& Mario, sf::RenderWindow& window) {
     // Add gravity
-    if (y < 600) {
+    if (y < 800) {
         velocityY += gravity;
     }
-    else if (y > 600) {
-        y = 600;
+    else if (y > 800) {
+        y = 800;
         velocityY = 0;  // Stop vertical movement when the sprite hits the ground
     }
 
@@ -76,7 +76,7 @@ int main() {
     text1.setCharacterSize(24);
     text1.setFillColor(sf::Color::Red);
     text1.setStyle(sf::Text::Bold | sf::Text::Underlined);
-    text1.setPosition(250.f, 0.f);
+    text1.setPosition(350.f, 0.f);
 
     sf::Text text2;
     text2.setFont(font2);
@@ -84,10 +84,10 @@ int main() {
     text2.setCharacterSize(24);
     text2.setFillColor(sf::Color::Blue);
     //text2.setStyle(sf::Text::Bold | sf::Text::Underlined);
-    text2.setPosition(150.f, 50.f);
+    text2.setPosition(250.f, 50.f);
 
     
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Side-Scrolling Game");
+    sf::RenderWindow window(sf::VideoMode(1200, 800), "Side-Scrolling Game");
 
     sf::Texture textureMario;
 
@@ -117,7 +117,7 @@ int main() {
     // Set the scale of the sprite to resize it (e.g., 0.1 for 10% of the original size)
     Bricks.setScale(0.4f, 0.2f);
 
-    Bricks.setPosition(400.f, 400.f);
+    Bricks.setPosition(400.f, 600.f);
 
     
     // // check collision with a point
@@ -214,7 +214,7 @@ int main() {
         //check collision with another box (like the bounding box of another entity)
         if (boundingBoxMario.intersects(boundingBoxBricks))
         {
-            velocityY = -gravity;
+            velocityY = 0;
         }
 
         // Render
