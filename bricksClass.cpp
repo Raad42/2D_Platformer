@@ -138,6 +138,19 @@ int main() {
     
     sf::RenderWindow window(sf::VideoMode(1200, 800), "Side-Scrolling Game");
 
+    sf::Texture textureBackground;
+    if (!textureBackground.loadFromFile("pixelBackground.jpg"))
+    {
+        return -1; // Exit the program if texture loading fails.
+    }
+
+    sf::Sprite background(textureBackground);
+    background.setScale(
+        static_cast<float>(window.getSize().x) / textureBackground.getSize().x, 
+        static_cast<float>(window.getSize().y) / textureBackground.getSize().y
+    );
+
+
     // Set up the view
     sf::View view(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
     window.setView(view);
@@ -264,6 +277,8 @@ int main() {
         // Render
         window.clear();
         
+        window.draw(background);
+
         window.draw(Mario);
         boundingBoxMario.draw(window);
 
