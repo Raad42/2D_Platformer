@@ -1,16 +1,17 @@
-#ifndef Entity_H
-#define Entity_H
+#ifndef ENTITY_H
+#define ENTITY_H
 
+#include <SFML/Graphics.hpp>
 
 class Entity {
-    private: 
-        int x_position;
-        int y_position;
+protected:
+    sf::Sprite sprite;
 
-        int width;
-        int height; 
-    public: 
-        
+public:
+    virtual void draw(sf::RenderWindow& window);
+    virtual sf::Sprite getSprite() const;
+    virtual bool isColliding(const Entity& other) const = 0;
+    virtual void onCollision(Entity& other) = 0;
 };
 
 #endif
