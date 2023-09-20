@@ -5,8 +5,14 @@
 #include "Character.h"
 
 class Enemy : public Character {
+private:
+    // Add enemy-specific members here.
 public:
-    // Define additional member functions or properties specific to Enemy here
+    Enemy(int x, int y, int width, int height, int health, int damage, const std::string& name);
+    Enemy();
+
+    void move();
+    void attack();
 };
 
 #endif

@@ -1,13 +1,19 @@
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
 
-#include <SFML/Graphics.hpp>
 #include "Entity.h"
+#include <SFML/Graphics.hpp>
 
 class Obstacle : public Entity {
+protected:
+    sf::RectangleShape shape;
 public:
-    virtual bool isColliding(const Entity& other) const override;
-    virtual void onCollision(Entity& other) override;
+    Obstacle(int x, int y, int width, int height);
+    virtual void update();
+    virtual void draw(sf::RenderWindow& window);
+    // Common attributes and methods for collision, rendering, etc.
 };
+
+
 
 #endif

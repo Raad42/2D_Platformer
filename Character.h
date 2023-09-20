@@ -1,21 +1,24 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include <string>
 #include "Entity.h"
+#include <SFML/Graphics.hpp>
+#include <string>
 
 class Character : public Entity {
-protected:
+private:
     int health;
     int damage;
     std::string name;
-
 public:
+    Character(int x, int y, int width, int height, int health, int damage, const std::string& name);
     Character();
-    int getHealth() const;
-    void setHealth(int health);
-    int getDamage() const;
-    std::string getName() const;
+
+    int get_health() const;
+    void set_health(int health);
+    int get_damage() const;
+    std::string get_name() const;
 };
+
 
 #endif

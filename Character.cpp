@@ -1,23 +1,31 @@
 #include "Character.h"
 
-Character::Character() {
-    health = 0;
-    damage = 0;
-    name = "null";
+Character::Character(int x, int y, int width, int height, int health, int damage, const std::string& name)
+    : Entity(x, y, width, height) {
+    this->health = health;
+    this->damage = damage;
+    this->name = name;
 }
 
-int Character::getHealth() const {
-    return health;
+Character::Character()
+    : Entity(0, 0, 0, 0) {
+    this->health = 0;
+    this->damage = 0;
+    this->name = "";
 }
 
-void Character::setHealth(int health) {
+int Character::get_health() const {
+    return this->health;
+}
+
+void Character::set_health(int health) {
     this->health = health;
 }
 
-int Character::getDamage() const {
-    return damage;
+int Character::get_damage() const {
+    return this->damage;
 }
 
-std::string Character::getName() const {
-    return name;
+std::string Character::get_name() const {
+    return this->name;
 }
