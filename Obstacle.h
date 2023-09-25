@@ -5,15 +5,15 @@
 #include <SFML/Graphics.hpp>
 
 class Obstacle : public Entity {
-protected:
-    sf::RectangleShape shape;
+private:
+    sf::RenderWindow& window;
 public:
-    Obstacle(int x, int y, int width, int height);
-    virtual void update();
-    virtual void draw(sf::RenderWindow& window);
-    // Common attributes and methods for collision, rendering, etc.
+    Obstacle();
+    Obstacle(int x, int y, int width, int height, sf::RenderWindow& window);
+    ~Obstacle();
+
+    bool IsColliding(Entity* other) override;
+    void OnCollision(Entity* other) override;
 };
-
-
 
 #endif

@@ -1,8 +1,10 @@
 #include "Game.h"
 
-Game::Game(sf::RenderWindow& window) : window(window), mario(100, 300, 32, 32, 100, 10, "Mario", window) {
+Game::Game(sf::RenderWindow& window) : window(window), mario(100, 300, 32, 32, 100, 10, "Mario", window), brick1(400, 600, 64, 64, window) {
     // Initialize your game-specific members here.
     mario.set_texture("8bitMario.png");
+    
+    brick1.set_texture("Bricks.png"); // Load the obstacle texture
 }
 
 
@@ -31,13 +33,17 @@ void Game::update() {
     // Update game logic here.
     // Update player, enemies, power-ups, etc.
     mario.update();
+    
+    brick1.getSprite().setScale(0.4f, 0.2f);
+    brick1.getSprite().setPosition(400, 600);
 }
 
 void Game::render() {
     window.clear();
     
     // Render game entities here.
-    window.draw(mario.getSprite()); // Assuming you have getSprite() in Player class
+    window.draw(mario.getSprite());
+    window.draw(brick1.getSprite());
 
     window.display();
 }
