@@ -15,7 +15,7 @@ void BoundingBox::update(const sf::Sprite& sprite) {
     shape.setPosition(rect.left, rect.top);
 }
 
-void BoundingBox::draw(sf::RenderWindow& window) {
+void BoundingBox::draw(sf::RenderWindow& window) const {
     window.draw(shape);
 }
 

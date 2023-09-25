@@ -1,8 +1,9 @@
 #include "Player.h"
 #include "PowerUp.h"
+#include "BoundingBox.h"
 
 Player::Player(int x, int y, int width, int height, int health, int damage, const std::string& name, sf::RenderWindow& window)
-    : Character(x, y, width, height, health, damage, name), window(window) {
+    : Character(x, y, width, height, health, damage, name), window(window), boundingBox(sprite) {
     x = 0;
     y = 0;
     velocityX = 0;
@@ -18,20 +19,19 @@ Player::Player(int x, int y, int width, int height, int health, int damage, cons
 }
 
 Player::Player()
-    : Character(0, 0, 0, 0, 0, 0, ""), window(window) {
-    // Initialize player-specific members here.
+    : Character(0, 0, 0, 0, 0, 0, ""), window(window), boundingBox(sprite) {
 }
 
 void Player::moveLeft() {
     isMovingLeft = true;
     isMovingRight = false;
-    velocityX = -3;
+    velocityX = -4;
 }
 
 void Player::moveRight() {
     isMovingRight = true;
     isMovingLeft = false;
-    velocityX = 3;
+    velocityX = 4;
 }
 
 void Player::jump() {
@@ -116,6 +116,9 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
         velocityY = 0;  // Stop vertical movement when the sprite hits the bottom border
         isJumping = false;
     }
+    
+    boundingBox.update(sprite);
+
 }
 
 
@@ -160,13 +163,15 @@ void Player::update() {
 
     updateMovement(sprite, window);
     sprite.setPosition(x,y);
-}
 
+    boundingBox.update(sprite);
+}
 
 
 void Player::collectPowerUp(PowerUp power_up) {
     // Implement power-up collection logic here.
 }
+
 
 // Implement the IsColliding function in the Player class
 bool Player::IsColliding(Entity* other) {
@@ -177,6 +182,7 @@ bool Player::IsColliding(Entity* other) {
     } else {
         return false; // or return false if no collision
     }
+    return boundingBox.intersects(other->getBoundingBox());
 }
 
 

@@ -2,6 +2,7 @@
 #define ENTITY_H
 
 #include <SFML/Graphics.hpp>
+#include "BoundingBox.h"
 
 class Entity {
 protected:
@@ -11,6 +12,7 @@ protected:
     int height;
     sf::Texture texture;
     sf::Sprite sprite;
+    BoundingBox boundingBox;
 public:
     Entity(int x, int y, int width, int height);
     virtual ~Entity();
@@ -25,6 +27,9 @@ public:
     void set_texture(const std::string& texturePath);
 
     sf::Sprite& getSprite();
+
+    BoundingBox& getBoundingBox();
+    void updateBoundingBox();
 };
 
 #endif

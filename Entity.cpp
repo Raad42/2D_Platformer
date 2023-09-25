@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Entity::Entity(int x, int y, int width, int height) {
+Entity::Entity(int x, int y, int width, int height) : boundingBox(sprite) {
     this->x_position = x;
     this->y_position = y;
     this->width = width;
@@ -36,4 +36,8 @@ void Entity::set_texture(const std::string& texturePath) {
 
 sf::Sprite& Entity::getSprite() {
     return sprite;
+}
+
+void Entity::updateBoundingBox() {
+    boundingBox.update(sprite);
 }

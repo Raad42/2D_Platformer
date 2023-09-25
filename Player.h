@@ -3,6 +3,7 @@
 
 #include "Character.h"
 #include "PowerUp.h"
+#include "BoundingBox.h"
 #include <SFML/Graphics.hpp>
 
 class Player : public Character {
@@ -21,6 +22,9 @@ private:
     bool isJumping;
     
     sf::RenderWindow& window;
+
+    BoundingBox boundingBox;
+
 public:
     Player(int x, int y, int width, int height, int health, int damage, const std::string& name, sf::RenderWindow& window);
     Player();
@@ -43,7 +47,6 @@ public:
     bool getIsJumping();
 
     void updateMovement(sf::Sprite& sprite, sf::RenderWindow& window);
-
 
 };
 

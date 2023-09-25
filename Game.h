@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "Obstacle.h"
+#include "BoundingBox.h"
 
 class Game {
 private:
@@ -11,7 +12,9 @@ private:
     Player mario;
     Obstacle brick1;
 
-    // Add game-specific members such as player, enemies, power-ups, etc.
+    BoundingBox boundingBoxMario;
+    BoundingBox boundingBoxBrick1;
+
 public:
     Game(sf::RenderWindow& window);
 
