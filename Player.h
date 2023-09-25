@@ -15,6 +15,10 @@ private:
     float accelerationY;
 
     float gravity = 1;
+
+    bool isMovingLeft;
+    bool isMovingRight;
+    bool isJumping;
     
     sf::RenderWindow& window;
 public:
@@ -33,6 +37,13 @@ public:
 
     void handleInput();
     void update();
+
+    bool getIsMovingLeft();
+    bool getIsMovingRight();
+    bool getIsJumping();
+
+    void updateMovement(sf::Sprite& sprite, sf::RenderWindow& window);
+
 
 };
 
