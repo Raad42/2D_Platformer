@@ -35,7 +35,10 @@ void Player::moveRight() {
 }
 
 void Player::jump() {
-    velocityY = -20;
+    if (!isJumping) {  // Check if the player is not already jumping
+        velocityY = -30; // Adjust the jump velocity as needed
+        isJumping = true;
+    }
 }
 
 void Player::fall() {
@@ -69,9 +72,11 @@ void Player::handleInput() {
         velocityX = 0;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+    static bool spacePressedLastFrame = false;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !spacePressedLastFrame) {
         jump();
     }
+    spacePressedLastFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
         attack();
@@ -109,6 +114,7 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
     if (y + sprite.getLocalBounds().height * sprite.getScale().y > window.getSize().y) {
         y = window.getSize().y - sprite.getLocalBounds().height * sprite.getScale().y;
         velocityY = 0;  // Stop vertical movement when the sprite hits the bottom border
+        isJumping = false;
     }
 }
 
@@ -124,10 +130,11 @@ void Player::update() {
     y += velocityY;
 
     // Handle jump when the Space key is pressed
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isJumping) {
-        velocityY = -20; // Adjust the jump velocity as needed
-        isJumping = true;
+    static bool spacePressedLastFrame = false;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !spacePressedLastFrame) {
+        jump();
     }
+    spacePressedLastFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
     float scale = 0.1f;
     float playerWidth = sprite.getLocalBounds().width * scale;
