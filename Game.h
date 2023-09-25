@@ -4,17 +4,15 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 
-#pragma once
-#include <SFML/Graphics.hpp>
-
 class Game {
 private:
     sf::RenderWindow& window;
+    Player mario;
     // Add game-specific members such as player, enemies, power-ups, etc.
 public:
     Game(sf::RenderWindow& window);
 
-    void init(); // Initialize the game.
+    void run(); // Run game
     void handleInput(); // Handle user input.
     void update(); // Update game logic.
     void render(); // Render game objects.

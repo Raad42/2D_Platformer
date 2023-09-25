@@ -7,9 +7,18 @@
 
 class Player : public Character {
 private:
-    // Add player-specific members here.
+    float x;
+    float y;
+    float velocityX;
+    float velocityY;
+    float accelerationX;
+    float accelerationY;
+
+    float gravity = 1;
+    
+    sf::RenderWindow& window;
 public:
-    Player(int x, int y, int width, int height, int health, int damage, const std::string& name);
+    Player(int x, int y, int width, int height, int health, int damage, const std::string& name, sf::RenderWindow& window);
     Player();
 
     void moveLeft();
@@ -19,6 +28,11 @@ public:
     void attack();
     void collectPowerUp(PowerUp power_up);
 
+    bool IsColliding(Entity* other) override;
+    void OnCollision(Entity* other) override;
+
+    void handleInput();
+    void update();
 
 };
 
