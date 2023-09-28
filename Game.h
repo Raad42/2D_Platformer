@@ -22,6 +22,9 @@ public:
     void handleInput(); // Handle user input.
     void update(); // Update game logic.
     void render(); // Render game objects.
+
+    void handleCollisions(); //  A separate function for collision handling
+
 };
 
 

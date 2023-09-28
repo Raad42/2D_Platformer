@@ -21,15 +21,20 @@ public:
     virtual void OnCollision(Entity* other) = 0;
 
     int get_x_position();
+    void set_x_position();
     int get_y_position();
+    void set_y_position(int y_position);
     int get_width();
     int get_height();
     void set_texture(const std::string& texturePath);
 
     sf::Sprite& getSprite();
 
-    BoundingBox& getBoundingBox();
+    virtual BoundingBox& getBoundingox() { return boundingBox; }
     void updateBoundingBox();
+    
+    virtual sf::FloatRect getBoundingbox() const;
+
 };
 
 #endif

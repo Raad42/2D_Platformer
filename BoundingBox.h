@@ -13,6 +13,9 @@ public:
     void update(const sf::Sprite& sprite);
     void draw(sf::RenderWindow& window) const;
     bool intersects(const BoundingBox& other) const;
+
+    sf::FloatRect getFloatRect() const;
+
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "PowerUp.h"
 #include "BoundingBox.h"
+#include "Entity.h"
 
 Player::Player(int x, int y, int width, int height, int health, int damage, const std::string& name, sf::RenderWindow& window)
     : Character(x, y, width, height, health, damage, name), window(window), boundingBox(sprite) {
@@ -16,6 +17,7 @@ Player::Player(int x, int y, int width, int height, int health, int damage, cons
     isMovingLeft = false;
     isMovingRight = false;
     isJumping = false;
+    isGrounded = true;
 }
 
 Player::Player()
@@ -36,8 +38,9 @@ void Player::moveRight() {
 
 void Player::jump() {
     if (!isJumping) {  // Check if the player is not already jumping
-        velocityY = -30; // Adjust the jump velocity as needed
+        velocityY = -35; // Adjust the jump velocity as needed
         isJumping = true;
+        isGrounded = false;
     }
 }
 
@@ -89,13 +92,14 @@ void Player::handleInput() {
 
 void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
     // Add gravity
-    if (y < window.getSize().y) {
+    if (y < window.getSize().y && !isGrounded) {
         velocityY += gravity;
     }
     else if (y >= window.getSize().y) {
         y = window.getSize().y;
         velocityY = 0;  // Stop vertical movement when the sprite hits the ground
         isJumping = false; // Reset jumping state when landing
+        isGrounded = true; // When on ground is grounded
     }
 
     // Boundary checks to keep the sprite within the window
@@ -164,7 +168,6 @@ void Player::update() {
     updateMovement(sprite, window);
     sprite.setPosition(x,y);
 
-    boundingBox.update(sprite);
 }
 
 
@@ -172,22 +175,15 @@ void Player::collectPowerUp(PowerUp power_up) {
     // Implement power-up collection logic here.
 }
 
-
-// Implement the IsColliding function in the Player class
 bool Player::IsColliding(Entity* other) {
-    // Your collision detection logic here
-    // If a collision is detected, return true; otherwise, return false
-    if (1) {
+    if (1){
         return true;
-    } else {
-        return false; // or return false if no collision
     }
-    return boundingBox.intersects(other->getBoundingBox());
+    return false;
 }
 
-
-// Implement the OnCollision function in the Player class
 void Player::OnCollision(Entity* other) {
-    // Add collision response logic specific to the Player class here
-    // For example, handle what happens when the player collides with 'other'.
+    if (IsColliding(other)) {
+        velocityY = 0;
+    }
 }

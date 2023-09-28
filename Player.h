@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 class Player : public Character {
-private:
+public:
     float x;
     float y;
     float velocityX;
@@ -20,6 +20,7 @@ private:
     bool isMovingLeft;
     bool isMovingRight;
     bool isJumping;
+    bool isGrounded;
     
     sf::RenderWindow& window;
 

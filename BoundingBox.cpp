@@ -22,3 +22,7 @@ void BoundingBox::draw(sf::RenderWindow& window) const {
 bool BoundingBox::intersects(const BoundingBox& other) const {
     return rect.intersects(other.rect);
 }
+
+sf::FloatRect BoundingBox::getFloatRect() const {
+    return rect;
+}

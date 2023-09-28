@@ -15,8 +15,16 @@ int Entity::get_x_position() {
     return this->x_position;
 }
 
+void Entity::set_x_position() {
+    this->x_position = x_position;
+}
+
 int Entity::get_y_position() {
     return this->y_position;
+}
+
+void Entity::set_y_position(int y_position) {
+    this->y_position = y_position;
 }
 
 int Entity::get_width() {
@@ -40,4 +48,8 @@ sf::Sprite& Entity::getSprite() {
 
 void Entity::updateBoundingBox() {
     boundingBox.update(sprite);
+}
+
+sf::FloatRect Entity::getBoundingbox() const {
+    return sprite.getGlobalBounds();
 }
