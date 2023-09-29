@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "Obstacle.h"
+#include "DamagingObstacle.h"
 #include "BoundingBox.h"
 
 class Game {
@@ -12,10 +13,12 @@ private:
     Player mario;
     Obstacle brick1;
     Obstacle brick2;
+    DamagingObstacle spike1;
 
     BoundingBox boundingBoxMario;
     BoundingBox boundingBoxBrick1;
     BoundingBox boundingBoxBrick2;
+    BoundingBox boundingBoxSpike1; 
 
 public:
     Game(sf::RenderWindow& window);

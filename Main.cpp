@@ -1,11 +1,13 @@
 #include "Entity.h"
 #include "Character.h"
 #include "Obstacle.h"
+#include "DamagingObstacle.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "PowerUp.h"
 #include "GameStats.h"
 #include "Game.h"
+#include "BoundingBox.h"
 
 #include <SFML/Graphics.hpp>
 

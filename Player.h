@@ -34,6 +34,7 @@ public:
     void moveRight();
     void jump();
     void fall();
+    //void takeDamage();
     void attack();
     void collectPowerUp(PowerUp power_up);
 
