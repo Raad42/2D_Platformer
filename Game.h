@@ -11,9 +11,11 @@ private:
     sf::RenderWindow& window;
     Player mario;
     Obstacle brick1;
+    Obstacle brick2;
 
     BoundingBox boundingBoxMario;
     BoundingBox boundingBoxBrick1;
+    BoundingBox boundingBoxBrick2;
 
 public:
     Game(sf::RenderWindow& window);
