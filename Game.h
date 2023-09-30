@@ -13,11 +13,15 @@ private:
     Player mario;
     Obstacle brick1;
     Obstacle brick2;
+    Obstacle brick3;
+    Obstacle brick4;
     DamagingObstacle spike1;
 
     BoundingBox boundingBoxMario;
     BoundingBox boundingBoxBrick1;
     BoundingBox boundingBoxBrick2;
+    BoundingBox boundingBoxBrick3;
+    BoundingBox boundingBoxBrick4;
     BoundingBox boundingBoxSpike1; 
 
 public:
