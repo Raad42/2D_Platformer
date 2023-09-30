@@ -4,7 +4,7 @@
 #include <iostream>
 
 Game::Game(sf::RenderWindow& window) : window(window), 
-    mario(100, 300, 32, 32, 100, 10, "Mario", window), 
+    mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window), 
     brick1(400, 600, 64, 64, window),
     brick2(400, 600, 64, 64, window),
     spike1(400, 600, 64, 64, window, 10),   
@@ -15,10 +15,12 @@ Game::Game(sf::RenderWindow& window) : window(window),
     boundingBoxSpike1(spike1.getSprite()) {
 
 
-    mario.set_texture("8bitMario1.png");
+    mario.set_texture("marioIdle.png");
     brick1.set_texture("Bricks.png");
     brick2.set_texture("Bricks.png");
     spike1.set_texture("Thwomp.png");
+
+    //mario.getSprite().setScale(5.f, 5.f);
 
     brick1.getSprite().setScale(0.4f, 0.1f);
     brick1.getSprite().setPosition(400, 620);
@@ -26,8 +28,8 @@ Game::Game(sf::RenderWindow& window) : window(window),
     brick2.getSprite().setScale(0.4f, 0.1f);
     brick2.getSprite().setPosition(400, 600);
 
-    spike1.getSprite(). setScale(1.f, 1.f);
-    spike1.getSprite().setPosition(500, 700);
+    spike1.getSprite().setScale(1.f, 1.f);
+    spike1.getSprite().setPosition(700, 700);
 }
 
 
@@ -100,15 +102,16 @@ void Game::handleCollisions() {
         mario.velocityY = -1;
     }
 
-    if (marioBounds.intersects(spike1Bounds)){
-        int health = mario.get_health(); 
-        health -= spike1.get_damage();
-        mario.set_health(health);
-        //Working on push back mechanics
-        //mario.x = 100;
-        //mario.velocityX = -100;
-        std::cout <<  "Collison"  << mario.get_health();
-    }
+    //If mario collides with spike
+   if (marioBounds.intersects(spike1Bounds)) {
+    int health = mario.get_health();
+    health -= spike1.get_damage();
+    mario.set_health(health);
+    mario.set_texture("MarioDeath.png");
+
+    std::cout << "Collision " << mario.get_health() << std::endl;
+}
+
 }
 
 

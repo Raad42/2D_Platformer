@@ -10,10 +10,13 @@ class Player : public Character {
 public:
     float x;
     float y;
+    float xBefore; 
+    float yBefore; 
     float velocityX;
     float velocityY;
     float accelerationX;
     float accelerationY;
+    float scale; 
 
     float gravity = 1;
 
@@ -27,7 +30,7 @@ public:
     BoundingBox boundingBox;
 
 public:
-    Player(int x, int y, int width, int height, int health, int damage, const std::string& name, sf::RenderWindow& window);
+    Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window);
     Player();
 
     void moveLeft();
@@ -35,7 +38,8 @@ public:
     void jump();
     void fall();
     //void takeDamage();
-    void attack();
+    void attack(); 
+    void die(); //Code this part
     void collectPowerUp(PowerUp power_up);
 
     bool IsColliding(Entity* other) override;

@@ -3,14 +3,15 @@
 #include "BoundingBox.h"
 #include "Entity.h"
 
-Player::Player(int x, int y, int width, int height, int health, int damage, const std::string& name, sf::RenderWindow& window)
-    : Character(x, y, width, height, health, damage, name), window(window), boundingBox(sprite) {
+Player::Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window)
+    : Character(x, y, width, height, health, damage, name), scale(scale), window(window), boundingBox(sprite) {
     x = 0;
     y = 0;
     velocityX = 0;
     velocityY = 0;
     accelerationX = 0;
     accelerationY = 0;
+    
     
     gravity = 1;
 
@@ -128,6 +129,7 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
 
 
 void Player::update() {
+
     // Update the player's position and physics.
     // Apply acceleration and gravity.
     velocityX += accelerationX;
@@ -144,7 +146,6 @@ void Player::update() {
     }
     spacePressedLastFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
-    float scale = 0.1f;
     float playerWidth = sprite.getLocalBounds().width * scale;
     float playerHeight = sprite.getLocalBounds().height * scale;
 
