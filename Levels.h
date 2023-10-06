@@ -18,6 +18,12 @@ private:
 
     std::vector<Obstacle*> obstacles;
     std::vector<BoundingBox*> BoundingBoxes;
+
+    // game world size (levels might have different sizes)
+    int numSections;
+    float sectionWidth;
+    float gameWorldWidth;
+
 public:
     Levels(sf::RenderWindow& window);
     ~Levels();
@@ -33,6 +39,8 @@ public:
 
     std::vector<Obstacle*>& getObstacles() { return obstacles; }
     std::vector<BoundingBox*>& getBoundingBoxes() { return BoundingBoxes; }
+
+    float getGameWorldWidth();
     
 };
 

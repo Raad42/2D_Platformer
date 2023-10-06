@@ -1,10 +1,19 @@
 #include "Levels.h"
 
 Levels::Levels(sf::RenderWindow& window) : window(window) {
-
+    // for game world (different levels different lengths)
+    int numSections = 0;
+    float sectionWidth = 0;
+    float gameWorldWidth = 0;
 }
 
 void Levels::LoadLevel1() {
+
+    // create game size
+    int numSections = 6;
+    float sectionWidth = 1200.0f;
+    float gameWorldWidth = numSections * sectionWidth;
+
     Obstacle* brick1 = new Obstacle(400, 600, 64, 64, window);
     Obstacle* brick2 = new Obstacle(400, 600, 64, 64, window);
     Obstacle* brick3 = new Obstacle(600, 500, 64, 64, window);
@@ -69,4 +78,8 @@ Levels::~Levels(){
     for (auto boundingBox : BoundingBoxes) {
         delete boundingBox;
     }
+}
+
+float Levels::getGameWorldWidth(){
+    return gameWorldWidth;
 }

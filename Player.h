@@ -54,6 +54,11 @@ public:
 
     void updateMovement(sf::Sprite& sprite, sf::RenderWindow& window);
 
+    // Getter function to get the local bounds
+    sf::FloatRect getLocalBounds() const {
+        return sprite.getLocalBounds();
+    }
+
 };
 
 

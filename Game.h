@@ -11,6 +11,8 @@
 class Game {
 private:
     sf::RenderWindow& window;
+    sf::View view;
+
     Player mario;
     BoundingBox boundingBoxMario;
 
@@ -27,6 +29,7 @@ public:
     void render(); // Render game objects.
 
     void handleCollisions(); //  A separate function for collision handling
+
 
 };
 
