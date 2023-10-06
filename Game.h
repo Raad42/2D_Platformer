@@ -14,14 +14,12 @@ private:
     Player mario;
     BoundingBox boundingBoxMario;
 
-    std::vector<Obstacle*> obstacles;
-    std::vector<BoundingBox*> BoundingBoxes;
     std::vector<sf::FloatRect> obstacleBounds;
 
+    Levels& levels;
 
 public:
-    Game(sf::RenderWindow& window);
-    ~Game();
+    Game(sf::RenderWindow& window, Levels& levels);
 
     void run(); // Run game
     void handleInput(); // Handle user input.

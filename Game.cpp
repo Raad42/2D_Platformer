@@ -1,56 +1,17 @@
 #include "Game.h"
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
+#include "Levels.h"
 #include <iostream>
 #include <cmath>
 
-Game::Game(sf::RenderWindow& window) : window(window), 
+Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(levels),
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
     boundingBoxMario(mario.getSprite()) {
 
-    
-    // Create and add obstacles to the vector
-    Obstacle* brick1 = new Obstacle(400, 600, 64, 64, window);
-    Obstacle* brick2 = new Obstacle(400, 600, 64, 64, window);
-    Obstacle* brick3 = new Obstacle(600, 500, 64, 64, window);
-    Obstacle* brick4 = new Obstacle(600, 500, 64, 64, window);
-    Obstacle* spike1 = new DamagingObstacle(400, 600, 64, 64, window, 10);
-
-    obstacles.push_back(brick1);
-    obstacles.push_back(brick2);
-    obstacles.push_back(brick3);
-    obstacles.push_back(brick4);
-    obstacles.push_back(spike1);
-
-    // Create BoundingBox objects for each obstacle and add them to BoundingBoxes vector
-    for (auto obstacle : obstacles) {
-        BoundingBoxes.push_back(new BoundingBox(obstacle->getSprite()));
-    }
-
     mario.set_texture("MarioIdle.png");
-    brick1->set_texture("Bricks.png");
-    brick2->set_texture("Bricks.png");
-    brick3->set_texture("Bricks.png");
-    brick4->set_texture("Bricks.png");
-    spike1->set_texture("Thwomp.png");
 
     //mario.getSprite().setScale(5.f, 5.f);
-
-    //Testing with making top brick layer really thin
-    brick1->getSprite().setScale(0.4f, 0.20f);
-    brick1->getSprite().setPosition(400, 610);
-    brick2->getSprite().setScale(0.4f, 0.01f);
-    brick2->getSprite().setPosition(400, 605);
-
-    brick3->getSprite().setScale(0.4f, 0.1f);
-    brick3->getSprite().setPosition(600, 380);
-    
-    brick4->getSprite().setScale(0.4f, 0.1f);
-    brick4->getSprite().setPosition(600, 360);
-
-    spike1->getSprite().setScale(1.f, 1.f);
-    spike1->getSprite().setPosition(700, 700);
-
 }
 
 
@@ -82,32 +43,23 @@ void Game::update() {
 
     boundingBoxMario.update(mario.getSprite());
 
-    for (size_t i = 0; i < obstacles.size(); ++i) {
-        BoundingBoxes[i]->update(obstacles[i]->getSprite());
-    }
+    levels.Update();
 
     handleCollisions();
-
-    // if (boundingBoxMario.intersects(boundingBoxBrick1)) {
-    //     mario.velocityY = 1;
-    // }
-
-    // if (mario.IsColliding(&brick1)) {
-    //     mario.OnCollision(&brick1);
-    // }
 }
 
 void Game::handleCollisions() {
     sf::FloatRect marioBounds = mario.getBoundingbox();
+
+    // Access obstacles and their bounding boxes through levels
+    std::vector<Obstacle*>& obstacles = levels.getObstacles();
+    std::vector<BoundingBox*>& obstacleBoundingBoxes = levels.getBoundingBoxes();
+
     // Calculate and add sf::FloatRect for each obstacle's bounding box
     for (auto obstacle : obstacles) {
         obstacleBounds.push_back(obstacle->getBoundingbox());
     }
 
-    // float marioTop = marioBounds.top;
-    // float marioBottom = marioBounds.width;
-    // float marioLeft = marioBounds.left;
-    // float marioRight = marioBounds.height;
 
     for (size_t i = 0; i < obstacles.size(); ++i) {
         // When he hits his head on the bottom
@@ -149,38 +101,11 @@ void Game::handleCollisions() {
 
 void Game::render() {
     window.clear();
-
-    // Draw obstacles and their bounding boxes
-    for (size_t i = 0; i < obstacles.size(); ++i) {
-        window.draw(obstacles[i]->getSprite()); // Draw the obstacle sprite
-
-        // Draw the bounding box using your BoundingBox class
-        BoundingBoxes[i]->draw(window);
-    }
-
     
     window.draw(mario.getSprite());
-    // window.draw(brick1.getSprite());
-    // window.draw(brick2.getSprite());
-    // window.draw(brick3.getSprite());
-    // window.draw(brick4.getSprite());
-    // window.draw(spike1.getSprite());
-
     boundingBoxMario.draw(window);
-    // boundingBoxBrick1.draw(window);
-    // boundingBoxBrick2.draw(window);
-    // boundingBoxBrick3.draw(window);
-    // boundingBoxBrick4.draw(window);
-    // boundingBoxSpike1.draw(window);
+
+    levels.Render(window);
 
     window.display();
-}
-
-Game::~Game(){
-    for (auto obstacle : obstacles) {
-        delete obstacle;
-    }
-    for (auto boundingBox : BoundingBoxes) {
-        delete boundingBox;
-    }
 }

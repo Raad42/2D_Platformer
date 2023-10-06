@@ -15,13 +15,16 @@
 
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(1200, 800), "SFML Mario Game");
+    sf::RenderWindow window(sf::VideoMode(1200, 800), "SFML Game");
 
-    Game game(window);
+    // Create a Levels object
+    Levels levels(window);
+    levels.LoadLevel1(); // Load the initial level
 
-    while (window.isOpen()) {
-        game.run(); // Handle input, update, and render inside the Game class
-    }
+    // Create the Game object, passing both sf::RenderWindow and Levels objects
+    Game game(window, levels);
+
+    game.run();
 
     return 0;
 }
