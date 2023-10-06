@@ -2,6 +2,7 @@
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
 #include <iostream>
+#include <cmath>
 
 Game::Game(sf::RenderWindow& window) : window(window), 
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window), 
@@ -19,7 +20,7 @@ Game::Game(sf::RenderWindow& window) : window(window),
     boundingBoxSpike1(spike1.getSprite()) {
 
 
-    mario.set_texture("marioIdle.png");
+    mario.set_texture("MarioIdle.png");
     brick1.set_texture("Bricks.png");
     brick2.set_texture("Bricks.png");
     brick3.set_texture("Bricks.png");
@@ -42,6 +43,7 @@ Game::Game(sf::RenderWindow& window) : window(window),
 
     spike1.getSprite().setScale(1.f, 1.f);
     spike1.getSprite().setPosition(700, 700);
+
 }
 
 
@@ -102,6 +104,11 @@ void Game::handleCollisions() {
     // float marioLeft = marioBounds.left;
     // float marioRight = marioBounds.height;
 
+    // float spike1Top = spike1Bounds.top;
+    // float spike1Bottom = spike1Bounds.width;
+    // float spike1Left = spike1Bounds.left;
+    // float spike1Right = spike1Bounds.height;    
+
     // float brickTop = brickBounds.top;
     // float brickBottom = brickBounds.width;
     // float brickLeft = brickBounds.left;
@@ -130,14 +137,14 @@ void Game::handleCollisions() {
     }
 
     //If mario collides with spike //Make mario death into player function
-   if (marioBounds.intersects(spike1Bounds)) {
-    int health = mario.get_health();
-    health -= spike1.get_damage();
-    mario.set_health(health);
-    mario.set_texture("MarioDeath.png");
+    if (marioBounds.intersects(spike1Bounds)) {
+        int health = mario.get_health();
+        health -= spike1.get_damage();
+        mario.set_health(health);
+        mario.set_texture("MarioDeath.png");
 
-    std::cout << "Collision " << mario.get_health() << std::endl;
-}
+        std::cout << "Collision " << mario.get_health() << std::endl;
+    }
 
 }
 

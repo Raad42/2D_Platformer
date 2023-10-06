@@ -15,6 +15,7 @@
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1200, 800), "SFML Mario Game");
+
     Game game(window);
 
     while (window.isOpen()) {

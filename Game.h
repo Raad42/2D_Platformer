@@ -22,7 +22,7 @@ private:
     BoundingBox boundingBoxBrick2;
     BoundingBox boundingBoxBrick3;
     BoundingBox boundingBoxBrick4;
-    BoundingBox boundingBoxSpike1; 
+    BoundingBox boundingBoxSpike1;
 
 public:
     Game(sf::RenderWindow& window);
