@@ -8,6 +8,7 @@
 #include "GameStats.h"
 #include "Game.h"
 #include "BoundingBox.h"
+#include "Levels.h"
 
 #include <SFML/Graphics.hpp>
 

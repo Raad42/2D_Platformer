@@ -6,26 +6,22 @@
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
 #include "BoundingBox.h"
+#include "Levels.h"
 
 class Game {
 private:
     sf::RenderWindow& window;
     Player mario;
-    Obstacle brick1;
-    Obstacle brick2;
-    Obstacle brick3;
-    Obstacle brick4;
-    DamagingObstacle spike1;
-
     BoundingBox boundingBoxMario;
-    BoundingBox boundingBoxBrick1;
-    BoundingBox boundingBoxBrick2;
-    BoundingBox boundingBoxBrick3;
-    BoundingBox boundingBoxBrick4;
-    BoundingBox boundingBoxSpike1;
+
+    std::vector<Obstacle*> obstacles;
+    std::vector<BoundingBox*> BoundingBoxes;
+    std::vector<sf::FloatRect> obstacleBounds;
+
 
 public:
     Game(sf::RenderWindow& window);
+    ~Game();
 
     void run(); // Run game
     void handleInput(); // Handle user input.
