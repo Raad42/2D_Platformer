@@ -7,7 +7,6 @@ SRCS=Main.cpp \
 	DamagingObstacle.cpp \
 	Player.cpp \
 	Enemy.cpp \
-	PowerUpBlock.cpp \
 	GameStats.cpp \
 	Game.cpp \
 	BoundingBox.cpp
