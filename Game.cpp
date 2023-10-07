@@ -112,6 +112,7 @@ void Game::handleCollisions() {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
                 text1.setFillColor(sf::Color::Transparent);
                 levels.ClearLevel();
+                obstacleBounds.clear();
                 resetPlayerPosition();
                 levels.levelLoadFunctions[1]();
 
