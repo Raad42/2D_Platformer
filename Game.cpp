@@ -135,5 +135,5 @@ void Game::render() {
 }
 
 void Game::resetPlayerPosition() {
-    mario.getSprite().setPosition(10.0f, 500.f);
+    mario.getSprite().setPosition(100.0f, 500.f);
 }
