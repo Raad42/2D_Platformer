@@ -20,8 +20,6 @@ private:
     std::vector<BoundingBox*> BoundingBoxes;
 
     // game world size (levels might have different sizes)
-    int numSections;
-    float sectionWidth;
     float gameWorldWidth;
 
 public:
@@ -33,6 +31,10 @@ public:
     void LoadLevel3();
     void LoadLevel4();
     void LoadLevel5();
+
+    void ClearLevel();
+
+    std::vector<std::function<void()>> levelLoadFunctions;
     
     void Update();
     void Render(sf::RenderWindow& window);
@@ -41,6 +43,7 @@ public:
     std::vector<BoundingBox*>& getBoundingBoxes() { return BoundingBoxes; }
 
     float getGameWorldWidth();
+    void setGameWorldWidth(float Width);
     
 };
 

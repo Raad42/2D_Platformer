@@ -11,6 +11,18 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
 
     mario.set_texture("MarioIdle.png");
 
+    if (!font.loadFromFile("ClassicalDiary.ttf")) {
+        std::cout << "faield to load font" << std::endl;
+    }
+    
+    text1.setFont(font);
+    text1.setString("Press 'n' to progress");
+    text1.setCharacterSize(50);
+    text1.setFillColor(sf::Color::Red);
+    text1.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    text1.setPosition(0.f, -100.f);
+
+
     //mario.getSprite().setScale(5.f, 5.f);
 }
 
@@ -93,11 +105,20 @@ void Game::handleCollisions() {
                 mario.set_health(health);
                 mario.set_texture("MarioDeath.png");
             }
-            std::cout << "Collision " << mario.get_health() << std::endl;
+            // std::cout << "Collision " << mario.get_health() << std::endl;
+        }
+        if (marioBounds.intersects(obstacleBounds[5])){
+            text1.setPosition(250.f, 250.f);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+                text1.setFillColor(sf::Color::Transparent);
+                levels.ClearLevel();
+                resetPlayerPosition();
+                levels.levelLoadFunctions[1]();
+
+            }
         }
     }
 }
-
 
 void Game::render() {
     window.clear();
@@ -107,5 +128,11 @@ void Game::render() {
 
     levels.Render(window);
 
+    window.draw(text1);
+
     window.display();
+}
+
+void Game::resetPlayerPosition() {
+    mario.getSprite().setPosition(10.0f, 500.f);
 }

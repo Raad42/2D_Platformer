@@ -17,7 +17,7 @@ int main() {
 
     // Create a Levels object
     Levels levels(window);
-    levels.LoadLevel1(); // Load the initial level
+    levels.levelLoadFunctions[0]();
 
     // Create the Game object, passing both sf::RenderWindow and Levels objects
     Game game(window, levels);
