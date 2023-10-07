@@ -11,7 +11,8 @@ public:
     // Additional attributes and methods specific to power-up blocks.
 
 private:
-    // Add power-up block-specific members here.
+    int health; // when it runs out of health drops powerup
+
 };
 
 #endif
