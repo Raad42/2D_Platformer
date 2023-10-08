@@ -128,11 +128,12 @@ void Game::handleCollisions() {
 
 void Game::render() {
     window.clear();
-    
-    window.draw(mario.getSprite());
-    boundingBoxMario.draw(window);
 
     levels.Render(window);
+
+    window.draw(mario.getSprite());
+
+    boundingBoxMario.draw(window);
 
     window.draw(text1);
 

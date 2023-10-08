@@ -19,6 +19,10 @@ private:
     std::vector<Obstacle*> obstacles;
     std::vector<BoundingBox*> BoundingBoxes;
 
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
+
+
     // game world size (levels might have different sizes)
     float gameWorldWidth;
 
@@ -43,7 +47,6 @@ public:
     std::vector<BoundingBox*>& getBoundingBoxes() { return BoundingBoxes; }
 
     float getGameWorldWidth();
-    void setGameWorldWidth(float Width);
     
 };
 

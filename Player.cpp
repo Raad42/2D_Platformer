@@ -3,6 +3,7 @@
 #include "BoundingBox.h"
 #include "Entity.h"
 
+
 Player::Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window)
     : Character(x, y, width, height, health, damage, name), scale(scale), window(window), boundingBox(sprite) {
     x = 0;
@@ -109,7 +110,7 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
         x = 0;
         velocityX = 0;  // Stop horizontal movement when the sprite hits the left border
     }
-    if (x + sprite.getLocalBounds().width * sprite.getScale().x > window.getSize().x) {
+    if (x + sprite.getLocalBounds().width * sprite.getScale().x > window.getSize().x) { // replace both window.getSize().x with levels.getGameWorldWidth()
         x = window.getSize().x - sprite.getLocalBounds().width * sprite.getScale().x;
         velocityX = 0;  // Stop horizontal movement when the sprite hits the right border
     }
