@@ -2,6 +2,7 @@
 #include "PowerUp.h"
 #include "BoundingBox.h"
 #include "Entity.h"
+#include "Levels.h"
 
 
 Player::Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window)
@@ -87,7 +88,6 @@ void Player::handleInput() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
         attack();
     }
-
     // You can add more input handling here for other actions.
 
     // Update other player-specific input handling if needed.
@@ -177,7 +177,6 @@ void Player::update() {
 void Player::collectPowerUp(PowerUp power_up) {
     // Implement power-up collection logic here.
 }
-
 
 
 bool Player::IsColliding(Entity* other) {

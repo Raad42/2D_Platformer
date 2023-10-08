@@ -14,6 +14,7 @@ private:
     sf::View view;
     sf::Font font;
     sf::Text text1;
+    sf::Text text2;
 
     Player mario;
     BoundingBox boundingBoxMario;

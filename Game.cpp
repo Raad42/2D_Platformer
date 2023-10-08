@@ -22,7 +22,13 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     text1.setFillColor(sf::Color::Transparent);
     text1.setStyle(sf::Text::Bold | sf::Text::Underlined);
     text1.setPosition(0.f, -100.f);
-
+    
+    text2.setFont(font);
+    text2.setString("PAUSED - Press P to unpause");
+    text2.setCharacterSize(50);
+    text2.setFillColor(sf::Color::Transparent);
+    text2.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    text2.setPosition(0.f, -100.f);
 
     //mario.getSprite().setScale(5.f, 5.f);
 }
@@ -33,10 +39,12 @@ void Game::run() {
         handleInput();
         update();
         render();
+        
         // Update the view's position to follow the character
         view.setCenter(mario.x + mario.getLocalBounds().width, 300);
         window.setView(view);
-    }
+
+    } 
 }
 
 void Game::handleInput() {
@@ -63,6 +71,7 @@ void Game::update() {
 
     handleCollisions();
 }
+
 
 void Game::handleCollisions() {
     sf::FloatRect marioBounds = mario.getBoundingbox();
@@ -136,6 +145,7 @@ void Game::render() {
     boundingBoxMario.draw(window);
 
     window.draw(text1);
+    window.draw(text2);
 
     window.display();
 }
