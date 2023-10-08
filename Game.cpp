@@ -10,6 +10,7 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     boundingBoxMario(mario.getSprite()) {
 
     mario.set_texture("MarioIdle.png");
+    mario.x = 0;
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {
         std::cout << "faield to load font" << std::endl;
@@ -32,6 +33,9 @@ void Game::run() {
         handleInput();
         update();
         render();
+        // Update the view's position to follow the character
+        view.setCenter(mario.x + mario.getLocalBounds().width, window.getSize().y);
+        window.setView(view);
     }
 }
 
@@ -98,25 +102,25 @@ void Game::handleCollisions() {
         //If mario collides with spike //Make mario death into player function
         if (marioBounds.intersects(obstacleBounds[4])) {
             int health = mario.get_health();
+            mario.x = 0;
             if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
                 // Access the get_damage function through the obstacle
                 int damage = dynamic_cast<DamagingObstacle*>(obstacles[4])->get_damage();
                 health -= damage;
                 mario.set_health(health);
                 mario.set_texture("MarioDeath.png");
-                mario.x = 0; 
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
         }
         if (marioBounds.intersects(obstacleBounds[5])){
             text1.setPosition(250.f, 250.f);
+            text1.setFillColor(sf::Color::Red);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
-                text1.setFillColor(sf::Color::Transparent);
                 levels.ClearLevel();
                 obstacleBounds.clear();
-                resetPlayerPosition();
-                levels.levelLoadFunctions[1]();
                 mario.x = 0;
+                levels.levelLoadFunctions[1]();
+                text1.setFillColor(sf::Color::Transparent);
 
             }
         }
@@ -134,8 +138,4 @@ void Game::render() {
     window.draw(text1);
 
     window.display();
-}
-
-void Game::resetPlayerPosition() {
-    mario.getSprite().setPosition(10.0f, 500.f);
 }

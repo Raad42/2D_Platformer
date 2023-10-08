@@ -15,6 +15,10 @@
 int main() {
     sf::RenderWindow window(sf::VideoMode(1200, 800), "SFML Game");
 
+    // Set up the view
+    // sf::View view(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
+    // window.setView(view);
+
     // Create a Levels object
     Levels levels(window);
     levels.levelLoadFunctions[0]();

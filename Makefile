@@ -10,7 +10,8 @@ SRCS=Main.cpp \
 	Enemy.cpp \
 	GameStats.cpp \
 	Game.cpp \
-	BoundingBox.cpp
+	BoundingBox.cpp \
+
 
 LINK=-lsfml-graphics -lsfml-window -lsfml-system
 
