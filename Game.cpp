@@ -19,7 +19,7 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     text1.setFont(font);
     text1.setString("Press 'n' to progress");
     text1.setCharacterSize(50);
-    text1.setFillColor(sf::Color::Red);
+    text1.setFillColor(sf::Color::Transparent);
     text1.setStyle(sf::Text::Bold | sf::Text::Underlined);
     text1.setPosition(0.f, -100.f);
 
@@ -34,7 +34,7 @@ void Game::run() {
         update();
         render();
         // Update the view's position to follow the character
-        view.setCenter(mario.x + mario.getLocalBounds().width, window.getSize().y);
+        view.setCenter(mario.x + mario.getLocalBounds().width, 300);
         window.setView(view);
     }
 }
@@ -113,7 +113,7 @@ void Game::handleCollisions() {
             // std::cout << "Collision " << mario.get_health() << std::endl;
         }
         if (marioBounds.intersects(obstacleBounds[5])){
-            text1.setPosition(250.f, 250.f);
+            text1.setPosition(650.f, 250.f);
             text1.setFillColor(sf::Color::Red);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
                 levels.ClearLevel();
