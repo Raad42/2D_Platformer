@@ -177,6 +177,8 @@ void Player::collectPowerUp(PowerUp power_up) {
     // Implement power-up collection logic here.
 }
 
+
+
 bool Player::IsColliding(Entity* other) {
     if (1){
         return true;

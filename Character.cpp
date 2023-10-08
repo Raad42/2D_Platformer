@@ -1,4 +1,5 @@
 #include "Character.h"
+#include <iostream>
 
 Character::Character(int x, int y, int width, int height, int health, int damage, const std::string& name)
     : Entity(x, y, width, height) {

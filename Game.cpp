@@ -1,47 +1,40 @@
 #include "Game.h"
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
+#include "Levels.h"
 #include <iostream>
+#include <cmath>
 
-Game::Game(sf::RenderWindow& window) : window(window), 
-    mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window), 
-    brick1(400, 600, 64, 64, window),
-    brick2(400, 600, 64, 64, window),
-    brick3(600, 500, 64, 64, window),
-    brick4(600, 500, 64, 64, window),
-    spike1(400, 600, 64, 64, window, 10),   
+Game::Game(sf::RenderWindow& window, Levels& levels) 
+    : window(window), levels(levels),
+      mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
+      goomba(500, 300, 32, 32, 100, 10, "Goomba", "goomba_image.png"), 
+      boundingBoxMario(mario.getSprite()), isPaused(false) {
+
+    mario.set_texture("MarioIdle.png");
+
+    if (!font.loadFromFile("ClassicalDiary.ttf")) {
+        std::cout << "faield to load font" << std::endl;
+    }
     
-    boundingBoxMario(mario.getSprite()),
-    boundingBoxBrick1(brick1.getSprite()),
-    boundingBoxBrick2(brick2.getSprite()),
-    boundingBoxBrick3(brick3.getSprite()),
-    boundingBoxBrick4(brick4.getSprite()),
-    boundingBoxSpike1(spike1.getSprite()) {
+    pauseTriangle.setPrimitiveType(sf::Triangles);
+    pauseTriangle.resize(3);
+    pauseTriangle[0].position = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
+    pauseTriangle[1].position = sf::Vector2f(window.getSize().x / 2 - 20, window.getSize().y / 2 + 20);
+    pauseTriangle[2].position = sf::Vector2f(window.getSize().x / 2 + 20, window.getSize().y / 2 + 20);
+    for (int i = 0; i < 3; ++i) {
+        pauseTriangle[i].color = sf::Color::White;
+    }
 
+    text1.setFont(font);
+    text1.setString("Press 'n' to progress");
+    text1.setCharacterSize(50);
+    text1.setFillColor(sf::Color::Red);
+    text1.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    text1.setPosition(0.f, -100.f);
 
-    mario.set_texture("marioIdle.png");
-    brick1.set_texture("Bricks.png");
-    brick2.set_texture("Bricks.png");
-    brick3.set_texture("Bricks.png");
-    brick4.set_texture("Bricks.png");
-    spike1.set_texture("Thwomp.png");
 
     //mario.getSprite().setScale(5.f, 5.f);
-
-    //Testing with making top brick layer really thin
-    brick1.getSprite().setScale(0.4f, 0.20f);
-    brick1.getSprite().setPosition(400, 610);
-    brick2.getSprite().setScale(0.4f, 0.01f);
-    brick2.getSprite().setPosition(400, 605);
-
-    brick3.getSprite().setScale(0.4f, 0.1f);
-    brick3.getSprite().setPosition(600, 380);
-    
-    brick4.getSprite().setScale(0.4f, 0.1f);
-    brick4.getSprite().setPosition(600, 360);
-
-    spike1.getSprite().setScale(1.f, 1.f);
-    spike1.getSprite().setPosition(700, 700);
 }
 
 
@@ -59,105 +52,122 @@ void Game::handleInput() {
         if (event.type == sf::Event::Closed) {
             window.close();
         }
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P) {
+            isPaused = !isPaused; // Toggle the pause state
+        }
         // Handle other user input events here.
     }
 
-    // Handle input for player and other game entities.
-    mario.handleInput();
+    // Only handle input for the player if the game is not paused.
+    if (!isPaused) {
+        mario.handleInput();
+    }
 }
 
 void Game::update() {
-    // Update game logic here.
-    // Update player, enemies, power-ups, etc.
+    if (isPaused) {
+        return; // Do not update the game logic if it's paused
+    }
     mario.update();
+    if (goomba.alive()) { // Only update Goomba if it's alive
+        goomba.move();
+    }
 
     boundingBoxMario.update(mario.getSprite());
-    boundingBoxBrick1.update(brick1.getSprite());
-    boundingBoxBrick2.update(brick2.getSprite());
-    boundingBoxBrick3.update(brick3.getSprite());
-    boundingBoxBrick4.update(brick4.getSprite());
-    boundingBoxSpike1.update(spike1.getSprite());
+
+    levels.Update();
 
     handleCollisions();
-
-    // if (boundingBoxMario.intersects(boundingBoxBrick1)) {
-    //     mario.velocityY = 1;
-    // }
-
-    // if (mario.IsColliding(&brick1)) {
-    //     mario.OnCollision(&brick1);
-    // }
 }
+
 
 void Game::handleCollisions() {
     sf::FloatRect marioBounds = mario.getBoundingbox();
-    sf::FloatRect brick1Bounds = brick1.getBoundingbox();
-    sf::FloatRect brick2Bounds = brick2.getBoundingbox();
-    sf::FloatRect brick3Bounds = brick3.getBoundingbox();
-    sf::FloatRect brick4Bounds = brick4.getBoundingbox();
-    sf::FloatRect spike1Bounds = spike1.getBoundingbox();
 
-    // float marioTop = marioBounds.top;
-    // float marioBottom = marioBounds.width;
-    // float marioLeft = marioBounds.left;
-    // float marioRight = marioBounds.height;
-
-    // float brickTop = brickBounds.top;
-    // float brickBottom = brickBounds.width;
-    // float brickLeft = brickBounds.left;
-    // float brickRight = brickBounds.height;
-
-    // When he hits his head on the bottom
-    if (marioBounds.intersects(brick1Bounds)||marioBounds.intersects(brick3Bounds)) {
-        mario.velocityY = 2;
-    }
-    // When he lands on the brick
-    if (marioBounds.intersects(brick2Bounds)||marioBounds.intersects(brick4Bounds)) {
-        mario.isGrounded = true;
-        mario.isJumping = false;
-        float brickTopY;
-        
-        if (marioBounds.intersects(brick2Bounds)){
-            brickTopY = brick2Bounds.top+1;
+    // Check for collision with Goomba
+    if (marioBounds.intersects(goomba.getSprite().getGlobalBounds()) && goomba.alive()) {
+        mario.set_health(mario.get_health() - 10);  // Reduce Mario's health by 10, for example
+    goomba.setAlive(false);  // Set Goomba as defeated
         }
-        else{
-            brickTopY = brick4Bounds.top+1;
-        }
-        
-        // Set Mario's position to the top of the brick
-        mario.y = brickTopY - marioBounds.height;
-        mario.velocityY = -1; //Oppose gravity
+
+    // Access obstacles and their bounding boxes through levels
+    std::vector<Obstacle*>& obstacles = levels.getObstacles();
+    std::vector<BoundingBox*>& obstacleBoundingBoxes = levels.getBoundingBoxes();
+
+    // Calculate and add sf::FloatRect for each obstacle's bounding box
+    for (auto obstacle : obstacles) {
+        obstacleBounds.push_back(obstacle->getBoundingbox());
     }
 
-    //If mario collides with spike //Make mario death into player function
-   if (marioBounds.intersects(spike1Bounds)) {
-    int health = mario.get_health();
-    health -= spike1.get_damage();
-    mario.set_health(health);
-    mario.set_texture("MarioDeath.png");
 
-    std::cout << "Collision " << mario.get_health() << std::endl;
+    for (size_t i = 0; i < obstacles.size(); ++i) {
+        // When he hits his head on the bottom
+        if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])) {
+            mario.velocityY = 2;
+        }
+        // When he lands on the brick
+        if (marioBounds.intersects(obstacleBounds[1])||marioBounds.intersects(obstacleBounds[3])) {
+            mario.isGrounded = true;
+            mario.isJumping = false;
+            float brickTopY;
+        
+            if (marioBounds.intersects(obstacleBounds[1])){
+                brickTopY = obstacleBounds[1].top+1;
+            }
+            else{
+                brickTopY = obstacleBounds[3].top+1;
+            }
+        
+            // Set Mario's position to the top of the brick
+            mario.y = brickTopY - marioBounds.height;
+            mario.velocityY = -1; //Oppose gravity
+        }
+        //If mario collides with spike //Make mario death into player function
+        if (marioBounds.intersects(obstacleBounds[4])) {
+            int health = mario.get_health();
+            if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
+                // Access the get_damage function through the obstacle
+                int damage = dynamic_cast<DamagingObstacle*>(obstacles[4])->get_damage();
+                health -= damage;
+                mario.set_health(health);
+                mario.set_texture("MarioDeath.png");
+            }
+            // std::cout << "Collision " << mario.get_health() << std::endl;
+        }
+        if (marioBounds.intersects(obstacleBounds[5])){
+            text1.setPosition(250.f, 250.f);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+                text1.setFillColor(sf::Color::Transparent);
+                levels.ClearLevel();
+                obstacleBounds.clear();
+                resetPlayerPosition();
+                levels.levelLoadFunctions[1]();
+
+            }
+        }
+    }
 }
-
-}
-
 
 void Game::render() {
     window.clear();
     
     window.draw(mario.getSprite());
-    window.draw(brick1.getSprite());
-    window.draw(brick2.getSprite());
-    window.draw(brick3.getSprite());
-    window.draw(brick4.getSprite());
-    window.draw(spike1.getSprite());
-
+    if (goomba.alive()) { // Only draw Goomba if it's alive
+        goomba.draw(window);
+    }
     boundingBoxMario.draw(window);
-    boundingBoxBrick1.draw(window);
-    boundingBoxBrick2.draw(window);
-    boundingBoxBrick3.draw(window);
-    boundingBoxBrick4.draw(window);
-    boundingBoxSpike1.draw(window);
+
+    levels.Render(window);
+
+    window.draw(text1);
 
     window.display();
+    if (isPaused) {
+        window.draw(pauseTriangle);
+    }
+}
+
+
+void Game::resetPlayerPosition() {
+    mario.getSprite().setPosition(10.0f, 500.f);
 }

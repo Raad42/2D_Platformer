@@ -15,7 +15,7 @@ int Entity::get_x_position() {
     return this->x_position;
 }
 
-void Entity::set_x_position() {
+void Entity::set_x_position(int x_position) {
     this->x_position = x_position;
 }
 

@@ -21,7 +21,7 @@ public:
     virtual void OnCollision(Entity* other) = 0;
 
     int get_x_position();
-    void set_x_position();
+    void set_x_position(int x_position);
     int get_y_position();
     void set_y_position(int y_position);
     int get_width();
