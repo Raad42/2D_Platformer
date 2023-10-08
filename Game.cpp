@@ -104,6 +104,7 @@ void Game::handleCollisions() {
                 health -= damage;
                 mario.set_health(health);
                 mario.set_texture("MarioDeath.png");
+                mario.x = 0; 
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
         }
@@ -115,6 +116,7 @@ void Game::handleCollisions() {
                 obstacleBounds.clear();
                 resetPlayerPosition();
                 levels.levelLoadFunctions[1]();
+                mario.x = 0;
 
             }
         }
