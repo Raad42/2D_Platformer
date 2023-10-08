@@ -5,6 +5,7 @@ SRCS=Main.cpp \
 	Character.cpp \
 	Obstacle.cpp \
 	DamagingObstacle.cpp \
+	Levels.cpp \
 	Player.cpp \
 	Enemy.cpp \
 	GameStats.cpp \
