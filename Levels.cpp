@@ -103,7 +103,7 @@ void Levels::LoadLevel2() {
     spike1->getSprite().setScale(1.f, 1.f);
     spike1->getSprite().setPosition(400, 400);
 
-    flag->getSprite().setPosition(1000, 700);
+    flag->getSprite().setPosition(1000, 530);
 }
 
 void Levels::Update() {

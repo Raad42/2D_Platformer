@@ -98,6 +98,7 @@ void Game::handleCollisions() {
         //If mario collides with spike //Make mario death into player function
         if (marioBounds.intersects(obstacleBounds[4])) {
             int health = mario.get_health();
+            mario.x = 0;
             if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
                 // Access the get_damage function through the obstacle
                 int damage = dynamic_cast<DamagingObstacle*>(obstacles[4])->get_damage();
@@ -113,7 +114,7 @@ void Game::handleCollisions() {
                 text1.setFillColor(sf::Color::Transparent);
                 levels.ClearLevel();
                 obstacleBounds.clear();
-                resetPlayerPosition();
+                mario.x = 0;
                 levels.levelLoadFunctions[1]();
 
             }
@@ -132,8 +133,4 @@ void Game::render() {
     window.draw(text1);
 
     window.display();
-}
-
-void Game::resetPlayerPosition() {
-    mario.getSprite().setPosition(100.0f, 500.f);
 }

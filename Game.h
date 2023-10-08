@@ -32,9 +32,6 @@ public:
 
     void handleCollisions(); //  A separate function for collision handling
 
-    void resetPlayerPosition();
-
-
 
 };
 
