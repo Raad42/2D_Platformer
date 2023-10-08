@@ -11,7 +11,6 @@ SRCS=Main.cpp \
 	GameStats.cpp \
 	Game.cpp \
 	BoundingBox.cpp \
-	Levels.cpp
 
 
 LINK=-lsfml-graphics -lsfml-window -lsfml-system
