@@ -112,12 +112,14 @@ void Game::handleCollisions() {
         if (marioBounds.intersects(obstacleBounds[4])) {
             int health = mario.get_health();
             mario.x = 0;
+            gameStats.update_deaths();
             if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
                 // Access the get_damage function through the obstacle
                 int damage = dynamic_cast<DamagingObstacle*>(obstacles[4])->get_damage();
                 health -= damage;
                 mario.set_health(health);
                 mario.set_texture("MarioDeath.png");
+
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
         }
@@ -126,6 +128,7 @@ void Game::handleCollisions() {
             text1.setPosition(650.f, 250.f);
             text1.setFillColor(sf::Color::Red);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+                std::cout << "Deaths on level 1: " << gameStats.getDeaths() << std::endl;
                 levels.ClearLevel();
                 obstacleBounds.clear();
                 mario.x = 0;

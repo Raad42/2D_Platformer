@@ -22,6 +22,7 @@ private:
     std::vector<sf::FloatRect> obstacleBounds;
 
     Levels& levels;
+    GameStats gameStats;
 
 public:
     Game(sf::RenderWindow& window, Levels& levels);

@@ -21,6 +21,7 @@ Player::Player(int x, int y, int width, int height, float scale, int health, int
     isMovingRight = false;
     isJumping = false;
     isGrounded = true;
+
 }
 
 Player::Player()
@@ -176,18 +177,4 @@ void Player::update() {
 
 void Player::collectPowerUp(PowerUp power_up) {
     // Implement power-up collection logic here.
-}
-
-
-bool Player::IsColliding(Entity* other) {
-    if (1){
-        return true;
-    }
-    return false;
-}
-
-void Player::OnCollision(Entity* other) {
-    if (IsColliding(other)) {
-        velocityY = 0;
-    }
 }

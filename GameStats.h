@@ -8,13 +8,17 @@ public:
     void update_enemies_killed();
     void update_damage_taken(int damage);
     void update_damage_dealt(int damage);
+    void update_deaths();
     void update_high_score(int score);
+    int getKills();
+    int getDeaths();
 
 private:
     int enemies_killed;
     int damage_taken;
     int damage_dealt;
     int high_score;
+    int deaths;
 };
 
 
