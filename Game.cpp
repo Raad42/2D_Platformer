@@ -112,6 +112,7 @@ void Game::handleCollisions() {
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
         }
+        text1.setFillColor(sf::Color::Transparent);
         if (marioBounds.intersects(obstacleBounds[5])){
             text1.setPosition(650.f, 250.f);
             text1.setFillColor(sf::Color::Red);
@@ -120,8 +121,6 @@ void Game::handleCollisions() {
                 obstacleBounds.clear();
                 mario.x = 0;
                 levels.levelLoadFunctions[1]();
-                text1.setFillColor(sf::Color::Transparent);
-
             }
         }
     }
