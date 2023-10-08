@@ -10,6 +10,7 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     boundingBoxMario(mario.getSprite()) {
 
     mario.set_texture("MarioIdle.png");
+    mario.x = 0;
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {
         std::cout << "faield to load font" << std::endl;
@@ -32,6 +33,9 @@ void Game::run() {
         handleInput();
         update();
         render();
+        // Update the view's position to follow the character
+        view.setCenter(mario.x + mario.getLocalBounds().width, window.getSize().y);
+        window.setView(view);
     }
 }
 
@@ -110,12 +114,13 @@ void Game::handleCollisions() {
         }
         if (marioBounds.intersects(obstacleBounds[5])){
             text1.setPosition(250.f, 250.f);
+            text1.setFillColor(sf::Color::Red);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
-                text1.setFillColor(sf::Color::Transparent);
                 levels.ClearLevel();
                 obstacleBounds.clear();
                 mario.x = 0;
                 levels.levelLoadFunctions[1]();
+                text1.setFillColor(sf::Color::Transparent);
 
             }
         }
