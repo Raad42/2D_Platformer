@@ -8,10 +8,16 @@
 
 Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(levels),
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
-    boundingBoxMario(mario.getSprite()) {
-
+    boundingBoxMario(mario.getSprite()),
+    move1(700, 500, 64, 64, window, 0, 2),
+    boundingBoxMove1(move1.getSprite()) {
+    
+    move1.set_texture("Bricks.png");
     mario.set_texture("MarioIdle.png");
     mario.x = 0;
+
+    move1.getSprite().setScale(0.4f, 0.1f);
+    move1.getSprite().setPosition(640, 500);
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {
         std::cout << "faield to load font" << std::endl;
@@ -60,6 +66,9 @@ void Game::update() {
 
     boundingBoxMario.update(mario.getSprite());
 
+    move1.update();
+    boundingBoxMove1.update(move1.getSprite());
+
     levels.Update();
 
     handleCollisions();
@@ -67,6 +76,7 @@ void Game::update() {
 
 void Game::handleCollisions() {
     sf::FloatRect marioBounds = mario.getBoundingbox();
+    sf::FloatRect move1Bounds = move1.getBoundingbox();
 
     // Access obstacles and their bounding boxes through levels
     std::vector<Obstacle*>& obstacles = levels.getObstacles();
@@ -84,7 +94,7 @@ void Game::handleCollisions() {
             mario.velocityY = 2;
         }
         // When he lands on the brick
-        if (marioBounds.intersects(obstacleBounds[1])||marioBounds.intersects(obstacleBounds[3])||marioBounds.intersects(obstacleBounds[4])) {
+        if (marioBounds.intersects(obstacleBounds[1])||marioBounds.intersects(obstacleBounds[3])||marioBounds.intersects(move1Bounds)) {
             mario.isGrounded = true;
             mario.isJumping = false;
             float brickTopY;
@@ -93,10 +103,14 @@ void Game::handleCollisions() {
                 brickTopY = obstacleBounds[1].top+1;
             }
 
-            else if (marioBounds.intersects(obstacleBounds[4])){
-                brickTopY = obstacleBounds[4].top+1;
-                std::cout << " collison";
+            else if (marioBounds.intersects(move1Bounds)){
+                brickTopY = move1Bounds.top+1;
             }
+
+            //else if (marioBounds.intersects(obstacleBounds[4])){
+                //brickTopY = obstacleBounds[4].top+1;
+                //std::cout << " collison";
+            //}
 
             else{
                 brickTopY = obstacleBounds[3].top+1;
@@ -107,19 +121,19 @@ void Game::handleCollisions() {
             mario.velocityY = -1; //Oppose gravity
         }
         //If mario collides with spike //Make mario death into player function
-        if (marioBounds.intersects(obstacleBounds[5])) {
+        if (marioBounds.intersects(obstacleBounds[4])) {
             int health = mario.get_health();
             mario.x = 0;
-            if (dynamic_cast<DamagingObstacle*>(obstacles[5])) {
+            if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
                 // Access the get_damage function through the obstacle
-                int damage = dynamic_cast<DamagingObstacle*>(obstacles[5])->get_damage();
+                int damage = dynamic_cast<DamagingObstacle*>(obstacles[4])->get_damage();
                 health -= damage;
                 mario.set_health(health);
                 mario.set_texture("MarioDeath.png");
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
         }
-        if (marioBounds.intersects(obstacleBounds[6])){
+        if (marioBounds.intersects(obstacleBounds[5])){
             text1.setPosition(250.f, 250.f);
             text1.setFillColor(sf::Color::Red);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
@@ -139,6 +153,9 @@ void Game::render() {
     
     window.draw(mario.getSprite());
     boundingBoxMario.draw(window);
+
+    window.draw(move1.getSprite());
+    boundingBoxMove1.draw(window);
 
     levels.Render(window);
 

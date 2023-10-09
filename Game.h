@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
+#include "MovingObstacle.h"
 #include "BoundingBox.h"
 #include "Levels.h"
 
@@ -17,6 +18,9 @@ private:
 
     Player mario;
     BoundingBox boundingBoxMario;
+
+    MovingObstacle move1;
+    BoundingBox boundingBoxMove1; 
 
     std::vector<sf::FloatRect> obstacleBounds;
 
