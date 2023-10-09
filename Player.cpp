@@ -111,8 +111,8 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
         x = 0;
         velocityX = 0;  // Stop horizontal movement when the sprite hits the left border
     }
-    if (x + sprite.getLocalBounds().width * sprite.getScale().x > window.getSize().x) { // replace both window.getSize().x with levels.getGameWorldWidth()
-        x = window.getSize().x - sprite.getLocalBounds().width * sprite.getScale().x;
+    if (x + sprite.getLocalBounds().width * sprite.getScale().x > 12000) { // replace both window.getSize().x with levels.getGameWorldWidth()
+        x = 12000 - sprite.getLocalBounds().width * sprite.getScale().x;
         velocityX = 0;  // Stop horizontal movement when the sprite hits the right border
     }
     if (y < 0) {
