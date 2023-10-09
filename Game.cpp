@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
+#include "MovingObstacle.h"
 #include "Levels.h"
 #include <iostream>
 #include <cmath>
@@ -34,8 +35,8 @@ void Game::run() {
         update();
         render();
         // Update the view's position to follow the character
-        view.setCenter(mario.x + mario.getLocalBounds().width, window.getSize().y);
-        window.setView(view);
+        //view.setCenter(mario.x + mario.getLocalBounds().width, window.getSize().y);
+        //window.setView(view);
     }
 }
 
@@ -83,7 +84,7 @@ void Game::handleCollisions() {
             mario.velocityY = 2;
         }
         // When he lands on the brick
-        if (marioBounds.intersects(obstacleBounds[1])||marioBounds.intersects(obstacleBounds[3])) {
+        if (marioBounds.intersects(obstacleBounds[1])||marioBounds.intersects(obstacleBounds[3])||marioBounds.intersects(obstacleBounds[4])) {
             mario.isGrounded = true;
             mario.isJumping = false;
             float brickTopY;
@@ -91,6 +92,12 @@ void Game::handleCollisions() {
             if (marioBounds.intersects(obstacleBounds[1])){
                 brickTopY = obstacleBounds[1].top+1;
             }
+
+            else if (marioBounds.intersects(obstacleBounds[4])){
+                brickTopY = obstacleBounds[4].top+1;
+                std::cout << " collison";
+            }
+
             else{
                 brickTopY = obstacleBounds[3].top+1;
             }
@@ -100,19 +107,19 @@ void Game::handleCollisions() {
             mario.velocityY = -1; //Oppose gravity
         }
         //If mario collides with spike //Make mario death into player function
-        if (marioBounds.intersects(obstacleBounds[4])) {
+        if (marioBounds.intersects(obstacleBounds[5])) {
             int health = mario.get_health();
             mario.x = 0;
-            if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
+            if (dynamic_cast<DamagingObstacle*>(obstacles[5])) {
                 // Access the get_damage function through the obstacle
-                int damage = dynamic_cast<DamagingObstacle*>(obstacles[4])->get_damage();
+                int damage = dynamic_cast<DamagingObstacle*>(obstacles[5])->get_damage();
                 health -= damage;
                 mario.set_health(health);
                 mario.set_texture("MarioDeath.png");
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
         }
-        if (marioBounds.intersects(obstacleBounds[5])){
+        if (marioBounds.intersects(obstacleBounds[6])){
             text1.setPosition(250.f, 250.f);
             text1.setFillColor(sf::Color::Red);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {

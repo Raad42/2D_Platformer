@@ -6,6 +6,7 @@
 #include "Character.h"
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
+#include "MovingObstacle.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "PowerUp.h"

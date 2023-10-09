@@ -26,3 +26,7 @@ void Obstacle::OnCollision(Entity* other) {
     // Add collision response logic specific to the Player class here
     // For example, handle what happens when the player collides with 'other'.
 }
+
+void Obstacle::update(){
+
+}

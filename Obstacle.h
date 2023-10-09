@@ -12,6 +12,7 @@ public:
     Obstacle(int x, int y, int width, int height, sf::RenderWindow& window);
     ~Obstacle();
 
+    virtual void update();
     bool IsColliding(Entity* other) override;
     void OnCollision(Entity* other) override;
 };

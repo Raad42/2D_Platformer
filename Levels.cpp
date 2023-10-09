@@ -15,6 +15,7 @@ void Levels::LoadLevel1() {
     Obstacle* brick2 = new Obstacle(400, 600, 64, 64, window);
     Obstacle* brick3 = new Obstacle(600, 500, 64, 64, window);
     Obstacle* brick4 = new Obstacle(600, 500, 64, 64, window);
+    Obstacle* brick5 = new MovingObstacle(700, 500, 64, 64, window, 0, 2);
     Obstacle* spike1 = new DamagingObstacle(400, 600, 64, 64, window, 10);
     Obstacle* flag = new Obstacle(400, 600, 64, 64, window);
 
@@ -22,6 +23,7 @@ void Levels::LoadLevel1() {
     obstacles.push_back(brick2);
     obstacles.push_back(brick3);
     obstacles.push_back(brick4);
+    obstacles.push_back(brick5);
     obstacles.push_back(spike1);
     obstacles.push_back(flag);
 
@@ -34,6 +36,7 @@ void Levels::LoadLevel1() {
     brick2->set_texture("Bricks.png");
     brick3->set_texture("Bricks.png");
     brick4->set_texture("Bricks.png");
+    brick5->set_texture("Bricks.png");
     spike1->set_texture("Thwomp.png");
     flag->set_texture("pole.png");
 
@@ -49,6 +52,9 @@ void Levels::LoadLevel1() {
     
     brick4->getSprite().setScale(0.4f, 0.1f);
     brick4->getSprite().setPosition(600, 360);
+
+    brick5->getSprite().setScale(0.4f, 0.1f);
+    brick5->getSprite().setPosition(640, 500);
 
     spike1->getSprite().setScale(1.f, 1.f);
     spike1->getSprite().setPosition(700, 700);
@@ -100,6 +106,7 @@ void Levels::LoadLevel2() {
     brick4->getSprite().setScale(0.4f, 0.1f);
     brick4->getSprite().setPosition(400, 360);
 
+
     spike1->getSprite().setScale(1.f, 1.f);
     spike1->getSprite().setPosition(400, 400);
 
@@ -107,8 +114,10 @@ void Levels::LoadLevel2() {
 }
 
 void Levels::Update() {
+    
     // Update objects and handle game logic for this level
     for (size_t i = 0; i < obstacles.size(); ++i) {
+        obstacles[i]->update();
         BoundingBoxes[i]->update(obstacles[i]->getSprite());
     }
 }
