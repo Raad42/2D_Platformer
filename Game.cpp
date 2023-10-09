@@ -19,10 +19,16 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     text1.setFont(font);
     text1.setString("Press 'n' to progress");
     text1.setCharacterSize(50);
-    text1.setFillColor(sf::Color::Red);
+    text1.setFillColor(sf::Color::Transparent);
     text1.setStyle(sf::Text::Bold | sf::Text::Underlined);
     text1.setPosition(0.f, -100.f);
-
+    
+    text2.setFont(font);
+    text2.setString("PAUSED - Press P to unpause");
+    text2.setCharacterSize(50);
+    text2.setFillColor(sf::Color::Transparent);
+    text2.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    text2.setPosition(0.f, -100.f);
 
     //mario.getSprite().setScale(5.f, 5.f);
 }
@@ -33,10 +39,12 @@ void Game::run() {
         handleInput();
         update();
         render();
+        
         // Update the view's position to follow the character
-        view.setCenter(mario.x + mario.getLocalBounds().width, window.getSize().y);
+        view.setCenter(mario.x + mario.getLocalBounds().width, 300);
         window.setView(view);
-    }
+
+    } 
 }
 
 void Game::handleInput() {
@@ -63,6 +71,7 @@ void Game::update() {
 
     handleCollisions();
 }
+
 
 void Game::handleCollisions() {
     sf::FloatRect marioBounds = mario.getBoundingbox();
@@ -103,25 +112,27 @@ void Game::handleCollisions() {
         if (marioBounds.intersects(obstacleBounds[4])) {
             int health = mario.get_health();
             mario.x = 0;
+            gameStats.update_deaths();
             if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
                 // Access the get_damage function through the obstacle
                 int damage = dynamic_cast<DamagingObstacle*>(obstacles[4])->get_damage();
                 health -= damage;
                 mario.set_health(health);
                 mario.set_texture("MarioDeath.png");
+
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
         }
+        text1.setFillColor(sf::Color::Transparent);
         if (marioBounds.intersects(obstacleBounds[5])){
-            text1.setPosition(250.f, 250.f);
+            text1.setPosition(650.f, 250.f);
             text1.setFillColor(sf::Color::Red);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+                std::cout << "Deaths on level 1: " << gameStats.getDeaths() << std::endl;
                 levels.ClearLevel();
                 obstacleBounds.clear();
                 mario.x = 0;
                 levels.levelLoadFunctions[1]();
-                text1.setFillColor(sf::Color::Transparent);
-
             }
         }
     }
@@ -129,13 +140,15 @@ void Game::handleCollisions() {
 
 void Game::render() {
     window.clear();
-    
-    window.draw(mario.getSprite());
-    boundingBoxMario.draw(window);
 
     levels.Render(window);
 
+    window.draw(mario.getSprite());
+
+    boundingBoxMario.draw(window);
+
     window.draw(text1);
+    window.draw(text2);
 
     window.display();
 }

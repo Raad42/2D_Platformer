@@ -1,10 +1,12 @@
 #include "Levels.h"
+#include <iostream>
 
 Levels::Levels(sf::RenderWindow& window) : window(window) {
     // Populate the vector with level loading functions
     levelLoadFunctions.push_back(std::bind(&Levels::LoadLevel1, this));
     levelLoadFunctions.push_back(std::bind(&Levels::LoadLevel2, this));
     float gameWorldWidth = 0;
+
 }
 
 void Levels::LoadLevel1() {
@@ -54,6 +56,20 @@ void Levels::LoadLevel1() {
     spike1->getSprite().setPosition(700, 700);
 
     flag->getSprite().setPosition(1000, 530);
+
+    
+    if (!backgroundTexture.loadFromFile("pixelBackground.jpg")) {
+        std::cout << "Background load failed for level 1" << std::endl;
+    }
+
+
+    backgroundSprite.setTexture(backgroundTexture);
+    backgroundSprite.setScale(
+        static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
+        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y
+    );
+    backgroundSprite.setPosition(0, 0);
+
 }
 
 void Levels::LoadLevel2() {
@@ -104,6 +120,18 @@ void Levels::LoadLevel2() {
     spike1->getSprite().setPosition(400, 400);
 
     flag->getSprite().setPosition(1000, 530);
+
+    if (!backgroundTexture.loadFromFile("pixelBackground.jpg")) {
+        std::cout << "Background load failed for level 2" << std::endl;
+    }
+
+
+    backgroundSprite.setTexture(backgroundTexture);
+    backgroundSprite.setScale(
+        static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
+        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y
+    );
+    backgroundSprite.setPosition(-200, 100);
 }
 
 void Levels::Update() {
@@ -114,6 +142,7 @@ void Levels::Update() {
 }
 
 void Levels::Render(sf::RenderWindow& window) {
+    window.draw(backgroundSprite);
     // Draw obstacles and their bounding boxes
     for (size_t i = 0; i < obstacles.size(); ++i) {
         window.draw(obstacles[i]->getSprite()); // Draw the obstacle sprite

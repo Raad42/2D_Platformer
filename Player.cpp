@@ -2,6 +2,8 @@
 #include "PowerUp.h"
 #include "BoundingBox.h"
 #include "Entity.h"
+#include "Levels.h"
+
 
 Player::Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window)
     : Character(x, y, width, height, health, damage, name), scale(scale), window(window), boundingBox(sprite) {
@@ -19,6 +21,7 @@ Player::Player(int x, int y, int width, int height, float scale, int health, int
     isMovingRight = false;
     isJumping = false;
     isGrounded = true;
+
 }
 
 Player::Player()
@@ -86,7 +89,6 @@ void Player::handleInput() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
         attack();
     }
-
     // You can add more input handling here for other actions.
 
     // Update other player-specific input handling if needed.
@@ -109,8 +111,8 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
         x = 0;
         velocityX = 0;  // Stop horizontal movement when the sprite hits the left border
     }
-    if (x + sprite.getLocalBounds().width * sprite.getScale().x > window.getSize().x) {
-        x = window.getSize().x - sprite.getLocalBounds().width * sprite.getScale().x;
+    if (x + sprite.getLocalBounds().width * sprite.getScale().x > 12000) { // replace both window.getSize().x with levels.getGameWorldWidth()
+        x = 12000 - sprite.getLocalBounds().width * sprite.getScale().x;
         velocityX = 0;  // Stop horizontal movement when the sprite hits the right border
     }
     if (y < 0) {
@@ -175,19 +177,4 @@ void Player::update() {
 
 void Player::collectPowerUp(PowerUp power_up) {
     // Implement power-up collection logic here.
-}
-
-
-
-bool Player::IsColliding(Entity* other) {
-    if (1){
-        return true;
-    }
-    return false;
-}
-
-void Player::OnCollision(Entity* other) {
-    if (IsColliding(other)) {
-        velocityY = 0;
-    }
 }

@@ -14,6 +14,7 @@ private:
     sf::View view;
     sf::Font font;
     sf::Text text1;
+    sf::Text text2;
 
     Player mario;
     BoundingBox boundingBoxMario;
@@ -21,6 +22,7 @@ private:
     std::vector<sf::FloatRect> obstacleBounds;
 
     Levels& levels;
+    GameStats gameStats;
 
 public:
     Game(sf::RenderWindow& window, Levels& levels);
