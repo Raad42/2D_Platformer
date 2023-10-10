@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
+#include "PowerUpBlock.h"
 #include "Levels.h"
 #include <iostream>
 #include <cmath>
@@ -24,11 +25,11 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     text1.setPosition(0.f, -100.f);
     
     text2.setFont(font);
-    text2.setString("PAUSED - Press P to unpause");
+    text2.setString("Half way there!");
     text2.setCharacterSize(50);
-    text2.setFillColor(sf::Color::Transparent);
+    text2.setFillColor(sf::Color::Red);
     text2.setStyle(sf::Text::Bold | sf::Text::Underlined);
-    text2.setPosition(0.f, -100.f);
+    text2.setPosition(5000.f, 300.f);
 
     //mario.getSprite().setScale(5.f, 5.f);
 }
@@ -41,7 +42,7 @@ void Game::run() {
         render();
         
         // Update the view's position to follow the character
-        view.setCenter(mario.x + mario.getLocalBounds().width, 300);
+        view.setCenter(mario.x + mario.getLocalBounds().width, 325);
         window.setView(view);
 
     } 
@@ -87,6 +88,20 @@ void Game::handleCollisions() {
 
 
     for (size_t i = 0; i < obstacles.size(); ++i) {
+
+        // powerup Block
+        if (marioBounds.intersects(obstacleBounds[6]))
+            if (marioBounds.top > (obstacleBounds[6].width)) {
+                mario.velocityY = 4;
+                int health = dynamic_cast<PowerUpBlock*>(obstacles[6])->get_health();
+                health = health - 10;
+                if (health <= 0) {
+                    dynamic_cast<PowerUpBlock*>(obstacles[6])->dropPowerUp();
+                    // delete obstacleBoundingBoxes[6];
+                }
+
+            }
+
         // When he hits his head on the bottom
         if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])) {
             mario.velocityY = 2;
@@ -125,7 +140,7 @@ void Game::handleCollisions() {
         }
         text1.setFillColor(sf::Color::Transparent);
         if (marioBounds.intersects(obstacleBounds[5])){
-            text1.setPosition(650.f, 250.f);
+            text1.setPosition(9800.f, 250.f);
             text1.setFillColor(sf::Color::Red);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
                 std::cout << "Deaths on level 1: " << gameStats.getDeaths() << std::endl;

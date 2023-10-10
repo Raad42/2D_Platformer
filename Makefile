@@ -11,6 +11,7 @@ SRCS=Main.cpp \
 	GameStats.cpp \
 	Game.cpp \
 	BoundingBox.cpp \
+	PowerUpBlock.cpp \
 
 
 LINK=-lsfml-graphics -lsfml-window -lsfml-system

@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "PowerUp.h"
+#include "PowerUpBlock.h"
 #include "GameStats.h"
 #include "BoundingBox.h"
 
