@@ -5,12 +5,12 @@
 
 #include <string>
 
-class PowerUp {
+class PowerUp:public Player {
 private:
     
 
 public:
-
+    
 };
 
 
