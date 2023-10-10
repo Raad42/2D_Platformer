@@ -55,24 +55,24 @@ void Levels::LoadLevel1() {
     spike1->getSprite().setScale(1.f, 1.f);
     spike1->getSprite().setPosition(700, 700);
 
-    flag->getSprite().setPosition(1000, 530);
+    flag->getSprite().setPosition(9900, 530);
 
     
-    if (!backgroundTexture.loadFromFile("pixelBackground.jpg")) {
+    if (!backgroundTexture.loadFromFile("level1BG.png")) {
         std::cout << "Background load failed for level 1" << std::endl;
     }
 
 
     backgroundSprite.setTexture(backgroundTexture);
 
-    backgroundSprite.setPosition(-300, 20);
+    backgroundSprite.setPosition(-500, -200);
 
 }
 
 void Levels::LoadLevel2() {
 
     // create game size
-    float gameWorldWidth = 12000;
+    float gameWorldWidth = 10000;
 
     Obstacle* brick1 = new Obstacle(400, 600, 64, 64, window);
     Obstacle* brick2 = new Obstacle(400, 600, 64, 64, window);
@@ -118,17 +118,14 @@ void Levels::LoadLevel2() {
 
     flag->getSprite().setPosition(1000, 530);
 
-    if (!backgroundTexture.loadFromFile("pixelBackground.jpg")) {
+    if (!backgroundTexture.loadFromFile("Level2BG.png")) {
         std::cout << "Background load failed for level 2" << std::endl;
     }
 
 
     backgroundSprite.setTexture(backgroundTexture);
-    backgroundSprite.setScale(
-        static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
-        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y
-    );
-    backgroundSprite.setPosition(-200, 100);
+
+    backgroundSprite.setPosition(-500, -200);
 }
 
 void Levels::Update() {

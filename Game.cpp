@@ -24,11 +24,11 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     text1.setPosition(0.f, -100.f);
     
     text2.setFont(font);
-    text2.setString("PAUSED - Press P to unpause");
+    text2.setString("Half way there!");
     text2.setCharacterSize(50);
-    text2.setFillColor(sf::Color::Transparent);
+    text2.setFillColor(sf::Color::Red);
     text2.setStyle(sf::Text::Bold | sf::Text::Underlined);
-    text2.setPosition(0.f, -100.f);
+    text2.setPosition(5000.f, 300.f);
 
     //mario.getSprite().setScale(5.f, 5.f);
 }
@@ -125,7 +125,7 @@ void Game::handleCollisions() {
         }
         text1.setFillColor(sf::Color::Transparent);
         if (marioBounds.intersects(obstacleBounds[5])){
-            text1.setPosition(650.f, 250.f);
+            text1.setPosition(9800.f, 250.f);
             text1.setFillColor(sf::Color::Red);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
                 std::cout << "Deaths on level 1: " << gameStats.getDeaths() << std::endl;

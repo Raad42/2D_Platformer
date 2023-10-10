@@ -6,12 +6,8 @@ PowerUpBlock::PowerUpBlock(int x, int y, int width, int height, sf::RenderWindow
 }
 
 void PowerUpBlock::onCollision(Player& player) {
-    // Custom behavior for power-up block collision with the player.
-    // Implement power-up behavior here.
 }
 
 void PowerUpBlock::dropPowerUp(){
-    if (health <= 0){
-        sprite.setPosition(0.f, -1000.f);
-    }
+    sprite.setPosition(0.f, -1000.f);
 }
