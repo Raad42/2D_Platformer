@@ -1,8 +1,8 @@
 #include "MovingObstacle.h"
 #include <SFML/Graphics.hpp>
 
-MovingObstacle::MovingObstacle(int x, int y, int width, int height, sf::RenderWindow& window, float velocityXIn, float velocityYIn)
-    : Obstacle(x, y, width, height, window), velocityX(velocityXIn), velocityY(velocityYIn){
+MovingObstacle::MovingObstacle(int x, int y, int width, int height, sf::RenderWindow& window, float velocityXIn, float velocityYIn, float maxPosition, float minPosition)
+    : Obstacle(x, y, width, height, window), velocityX(velocityXIn), velocityY(velocityYIn), maxPosition(maxPosition), minPosition(minPosition){
         moveUp = true;
     // Initialize moving obstacle-specific members here.
 }
@@ -10,7 +10,7 @@ MovingObstacle::MovingObstacle(int x, int y, int width, int height, sf::RenderWi
 void MovingObstacle::update() {
     if (moveUp) {
         // Move up until a certain point is reached (e.g., y < 100)
-        if (get_y_position() > 100) {
+        if (get_y_position() > maxPosition) {
             set_x_position(get_x_position() - velocityX); 
             set_y_position(get_y_position() - velocityY);
         } else {
@@ -19,7 +19,7 @@ void MovingObstacle::update() {
         }
     } else {
         // Move down until another point is reached (e.g., y > 800)
-        if (get_y_position() < 800) {
+        if (get_y_position() < minPosition) {
             set_x_position(get_x_position() + velocityX); 
             set_y_position(get_y_position() + velocityY);
         } else {

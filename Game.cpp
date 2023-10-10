@@ -9,20 +9,21 @@
 Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(levels),
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
     boundingBoxMario(mario.getSprite()),
-    move1(700, 500, 64, 64, window, 0, 2),
+    move1(700, 500, 64, 64, window, 0, 2, 90, 600),
     boundingBoxMove1(move1.getSprite()),
-    move2(700, 500, 64, 64, window, 0, 2), 
+    move2(700, 500, 64, 64, window, 0, 0, 100, 800), 
     boundingBoxMove2(move2.getSprite()) {
     
     move1.set_texture("Bricks.png");
+    move2.set_texture("Bricks.png");
     mario.set_texture("MarioIdle.png");
     mario.x = 0;
 
     move1.getSprite().setScale(0.4f, 0.01f);
-    move1.getSprite().setPosition(640, 505);
+    move1.getSprite().setPosition(640, 515);
 
-    move2.getSprite().setScale(0.4f, 0.2f);
-    move2.getSprite().setPosition(640, 510);
+    move2.getSprite().setScale(0.4f, 0.20f);
+    move2.getSprite().setPosition(640, 520);
 
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {
@@ -75,6 +76,9 @@ void Game::update() {
     move1.update();
     boundingBoxMove1.update(move1.getSprite());
 
+    move2.update();
+    boundingBoxMove2.update(move2.getSprite());
+
     levels.Update();
 
     handleCollisions();
@@ -96,9 +100,16 @@ void Game::handleCollisions() {
 
 
     for (size_t i = 0; i < obstacles.size(); ++i) {
+        float brickTopY2; 
         // When he hits his head on the bottom
         if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])||marioBounds.intersects(move2Bounds)) {
             mario.velocityY = 2;
+        }
+
+        if (move1Bounds.intersects(move2Bounds)){
+            brickTopY2 = move1Bounds.top;
+            move2.set_y_position(brickTopY2);
+
         }
         // When he lands on the brick
         if (marioBounds.intersects(obstacleBounds[1])||marioBounds.intersects(obstacleBounds[3])||marioBounds.intersects(move1Bounds)) {
@@ -112,6 +123,7 @@ void Game::handleCollisions() {
 
             else if (marioBounds.intersects(move1Bounds)){
                 brickTopY = move1Bounds.top+1;
+                
             }
 
             //else if (marioBounds.intersects(obstacleBounds[4])){
