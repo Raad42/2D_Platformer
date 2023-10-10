@@ -10,7 +10,7 @@ MovingObstacle::MovingObstacle(int x, int y, int width, int height, sf::RenderWi
 void MovingObstacle::update() {
     if (moveUp) {
         // Move up until a certain point is reached (e.g., y < 100)
-        if (get_y_position() > maxPosition) {
+        if ((get_y_position() > maxPosition && velocityX == 0) || (get_x_position() > maxPosition && velocityY == 0)) {
             set_x_position(get_x_position() - velocityX); 
             set_y_position(get_y_position() - velocityY);
         } else {
@@ -19,7 +19,7 @@ void MovingObstacle::update() {
         }
     } else {
         // Move down until another point is reached (e.g., y > 800)
-        if (get_y_position() < minPosition) {
+        if ((get_y_position() < minPosition && velocityX == 0) || (get_x_position() < minPosition && velocityY == 0)) {
             set_x_position(get_x_position() + velocityX); 
             set_y_position(get_y_position() + velocityY);
         } else {

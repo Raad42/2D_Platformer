@@ -9,7 +9,7 @@
 Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(levels),
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
     boundingBoxMario(mario.getSprite()),
-    move1(700, 500, 64, 64, window, 0, 2, 90, 600),
+    move1(700, 500, 64, 64, window, 2, 0, 90, 600),
     boundingBoxMove1(move1.getSprite()),
     move2(700, 500, 64, 64, window, 0, 0, 100, 800), 
     boundingBoxMove2(move2.getSprite()) {
@@ -100,15 +100,15 @@ void Game::handleCollisions() {
 
 
     for (size_t i = 0; i < obstacles.size(); ++i) {
-        float brickTopY2; 
+        float brickTopX2; 
         // When he hits his head on the bottom
         if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])||marioBounds.intersects(move2Bounds)) {
             mario.velocityY = 2;
         }
 
         if (move1Bounds.intersects(move2Bounds)){
-            brickTopY2 = move1Bounds.top;
-            move2.set_y_position(brickTopY2);
+            brickTopX2 = move1Bounds.top;
+            move2.set_x_position(move1.get_x_position());
 
         }
         // When he lands on the brick
