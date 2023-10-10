@@ -10,14 +10,20 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
     boundingBoxMario(mario.getSprite()),
     move1(700, 500, 64, 64, window, 0, 2),
-    boundingBoxMove1(move1.getSprite()) {
+    boundingBoxMove1(move1.getSprite()),
+    move2(700, 500, 64, 64, window, 0, 2), 
+    boundingBoxMove2(move2.getSprite()) {
     
     move1.set_texture("Bricks.png");
     mario.set_texture("MarioIdle.png");
     mario.x = 0;
 
-    move1.getSprite().setScale(0.4f, 0.1f);
-    move1.getSprite().setPosition(640, 500);
+    move1.getSprite().setScale(0.4f, 0.01f);
+    move1.getSprite().setPosition(640, 505);
+
+    move2.getSprite().setScale(0.4f, 0.2f);
+    move2.getSprite().setPosition(640, 510);
+
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {
         std::cout << "faield to load font" << std::endl;
@@ -77,6 +83,7 @@ void Game::update() {
 void Game::handleCollisions() {
     sf::FloatRect marioBounds = mario.getBoundingbox();
     sf::FloatRect move1Bounds = move1.getBoundingbox();
+    sf::FloatRect move2Bounds = move2.getBoundingbox();
 
     // Access obstacles and their bounding boxes through levels
     std::vector<Obstacle*>& obstacles = levels.getObstacles();
@@ -90,7 +97,7 @@ void Game::handleCollisions() {
 
     for (size_t i = 0; i < obstacles.size(); ++i) {
         // When he hits his head on the bottom
-        if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])) {
+        if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])||marioBounds.intersects(move2Bounds)) {
             mario.velocityY = 2;
         }
         // When he lands on the brick
@@ -156,6 +163,9 @@ void Game::render() {
 
     window.draw(move1.getSprite());
     boundingBoxMove1.draw(window);
+
+    window.draw(move2.getSprite());
+    boundingBoxMove2.draw(window);
 
     levels.Render(window);
 

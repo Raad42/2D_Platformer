@@ -22,6 +22,9 @@ private:
     MovingObstacle move1;
     BoundingBox boundingBoxMove1; 
 
+    MovingObstacle move2;
+    BoundingBox boundingBoxMove2; 
+
     std::vector<sf::FloatRect> obstacleBounds;
 
     Levels& levels;
