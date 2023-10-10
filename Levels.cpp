@@ -64,11 +64,8 @@ void Levels::LoadLevel1() {
 
 
     backgroundSprite.setTexture(backgroundTexture);
-    backgroundSprite.setScale(
-        static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
-        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y
-    );
-    backgroundSprite.setPosition(0, 0);
+
+    backgroundSprite.setPosition(-300, 20);
 
 }
 

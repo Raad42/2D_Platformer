@@ -41,7 +41,7 @@ void Game::run() {
         render();
         
         // Update the view's position to follow the character
-        view.setCenter(mario.x + mario.getLocalBounds().width, 300);
+        view.setCenter(mario.x + mario.getLocalBounds().width, 325);
         window.setView(view);
 
     } 
