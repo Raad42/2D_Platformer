@@ -19,6 +19,8 @@ void Levels::LoadLevel1() {
     Obstacle* brick4 = new Obstacle(600, 500, 64, 64, window);
     Obstacle* spike1 = new DamagingObstacle(400, 600, 64, 64, window, 10);
     Obstacle* flag = new Obstacle(400, 600, 64, 64, window);
+    Obstacle* powerUpBlock = new PowerUpBlock(400, 600, 64, 64, window, 99);
+
 
     obstacles.push_back(brick1);
     obstacles.push_back(brick2);
@@ -26,6 +28,7 @@ void Levels::LoadLevel1() {
     obstacles.push_back(brick4);
     obstacles.push_back(spike1);
     obstacles.push_back(flag);
+    obstacles.push_back(powerUpBlock);
 
     // Create BoundingBox objects for each obstacle and add them to BoundingBoxes vector
     for (auto obstacle : obstacles) {
@@ -38,6 +41,7 @@ void Levels::LoadLevel1() {
     brick4->set_texture("Bricks.png");
     spike1->set_texture("Thwomp.png");
     flag->set_texture("pole.png");
+    powerUpBlock->set_texture("QuestionBlock.png");
 
     //Testing with making top brick layer really thin
     brick1->getSprite().setScale(0.4f, 0.20f);
@@ -56,6 +60,9 @@ void Levels::LoadLevel1() {
     spike1->getSprite().setPosition(700, 700);
 
     flag->getSprite().setPosition(9900, 530);
+    
+    powerUpBlock->getSprite().setScale(3.0f, 3.0f);
+    powerUpBlock->getSprite().setPosition(1000, 600);
 
     
     if (!backgroundTexture.loadFromFile("level1BG.png")) {

@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
+#include "PowerUpBlock.h"
 #include "Levels.h"
 #include <iostream>
 #include <cmath>
@@ -87,6 +88,20 @@ void Game::handleCollisions() {
 
 
     for (size_t i = 0; i < obstacles.size(); ++i) {
+
+        // powerup Block
+        if (marioBounds.intersects(obstacleBounds[6]))
+            if (marioBounds.top > (obstacleBounds[6].width)) {
+                mario.velocityY = 4;
+                int health = dynamic_cast<PowerUpBlock*>(obstacles[6])->get_health();
+                health = health - 10;
+                if (health <= 0) {
+                    dynamic_cast<PowerUpBlock*>(obstacles[6])->dropPowerUp();
+                    // delete obstacleBoundingBoxes[6];
+                }
+
+            }
+
         // When he hits his head on the bottom
         if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])) {
             mario.velocityY = 2;
