@@ -76,16 +76,25 @@ void Game::update() {
 
 void Game::handleCollisions() {
     sf::FloatRect marioBounds = mario.getBoundingbox();
+    MovingObstacle** movingObstacles = levels.getmovingObstacles();
+    sf::FloatRect movingObstacleBounds1 = movingObstacles[0]->getBoundingbox();
+    sf::FloatRect movingObstacleBounds2 = movingObstacles[1]->getBoundingbox();
+    float movingX; 
 
     // Access obstacles and their bounding boxes through levels
     std::vector<Obstacle*>& obstacles = levels.getObstacles();
     std::vector<BoundingBox*>& obstacleBoundingBoxes = levels.getBoundingBoxes();
+
+
 
     // Calculate and add sf::FloatRect for each obstacle's bounding box
     for (auto obstacle : obstacles) {
         obstacleBounds.push_back(obstacle->getBoundingbox());
     }
 
+    if (movingObstacleBounds1.intersects(movingObstacleBounds2)){
+        movingObstacles[1]->set_x_position(movingObstacles[0]->get_x_position());
+    }
 
     for (size_t i = 0; i < obstacles.size(); ++i) {
 
@@ -103,17 +112,21 @@ void Game::handleCollisions() {
             }
 
         // When he hits his head on the bottom
-        if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])) {
+        if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])||marioBounds.intersects(movingObstacleBounds2)) {
             mario.velocityY = 2;
         }
         // When he lands on the brick
-        if (marioBounds.intersects(obstacleBounds[1])||marioBounds.intersects(obstacleBounds[3])) {
+        if (marioBounds.intersects(obstacleBounds[1])||marioBounds.intersects(obstacleBounds[3])||marioBounds.intersects(movingObstacleBounds1)) {
             mario.isGrounded = true;
             mario.isJumping = false;
             float brickTopY;
         
             if (marioBounds.intersects(obstacleBounds[1])){
                 brickTopY = obstacleBounds[1].top+1;
+            }
+
+            else  if (marioBounds.intersects(movingObstacleBounds1)){
+                brickTopY = movingObstacleBounds1.top+1;
             }
             else{
                 brickTopY = obstacleBounds[3].top+1;

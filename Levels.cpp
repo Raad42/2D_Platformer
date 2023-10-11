@@ -1,4 +1,5 @@
 #include "Levels.h"
+#include "MovingObstacle.h"
 #include <iostream>
 
 Levels::Levels(sf::RenderWindow& window) : window(window) {
@@ -7,7 +8,11 @@ Levels::Levels(sf::RenderWindow& window) : window(window) {
     levelLoadFunctions.push_back(std::bind(&Levels::LoadLevel2, this));
     float gameWorldWidth = 0;
 
+    movingObstacles = nullptr; // Initialize the movingObstacles pointer
+    movingObstacleBoundingbox = nullptr; // Initialize the movingObstacleBoundingbox pointer
 }
+
+
 
 void Levels::LoadLevel1() {
 
@@ -21,6 +26,13 @@ void Levels::LoadLevel1() {
     Obstacle* flag = new Obstacle(400, 600, 64, 64, window);
     Obstacle* powerUpBlock = new PowerUpBlock(400, 600, 64, 64, window, 99);
 
+    movingObstacles = new MovingObstacle*[2];
+    movingObstacles[0] = new MovingObstacle(700, 500, 64, 64, window, 2, 0, 90, 600);
+    movingObstacles[1] = new MovingObstacle(700, 500, 64, 64, window, 0, 0, 100, 800);
+
+    movingObstacleBoundingbox = new BoundingBox*[2];
+    movingObstacleBoundingbox[0] = new BoundingBox(movingObstacles[0]->getSprite());
+    movingObstacleBoundingbox[1] = new BoundingBox(movingObstacles[1]->getSprite());
 
     obstacles.push_back(brick1);
     obstacles.push_back(brick2);
@@ -39,6 +51,9 @@ void Levels::LoadLevel1() {
     brick2->set_texture("Bricks.png");
     brick3->set_texture("Bricks.png");
     brick4->set_texture("Bricks.png");
+    movingObstacles[0]->set_texture("Bricks.png");
+    movingObstacles[1]->set_texture("Bricks.png");
+
     spike1->set_texture("Thwomp.png");
     flag->set_texture("pole.png");
     powerUpBlock->set_texture("QuestionBlock.png");
@@ -50,11 +65,17 @@ void Levels::LoadLevel1() {
     brick2->getSprite().setScale(0.4f, 0.01f);
     brick2->getSprite().setPosition(400, 605);
 
-    brick3->getSprite().setScale(0.4f, 0.1f);
+    brick3->getSprite().setScale(0.4f, 0.20f);
     brick3->getSprite().setPosition(600, 380);
     
-    brick4->getSprite().setScale(0.4f, 0.1f);
-    brick4->getSprite().setPosition(600, 360);
+    brick4->getSprite().setScale(0.4f, 0.01f);
+    brick4->getSprite().setPosition(600, 375);
+
+    movingObstacles[0]->getSprite().setPosition(640, 515);
+    movingObstacles[0]->getSprite().setScale(0.4f, 0.01f);
+    
+    movingObstacles[1]->getSprite().setScale(0.4f, 0.20f);
+    movingObstacles[1]->getSprite().setPosition(640, 520);
 
     spike1->getSprite().setScale(1.f, 1.f);
     spike1->getSprite().setPosition(700, 700);
@@ -140,6 +161,11 @@ void Levels::Update() {
     for (size_t i = 0; i < obstacles.size(); ++i) {
         BoundingBoxes[i]->update(obstacles[i]->getSprite());
     }
+
+    for (int i = 0; i < 2; i++){
+        movingObstacles[i]->update();
+        movingObstacleBoundingbox[i]->update(movingObstacles[i]->getSprite());
+    }
 }
 
 void Levels::Render(sf::RenderWindow& window) {
@@ -151,6 +177,11 @@ void Levels::Render(sf::RenderWindow& window) {
         // Draw the bounding box using your BoundingBox class
         BoundingBoxes[i]->draw(window);
     }
+
+    for (int i = 0; i < 2; i++){
+        window.draw(movingObstacles[i]->getSprite());
+        movingObstacleBoundingbox[i]->draw(window);
+    }
 }
 
 Levels::~Levels(){
@@ -159,6 +190,11 @@ Levels::~Levels(){
     }
     for (auto boundingBox : BoundingBoxes) {
         delete boundingBox;
+    }
+
+    for (int i = 0; i < 2; i++){
+        delete movingObstacles[i];
+        delete movingObstacleBoundingbox[i];
     }
 }
 

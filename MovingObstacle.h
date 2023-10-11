@@ -16,7 +16,7 @@ private:
     // Add moving obstacle-specific members here.
 public:
     MovingObstacle(int x, int y, int width, int height, sf::RenderWindow& window, float velocityXIn, float velocityYIn, float maxPosition, float minPosition);
-    void update() override;
+    void update();
     // Additional attributes and methods for moving obstacles.
 };
 

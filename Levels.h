@@ -6,6 +6,7 @@
 #include "Character.h"
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
+#include "MovingObstacle.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "PowerUp.h"
@@ -19,6 +20,9 @@ private:
 
     std::vector<Obstacle*> obstacles;
     std::vector<BoundingBox*> BoundingBoxes;
+
+    MovingObstacle** movingObstacles;
+    BoundingBox**  movingObstacleBoundingbox;
 
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
@@ -46,6 +50,8 @@ public:
 
     std::vector<Obstacle*>& getObstacles() { return obstacles; }
     std::vector<BoundingBox*>& getBoundingBoxes() { return BoundingBoxes; }
+    MovingObstacle** getmovingObstacles() { return movingObstacles; }
+
 
     float getGameWorldWidth();
     
