@@ -6,7 +6,6 @@ Levels::Levels(sf::RenderWindow& window) : window(window) {
     // Populate the vector with level loading functions
     levelLoadFunctions.push_back(std::bind(&Levels::LoadLevel1, this));
     levelLoadFunctions.push_back(std::bind(&Levels::LoadLevel2, this));
-    float gameWorldWidth = 0;
 
     movingObstacles = nullptr; // Initialize the movingObstacles pointer
     movingObstacleBoundingbox = nullptr; // Initialize the movingObstacleBoundingbox pointer
@@ -15,8 +14,6 @@ Levels::Levels(sf::RenderWindow& window) : window(window) {
 
 
 void Levels::LoadLevel1() {
-
-    float gameWorldWidth = 12000;
 
     Obstacle* brick1 = new Obstacle(400, 600, 64, 64, window);
     Obstacle* brick2 = new Obstacle(400, 600, 64, 64, window);
@@ -80,7 +77,7 @@ void Levels::LoadLevel1() {
     spike1->getSprite().setScale(1.f, 1.f);
     spike1->getSprite().setPosition(700, 700);
 
-    flag->getSprite().setPosition(9900, 530);
+    flag->getSprite().setPosition(1000, 530);
     
     powerUpBlock->getSprite().setScale(3.0f, 3.0f);
     powerUpBlock->getSprite().setPosition(1000, 600);
@@ -98,9 +95,6 @@ void Levels::LoadLevel1() {
 }
 
 void Levels::LoadLevel2() {
-
-    // create game size
-    float gameWorldWidth = 10000;
 
     Obstacle* brick1 = new Obstacle(400, 600, 64, 64, window);
     Obstacle* brick2 = new Obstacle(400, 600, 64, 64, window);
@@ -156,6 +150,62 @@ void Levels::LoadLevel2() {
     backgroundSprite.setPosition(-500, -200);
 }
 
+void Levels::LoadLevel3() {
+
+    Obstacle* brick1 = new Obstacle(400, 600, 64, 64, window);
+    Obstacle* brick2 = new Obstacle(400, 600, 64, 64, window);
+    Obstacle* brick3 = new Obstacle(600, 500, 64, 64, window);
+    Obstacle* brick4 = new Obstacle(600, 500, 64, 64, window);
+    Obstacle* spike1 = new DamagingObstacle(400, 600, 64, 64, window, 10);
+    Obstacle* flag = new Obstacle(400, 600, 64, 64, window);
+
+    obstacles.push_back(brick1);
+    obstacles.push_back(brick2);
+    obstacles.push_back(brick3);
+    obstacles.push_back(brick4);
+    obstacles.push_back(spike1);
+    obstacles.push_back(flag);
+
+    // Create BoundingBox objects for each obstacle and add them to BoundingBoxes vector
+    for (auto obstacle : obstacles) {
+        BoundingBoxes.push_back(new BoundingBox(obstacle->getSprite()));
+    }
+    
+    brick1->set_texture("Bricks.png");
+    brick2->set_texture("Bricks.png");
+    brick3->set_texture("Bricks.png");
+    brick4->set_texture("Bricks.png");
+    spike1->set_texture("Thwomp.png");
+    flag->set_texture("pole.png");
+
+    //Testing with making top brick layer really thin
+    brick1->getSprite().setScale(0.4f, 0.20f);
+    brick1->getSprite().setPosition(200, 610);
+    
+    brick2->getSprite().setScale(0.4f, 0.01f);
+    brick2->getSprite().setPosition(200, 605);
+
+    brick3->getSprite().setScale(0.4f, 0.1f);
+    brick3->getSprite().setPosition(400, 380);
+    
+    brick4->getSprite().setScale(0.4f, 0.1f);
+    brick4->getSprite().setPosition(400, 360);
+
+    spike1->getSprite().setScale(1.f, 1.f);
+    spike1->getSprite().setPosition(400, 400);
+
+    flag->getSprite().setPosition(9900, 230);
+
+    if (!backgroundTexture.loadFromFile("Level3BG.png")) {
+        std::cout << "Background load failed for level 3" << std::endl;
+    }
+
+
+    backgroundSprite.setTexture(backgroundTexture);
+
+    backgroundSprite.setPosition(-500, -200);
+}
+
 void Levels::Update() {
     // Update objects and handle game logic for this level
     for (size_t i = 0; i < obstacles.size(); ++i) {
@@ -196,10 +246,6 @@ Levels::~Levels(){
         delete movingObstacles[i];
         delete movingObstacleBoundingbox[i];
     }
-}
-
-float Levels::getGameWorldWidth(){
-    return gameWorldWidth;
 }
 
 void Levels::ClearLevel() {

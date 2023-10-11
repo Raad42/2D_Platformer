@@ -27,10 +27,6 @@ private:
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
 
-
-    // game world size (levels might have different sizes)
-    float gameWorldWidth;
-
 public:
     Levels(sf::RenderWindow& window);
     ~Levels();
@@ -38,8 +34,6 @@ public:
     void LoadLevel1();
     void LoadLevel2();
     void LoadLevel3();
-    void LoadLevel4();
-    void LoadLevel5();
 
     void ClearLevel();
 
@@ -51,10 +45,7 @@ public:
     std::vector<Obstacle*>& getObstacles() { return obstacles; }
     std::vector<BoundingBox*>& getBoundingBoxes() { return BoundingBoxes; }
     MovingObstacle** getmovingObstacles() { return movingObstacles; }
-
-
-    float getGameWorldWidth();
-    
+        
 };
 
 

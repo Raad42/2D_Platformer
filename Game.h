@@ -18,6 +18,8 @@ private:
 
     bool powerUpCollected[5];
 
+    bool levelCheck;
+
     Player mario;
     BoundingBox boundingBoxMario;
 
