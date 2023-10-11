@@ -1,4 +1,7 @@
 #include "Levels.h"
+#include <vector>
+#include <function> 
+#include <iostream>
 
 Levels::Levels(sf::RenderWindow& window) : window(window) {
     // Populate the vector with level loading functions

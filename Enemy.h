@@ -2,7 +2,7 @@
 #define ENEMY_H
 
 #include <string>
-#include <SFML/Graphics.hpp> // <- Add this for sf::Texture and sf::Sprite
+#include <SFML/Graphics.hpp>
 #include "Character.h"
 
 class Enemy : public Character {
@@ -12,14 +12,14 @@ private:
     bool isAlive;
 
 public:
-    Enemy(int x, int y, int width, int height, int health, int damage, const std::string& name, const std::string& texturePath); // <- Update the constructor signature
+    Enemy(int x, int y, int width, int height, int health, int damage, const std::string& name, const std::string& texturePath);
     Enemy();
     void setAlive(bool status);
 
     void move();
     void attack();
-    void draw(sf::RenderWindow& window); // 
-    bool alive() const; //
+    void draw(sf::RenderWindow& window);
+    bool alive() const;  // Added this function
     bool IsColliding(Entity* other) override;
     void OnCollision(Entity* other) override;
 };

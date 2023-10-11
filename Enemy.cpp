@@ -40,3 +40,7 @@ void Enemy::draw(sf::RenderWindow& window) {
 void Enemy::setAlive(bool status) {
     isAlive = status;
 }
+
+bool Enemy::alive() const {
+    return isAlive;
+}

@@ -14,7 +14,7 @@ Game::Game(sf::RenderWindow& window, Levels& levels)
     mario.set_texture("MarioIdle.png");
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {
-        std::cout << "faield to load font" << std::endl;
+        std::cout << "Failed to load font" << std::endl;
     }
     
     pauseTriangle.setPrimitiveType(sf::Triangles);
@@ -69,16 +69,15 @@ void Game::update() {
         return; // Do not update the game logic if it's paused
     }
     mario.update();
-    if (goomba.alive()) { // Only update Goomba if it's alive
-        goomba.move();
-    }
 
+    // Always update Goomba for debugging purposes.
+    goomba.move();
+    
     boundingBoxMario.update(mario.getSprite());
-
     levels.Update();
-
     handleCollisions();
 }
+
 
 
 void Game::handleCollisions() {
@@ -152,16 +151,15 @@ void Game::render() {
     window.clear();
     
     window.draw(mario.getSprite());
-    if (goomba.alive()) { // Only draw Goomba if it's alive
-        goomba.draw(window);
-    }
+
+    // Debugging: Always draw Goomba, bypassing the alive check.
+    goomba.draw(window);
+
     boundingBoxMario.draw(window);
-
     levels.Render(window);
-
     window.draw(text1);
-
     window.display();
+
     if (isPaused) {
         window.draw(pauseTriangle);
     }

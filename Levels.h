@@ -2,6 +2,8 @@
 #define LEVELS_H
 
 #include <SFML/Graphics.hpp>
+#include <functional>  //should fix it??
+#include <vector>
 #include "Entity.h"
 #include "Character.h"
 #include "Obstacle.h"
@@ -44,8 +46,6 @@ public:
 
     float getGameWorldWidth();
     void setGameWorldWidth(float Width);
-    
 };
-
 
 #endif
