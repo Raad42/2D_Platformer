@@ -31,6 +31,9 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     text2.setStyle(sf::Text::Bold | sf::Text::Underlined);
     text2.setPosition(5000.f, 300.f);
 
+    for (int i = 0; i < 5; i++){
+        powerUpCollected[i] = false; 
+    }
     //mario.getSprite().setScale(5.f, 5.f);
 }
 
@@ -99,7 +102,8 @@ void Game::handleCollisions() {
     for (size_t i = 0; i < obstacles.size(); ++i) {
 
         // powerup Block
-        if (marioBounds.intersects(obstacleBounds[6]))
+        if (marioBounds.intersects(obstacleBounds[6]) && powerUpCollected[0] == false){
+            powerUpCollected[0] = true;
             if (marioBounds.top > (obstacleBounds[6].width)) {
                 mario.velocityY = 4;
                 int health = dynamic_cast<PowerUpBlock*>(obstacles[6])->get_health();
@@ -110,7 +114,7 @@ void Game::handleCollisions() {
                 }
 
             }
-
+        }
         // When he hits his head on the bottom
         if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])||marioBounds.intersects(movingObstacleBounds2)) {
             mario.velocityY = 2;

@@ -16,6 +16,8 @@ private:
     sf::Text text1;
     sf::Text text2;
 
+    bool powerUpCollected[5];
+
     Player mario;
     BoundingBox boundingBoxMario;
 
