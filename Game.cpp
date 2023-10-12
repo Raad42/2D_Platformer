@@ -140,7 +140,7 @@ void Game::handleCollisions() {
         //If mario collides with spike //Make mario death into player function
         if (marioBounds.intersects(obstacleBounds[4])) {
             int health = mario.get_health();
-            mario.x = 0;
+            //mario.x = 0;
             gameStats.update_deaths();
             if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
                 // Access the get_damage function through the obstacle
@@ -148,6 +148,7 @@ void Game::handleCollisions() {
                 health -= damage;
                 mario.set_health(health);
                 mario.set_texture("MarioDeath.png");
+                mario.isDead = true; 
 
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;

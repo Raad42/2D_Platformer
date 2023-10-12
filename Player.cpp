@@ -17,6 +17,7 @@ Player::Player(int x, int y, int width, int height, float scale, int health, int
     
     gravity = 1;
 
+    isDead = false; 
     isMovingLeft = false;
     isMovingRight = false;
     isJumping = false;
@@ -69,25 +70,33 @@ bool Player::getIsJumping() {
 
 void Player::handleInput() {
     // Check for user input events (e.g., keyboard keys)
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        moveLeft();
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        moveRight();
-    }
-    else {
-        // If neither left nor right keys are pressed, stop horizontal movement.
-        velocityX = 0;
-    }
+    if (isDead == false){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            moveLeft();
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            moveRight();
+        }
+        else {
+            // If neither left nor right keys are pressed, stop horizontal movement.
+            velocityX = 0;
+        }
 
-    static bool spacePressedLastFrame = false;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !spacePressedLastFrame) {
-        jump();
-    }
-    spacePressedLastFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+        static bool spacePressedLastFrame = false;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !spacePressedLastFrame) {
+            jump();
+        }
+        spacePressedLastFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-        attack();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+            attack();
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)&& isDead == true){
+        x = 0; 
+        y = 100;
+        set_texture("MarioIdle.png");
+        isDead = false; 
     }
     // You can add more input handling here for other actions.
 
@@ -95,6 +104,8 @@ void Player::handleInput() {
 }
 
 void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
+    if (isDead == false){
+
     // Add gravity
     if (y < window.getSize().y && !isGrounded) {
         velocityY += gravity;
@@ -126,6 +137,8 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
     }
     
     boundingBox.update(sprite);
+    }
+    
 
 }
 

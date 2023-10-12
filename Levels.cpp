@@ -37,10 +37,10 @@ void Levels::LoadLevel1() {
     obstacles.push_back(brick2);
     obstacles.push_back(brick3);
     obstacles.push_back(brick4);
-    obstacles.push_back(brick5);
     obstacles.push_back(spike1);
     obstacles.push_back(flag);
     obstacles.push_back(powerUpBlock);
+    obstacles.push_back(brick5);
 
     // Create BoundingBox objects for each obstacle and add them to BoundingBoxes vector
     for (auto obstacle : obstacles) {
