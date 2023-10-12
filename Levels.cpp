@@ -19,6 +19,7 @@ void Levels::LoadLevel1() {
     Obstacle* brick2 = new Obstacle(400, 600, 64, 64, window);
     Obstacle* brick3 = new Obstacle(600, 500, 64, 64, window);
     Obstacle* brick4 = new Obstacle(600, 500, 64, 64, window);
+    Obstacle* brick5 = new Obstacle(600, 500, 64, 64, window);
 
     Obstacle* spike1 = new DamagingObstacle(400, 600, 64, 64, window, 10);
     Obstacle* flag = new Obstacle(400, 600, 64, 64, window);
@@ -39,6 +40,7 @@ void Levels::LoadLevel1() {
     obstacles.push_back(spike1);
     obstacles.push_back(flag);
     obstacles.push_back(powerUpBlock);
+    obstacles.push_back(brick5);
 
     // Create BoundingBox objects for each obstacle and add them to BoundingBoxes vector
     for (auto obstacle : obstacles) {
@@ -49,6 +51,7 @@ void Levels::LoadLevel1() {
     brick2->set_texture("Bricks.png");
     brick3->set_texture("Bricks.png");
     brick4->set_texture("Bricks.png");
+    brick5->set_texture("Bricks.png");
     movingObstacles[0]->set_texture("Bricks.png");
     movingObstacles[1]->set_texture("Bricks.png");
 
@@ -68,6 +71,9 @@ void Levels::LoadLevel1() {
     
     brick4->getSprite().setScale(0.4f, 0.01f);
     brick4->getSprite().setPosition(600, 375);
+
+    brick5->getSprite().setScale(0.4f, 0.01f);
+    brick5->getSprite().setPosition(700, 375);
 
     movingObstacles[0]->getSprite().setPosition(640, 515);
     movingObstacles[0]->getSprite().setScale(0.4f, 0.01f);
