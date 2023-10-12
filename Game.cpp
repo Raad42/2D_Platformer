@@ -8,7 +8,7 @@
 
 Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(levels),
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
-    boundingBoxMario(mario.getSprite()), levelCheck(true) {
+    boundingBoxMario(mario.getSprite()) {
 
     mario.set_texture("MarioIdle.png");
     mario.x = 0;
@@ -156,22 +156,12 @@ void Game::handleCollisions() {
         if (marioBounds.intersects(obstacleBounds[5])){
             text1.setPosition(9800.f, 250.f);
             text1.setFillColor(sf::Color::Red);
-            std::cout << levelCheck << std::endl;
             if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
-                if (levelCheck == true ) {
-                    std::cout << "Deaths on level 1: " << gameStats.getDeaths() << std::endl;
-                    levels.ClearLevel();
-                    obstacleBounds.clear();
-                    mario.x = 0;
-                    levels.levelLoadFunctions[1]();
-                    levelCheck = false;
-                    std::cout << levelCheck << std::endl;
-                } else if (levelCheck == false) {
-                    levels.ClearLevel();
-                    obstacleBounds.clear();
-                    mario.x = 0;
-                    levels.levelLoadFunctions[2]();
-                } 
+                std::cout << "Deaths on level 1: " << gameStats.getDeaths() << std::endl;
+                levels.ClearLevel();
+                obstacleBounds.clear();
+                mario.x = 0;
+                levels.levelLoadFunctions[1]();
             }
         }
     }
