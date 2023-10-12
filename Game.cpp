@@ -8,7 +8,7 @@
 
 Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(levels),
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
-    boundingBoxMario(mario.getSprite()), goomba(500, 300, 32, 32, 100, 10, "Goomba", "goomba_image.png") {
+    boundingBoxMario(mario.getSprite()), goomba(500, 300, 32, 32, 100, 10, "Goomba", "goomba.png") {
 
     mario.set_texture("MarioIdle.png");
     mario.x = 0;
