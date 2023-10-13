@@ -8,7 +8,7 @@
 
 Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(levels),
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
-    boundingBoxMario(mario.getSprite()), goomba(500, 300, 32, 32, 100, 10, "Goomba", "goomba.png") {
+    boundingBoxMario(mario.getSprite()) { 
 
     mario.set_texture("MarioIdle.png");
     mario.x = 0;
@@ -73,8 +73,6 @@ void Game::update() {
 
     boundingBoxMario.update(mario.getSprite());
 
-    goomba.move();
-
     levels.Update();
 
     handleCollisions();
@@ -87,12 +85,6 @@ void Game::handleCollisions() {
     sf::FloatRect movingObstacleBounds1 = movingObstacles[0]->getBoundingbox();
     sf::FloatRect movingObstacleBounds2 = movingObstacles[1]->getBoundingbox();
     float movingX; 
-
-    // Check for collision with Goomba
-    if (marioBounds.intersects(goomba.getSprite().getGlobalBounds()) && goomba.alive()) {
-        mario.set_health(mario.get_health() - 10);  // Reduce Mario's health by 10, for example
-        goomba.setAlive(false);  // Set Goomba as defeated
-    }
 
     // Access obstacles and their bounding boxes through levels
     std::vector<Obstacle*>& obstacles = levels.getObstacles();
@@ -147,6 +139,7 @@ void Game::handleCollisions() {
             mario.y = brickTopY - marioBounds.height;
             mario.velocityY = -1; //Oppose gravity
         }
+
         //If mario collides with spike, mario dies and sprite chnages
         if (marioBounds.intersects(obstacleBounds[4])) {
             int health = mario.get_health();
@@ -182,8 +175,6 @@ void Game::render() {
     window.clear();
 
     levels.Render(window);
-    goomba.draw(window);
-
 
     window.draw(mario.getSprite());
 
