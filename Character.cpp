@@ -1,6 +1,6 @@
 #include "Character.h"
-#include <iostream>
 
+// Parameterized constructor initializing character attributes
 Character::Character(int x, int y, int width, int height, int health, int damage, const std::string& name)
     : Entity(x, y, width, height) {
     this->health = health;
@@ -8,6 +8,7 @@ Character::Character(int x, int y, int width, int height, int health, int damage
     this->name = name;
 }
 
+// Default constructor initializing character with default values
 Character::Character()
     : Entity(0, 0, 0, 0) {
     this->health = 0;
