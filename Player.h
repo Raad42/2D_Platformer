@@ -42,9 +42,6 @@ public:
     void die(); //Code this part
     void collectPowerUp(PowerUp power_up);
 
-    bool IsColliding(Entity* other) override;
-    void OnCollision(Entity* other) override;
-
     void handleInput();
     void update();
 
