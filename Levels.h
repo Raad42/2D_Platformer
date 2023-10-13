@@ -2,15 +2,15 @@
 #define LEVELS_H
 
 #include <SFML/Graphics.hpp>
-#include <functional>  //should fix it??
-#include <vector>
 #include "Entity.h"
 #include "Character.h"
 #include "Obstacle.h"
 #include "DamagingObstacle.h"
+#include "MovingObstacle.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "PowerUp.h"
+#include "PowerUpBlock.h"
 #include "GameStats.h"
 #include "BoundingBox.h"
 
@@ -20,32 +20,29 @@ private:
 
     std::vector<Obstacle*> obstacles;
     std::vector<BoundingBox*> BoundingBoxes;
+    
+    MovingObstacle** movingObstacles;
 
-    // game world size (levels might have different sizes)
-    float gameWorldWidth;
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
 
 public:
     Levels(sf::RenderWindow& window);
     ~Levels();
-    
+
     void LoadLevel1();
     void LoadLevel2();
-    void LoadLevel3();
-    void LoadLevel4();
-    void LoadLevel5();
+    void ClearLevel(); // Cleans up resources and preps for a new level.
 
-    void ClearLevel();
+    // Function pointers for level loading.
+    std::vector<std::function<void()>> levelLoadFunctions; 
 
-    std::vector<std::function<void()>> levelLoadFunctions;
-    
-    void Update();
+    void Update(); 
     void Render(sf::RenderWindow& window);
 
-    std::vector<Obstacle*>& getObstacles() { return obstacles; }
-    std::vector<BoundingBox*>& getBoundingBoxes() { return BoundingBoxes; }
-
-    float getGameWorldWidth();
-    void setGameWorldWidth(float Width);
+    // Accessor for obstacles
+    std::vector<Obstacle*>& getObstacles() { return obstacles; } 
+    MovingObstacle** getmovingObstacles() { return movingObstacles; }        
 };
 
 #endif
