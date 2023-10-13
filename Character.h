@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+//Derived class from Entity, representing characters with health, damage, and name attributes
 class Character : public Entity {
 private:
     int health;
