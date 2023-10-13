@@ -7,7 +7,6 @@
 #include "DamagingObstacle.h"
 #include "BoundingBox.h"
 #include "Levels.h"
-#include "Enemy.h" 
 
 class Game {
 private:
@@ -15,17 +14,17 @@ private:
     sf::View view;
     sf::Font font;
     sf::Text text1;
-    
-    bool isPaused; // To track if the game is paused
-    sf::VertexArray pauseTriangle; // Triangle displayed during the pause  
-     
+    sf::Text text2;
+
+    bool powerUpCollected[5];
+
     Player mario;
     BoundingBox boundingBoxMario;
-    Enemy goomba; 
-    
+
     std::vector<sf::FloatRect> obstacleBounds;
 
     Levels& levels;
+    GameStats gameStats;
 
 public:
     Game(sf::RenderWindow& window, Levels& levels);
@@ -37,7 +36,6 @@ public:
 
     void handleCollisions(); //  A separate function for collision handling
 
-    void resetPlayerPosition();
 };
 
 #endif
