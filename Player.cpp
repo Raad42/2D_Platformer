@@ -2,6 +2,8 @@
 #include "PowerUp.h"
 #include "BoundingBox.h"
 #include "Entity.h"
+#include "Levels.h"
+
 
 Player::Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window)
     : Character(x, y, width, height, health, damage, name), scale(scale), window(window), boundingBox(sprite) {
@@ -19,12 +21,13 @@ Player::Player(int x, int y, int width, int height, float scale, int health, int
     isMovingRight = false;
     isJumping = false;
     isGrounded = true;
+
 }
 
 Player::Player()
     : Character(0, 0, 0, 0, 0, 0, ""), window(window), boundingBox(sprite) {
 }
-
+//player movement
 void Player::moveLeft() {
     isMovingLeft = true;
     isMovingRight = false;
@@ -38,8 +41,8 @@ void Player::moveRight() {
 }
 
 void Player::jump() {
-    if (!isJumping) {  // Check if the player is not already jumping
-        velocityY = -35; // Adjust the jump velocity as needed
+    if (!isJumping) {  
+        velocityY = -35; 
         isJumping = true;
         isGrounded = false;
     }
@@ -51,7 +54,7 @@ void Player::fall() {
 
 
 void Player::attack() {
-    // Implement attack logic here.
+    
 }
 
 bool Player::getIsMovingLeft() { 
@@ -73,7 +76,7 @@ void Player::handleInput() {
         moveRight();
     }
     else {
-        // If neither left nor right keys are pressed, stop horizontal movement.
+        // stop horizontal movement if keyboard not pressed
         velocityX = 0;
     }
 
@@ -86,14 +89,9 @@ void Player::handleInput() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
         attack();
     }
-
-    // You can add more input handling here for other actions.
-
-    // Update other player-specific input handling if needed.
 }
 
 void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
-    // Add gravity
     if (y < window.getSize().y && !isGrounded) {
         velocityY += gravity;
     }
@@ -109,8 +107,8 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
         x = 0;
         velocityX = 0;  // Stop horizontal movement when the sprite hits the left border
     }
-    if (x + sprite.getLocalBounds().width * sprite.getScale().x > window.getSize().x) {
-        x = window.getSize().x - sprite.getLocalBounds().width * sprite.getScale().x;
+    if (x + sprite.getLocalBounds().width * sprite.getScale().x > 10000) {
+        x = 10000 - sprite.getLocalBounds().width * sprite.getScale().x;
         velocityX = 0;  // Stop horizontal movement when the sprite hits the right border
     }
     if (y < 0) {
@@ -131,7 +129,6 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
 void Player::update() {
 
     // Update the player's position and physics.
-    // Apply acceleration and gravity.
     velocityX += accelerationX;
     velocityY += accelerationY + gravity;
 
@@ -174,20 +171,4 @@ void Player::update() {
 
 
 void Player::collectPowerUp(PowerUp power_up) {
-    // Implement power-up collection logic here.
-}
-
-
-
-bool Player::IsColliding(Entity* other) {
-    if (1){
-        return true;
-    }
-    return false;
-}
-
-void Player::OnCollision(Entity* other) {
-    if (IsColliding(other)) {
-        velocityY = 0;
-    }
 }
