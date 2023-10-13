@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+// Parameterized constructor initializing entity dimensions and position
 Entity::Entity(int x, int y, int width, int height) : boundingBox(sprite) {
     this->x_position = x;
     this->y_position = y;
@@ -34,7 +35,7 @@ int Entity::get_width() {
 int Entity::get_height() {
     return this->height;
 }
-
+//sets texture. prints error otherwise
 void Entity::set_texture(const std::string& texturePath) {
     if (!texture.loadFromFile(texturePath)) {
         std::cout << "Failed to load texture from file: " << texturePath << std::endl;
@@ -45,7 +46,7 @@ void Entity::set_texture(const std::string& texturePath) {
 sf::Sprite& Entity::getSprite() {
     return sprite;
 }
-
+// Updates the bounding box with current sprite properties
 void Entity::updateBoundingBox() {
     boundingBox.update(sprite);
 }
