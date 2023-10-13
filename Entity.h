@@ -16,10 +16,8 @@ protected:
 public:
     Entity(int x, int y, int width, int height);
     virtual ~Entity();
-
-    virtual bool IsColliding(Entity* other) = 0;
-    virtual void OnCollision(Entity* other) = 0;
-
+    
+    // Accessors and Modifiers for entity's position.
     int get_x_position();
     void set_x_position(int x_position);
     int get_y_position();
