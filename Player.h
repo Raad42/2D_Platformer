@@ -2,7 +2,6 @@
 #define PLAYER_H
 
 #include "Character.h"
-#include "PowerUp.h"
 #include "BoundingBox.h"
 #include <SFML/Graphics.hpp>
 
@@ -16,11 +15,14 @@ public:
     float velocityY;
     float accelerationX;
     float accelerationY;
+    float jumpVelocity; 
+    float runSpeed; 
     float scale; 
 
     float gravity = 1;
 
     bool isDead;
+    bool isPowerUp; 
     bool isMovingLeft;
     bool isMovingRight;
     bool isJumping;
@@ -41,7 +43,8 @@ public:
     //void takeDamage();
     void attack(); 
     void die(); //Code this part
-    void collectPowerUp(PowerUp power_up);
+    void reset();
+    void PowerUp();
 
     void handleInput();
     void update();

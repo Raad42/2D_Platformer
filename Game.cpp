@@ -113,6 +113,10 @@ void Game::handleCollisions() {
         damagingObstacleBounds.push_back(damagingObstacle->getBoundingbox());
     }
 
+    for (auto PowerUpBlock: PowerUpBlocks) {
+        powerUpBlocksBounds.push_back(PowerUpBlock->getBoundingbox());
+    }
+
     if (movingObstacleBounds1.intersects(movingObstacleBounds2)){
         movingObstacles[1]->set_x_position(movingObstacles[0]->get_x_position());
     }
@@ -136,16 +140,22 @@ void Game::handleCollisions() {
     }
 
     for (size_t i = 0; i < damagingObstacles.size(); ++i){
-        if (marioBounds.intersects(damagingObstacleBounds[i])) {
+        if (marioBounds.intersects(damagingObstacleBounds[i])&&mario.isPowerUp == false) {
             int health = mario.get_health();
             //mario.x = 0;
             gameStats.update_deaths();
             mario.set_texture("MarioDeath.png");
             mario.isDead = true; 
-            }
         }
-    
+    }
 
+    for (size_t i = 0; i < PowerUpBlocks.size(); ++i) {
+    if (marioBounds.intersects(powerUpBlocksBounds[i]) && PowerUpBlocks[i]->get_IsCollected() == false)  {
+            mario.velocityY = 2;
+            mario.PowerUp();
+            PowerUpBlocks[i]->dropPowerUp();
+        }
+    }
 
         // powerup Block
         /*if (marioBounds.intersects(obstacleBounds[6]) && powerUpCollected[0] == false){

@@ -9,6 +9,8 @@ Player::Player(int x, int y, int width, int height, float scale, int health, int
     : Character(x, y, width, height, health, damage, name), scale(scale), window(window), boundingBox(sprite) {
     x = 0;
     y = 0;
+    jumpVelocity = -35;
+    runSpeed = 4; 
     velocityX = 0;
     velocityY = 0;
     accelerationX = 0;
@@ -18,6 +20,7 @@ Player::Player(int x, int y, int width, int height, float scale, int health, int
     gravity = 1;
 
     isDead = false; 
+    isPowerUp = false; 
     isMovingLeft = false;
     isMovingRight = false;
     isJumping = false;
@@ -32,18 +35,18 @@ Player::Player()
 void Player::moveLeft() {
     isMovingLeft = true;
     isMovingRight = false;
-    velocityX = -4;
+    velocityX = -runSpeed;
 }
 
 void Player::moveRight() {
     isMovingRight = true;
     isMovingLeft = false;
-    velocityX = 4;
+    velocityX = runSpeed;
 }
 
 void Player::jump() {
     if (!isJumping) {  // Check if the player is not already jumping
-        velocityY = -35; // Adjust the jump velocity as needed
+        velocityY = jumpVelocity; // Adjust the jump velocity as needed
         isJumping = true;
         isGrounded = false;
     }
@@ -93,10 +96,7 @@ void Player::handleInput() {
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)&& isDead == true){
-        x = 0; 
-        y = 100;
-        set_texture("MarioIdle.png");
-        isDead = false; 
+       reset();
     }
     // You can add more input handling here for other actions.
 
@@ -187,7 +187,18 @@ void Player::update() {
 
 }
 
-
-void Player::collectPowerUp(PowerUp power_up) {
-    // Implement power-up collection logic here.
+void Player::reset () {
+    x = 0; 
+    y = 100;
+    runSpeed = 4; 
+    jumpVelocity = -35; 
+    set_texture("MarioIdle.png");
+    isDead = false; 
+}
+void Player::PowerUp(){
+    jumpVelocity = -50;
+    runSpeed = 6; 
+    isPowerUp = true; 
+    set_texture("BigMarioCrouch.png");
+    boundingBox.update(sprite);
 }
