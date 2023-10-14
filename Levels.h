@@ -21,6 +21,12 @@ private:
     std::vector<Obstacle*> obstacles;
     std::vector<BoundingBox*> BoundingBoxes;
 
+    std::vector<DamagingObstacle*> damagingObstacles;
+    std::vector<BoundingBox*> BoundingBoxesDamagingObstacles;
+
+    std::vector<PowerUpBlock*> PowerUpBlocks;
+    std::vector<BoundingBox*> BoundingBoxesPowerUpBlocks;
+
     MovingObstacle** movingObstacles;
     BoundingBox**  movingObstacleBoundingbox;
 
@@ -43,6 +49,13 @@ public:
 
     std::vector<Obstacle*>& getObstacles() { return obstacles; }
     std::vector<BoundingBox*>& getBoundingBoxes() { return BoundingBoxes; }
+
+    std::vector<DamagingObstacle*>& getDamagingObstacles() { return damagingObstacles; }
+    std::vector<BoundingBox*>& getBoundingBoxesDamagingObstacles() { return BoundingBoxesDamagingObstacles; }
+
+    std::vector<PowerUpBlock*>& getPowerUpBlocks() { return PowerUpBlocks; }
+    std::vector<BoundingBox*>& getBoundingBoxesPowerUpBlocks() { return BoundingBoxesPowerUpBlocks; }
+
     MovingObstacle** getmovingObstacles() { return movingObstacles; }
         
 };

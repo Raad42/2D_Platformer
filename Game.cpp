@@ -88,9 +88,19 @@ void Game::handleCollisions() {
     std::vector<Obstacle*>& obstacles = levels.getObstacles();
     std::vector<BoundingBox*>& obstacleBoundingBoxes = levels.getBoundingBoxes();
 
+    std::vector<DamagingObstacle*>& damagingObstacles = levels.getDamagingObstacles();
+    std::vector<BoundingBox*>& BoundingBoxesDamagingObstacles = levels.getBoundingBoxesDamagingObstacles();
+
+    std::vector<PowerUpBlock*>& PowerUpBlocks = levels.getPowerUpBlocks();
+    std::vector<BoundingBox*>& BoundingBoxesPowerUpBlocks = levels.getBoundingBoxesPowerUpBlocks();
+   
     // Calculate and add sf::FloatRect for each obstacle's bounding box
     for (auto obstacle : obstacles) {
         obstacleBounds.push_back(obstacle->getBoundingbox());
+    }
+
+    for (auto damagingObstacle: damagingObstacles) {
+        damagingObstacleBounds.push_back(damagingObstacle->getBoundingbox());
     }
 
     if (movingObstacleBounds1.intersects(movingObstacleBounds2)){
@@ -98,9 +108,37 @@ void Game::handleCollisions() {
     }
 
     for (size_t i = 0; i < obstacles.size(); ++i) {
+        if (i % 2 == 0) {
+            if (marioBounds.intersects(obstacleBounds[i])) {
+            mario.velocityY = 2;
+            }
+        } else {
+            if (marioBounds.intersects(obstacleBounds[i])) {
+                mario.isGrounded = true;
+                mario.isJumping = false;
+                float brickTopY;
+                brickTopY = obstacleBounds[i].top + 1;
+                // Set Mario's position to the top of the brick
+                mario.y = brickTopY - marioBounds.height;
+                mario.velocityY = -1; // Oppose gravity
+            }
+        }
+    }
+
+    for (size_t i = 0; i < damagingObstacles.size(); ++i){
+        if (marioBounds.intersects(damagingObstacleBounds[i])) {
+            int health = mario.get_health();
+            //mario.x = 0;
+            gameStats.update_deaths();
+            mario.set_texture("MarioDeath.png");
+            mario.isDead = true; 
+            }
+        }
+    
+
 
         // powerup Block
-        if (marioBounds.intersects(obstacleBounds[6]) && powerUpCollected[0] == false){
+        /*if (marioBounds.intersects(obstacleBounds[6]) && powerUpCollected[0] == false){
             powerUpCollected[0] = true;
             if (marioBounds.top > (obstacleBounds[6].width)) {
                 mario.velocityY = 4;
@@ -111,8 +149,8 @@ void Game::handleCollisions() {
                 }
 
             }
-        }
-        // When he hits his head on the bottom
+        }*/
+        /*// When he hits his head on the bottom
         if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])||marioBounds.intersects(movingObstacleBounds2)) {
             mario.velocityY = 2;
         }
@@ -152,8 +190,8 @@ void Game::handleCollisions() {
 
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
-        }
-        text1.setFillColor(sf::Color::Transparent);
+        }*/
+        /*text1.setFillColor(sf::Color::Transparent);
         if (marioBounds.intersects(obstacleBounds[5])){
             text1.setPosition(9800.f, 250.f);
             text1.setFillColor(sf::Color::Red);
@@ -164,9 +202,10 @@ void Game::handleCollisions() {
                 mario.x = 0;
                 levels.levelLoadFunctions[1]();
             }
-        }
+        }*/
+
     }
-}
+
 
 void Game::render() {
     window.clear();

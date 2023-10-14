@@ -22,6 +22,7 @@ private:
     BoundingBox boundingBoxMario;
 
     std::vector<sf::FloatRect> obstacleBounds;
+    std::vector<sf::FloatRect> damagingObstacleBounds;
 
     Levels& levels;
     GameStats gameStats;
