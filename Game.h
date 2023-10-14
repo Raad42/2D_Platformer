@@ -21,6 +21,8 @@ private:
     Player mario;
     BoundingBox boundingBoxMario;
 
+    Enemy goomba;
+
     std::vector<sf::FloatRect> obstacleBounds;
     std::vector<sf::FloatRect> damagingObstacleBounds;
 
