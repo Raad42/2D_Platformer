@@ -11,7 +11,7 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     boundingBoxMario(mario.getSprite()), goomba(500, 300, 32, 32, 100, 10, "Goomba", "goomba.png") {
 
     mario.set_texture("MarioIdle.png");
-    mario.x = 0;
+    mario.x = 1500;
 
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {

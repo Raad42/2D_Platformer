@@ -7,13 +7,13 @@ class PowerUp {
 private:
     std::string bonus_type;
     int bonus_value;
-    bool isCollected; 
+   
 public:
     PowerUp(const std::string& bonusType, int bonusValue);
 
     std::string get_bonus_type() const;
     int get_bonus_value() const;
-    bool getIsCollected();
+    bool get_IsCollected();
 };
 
 
