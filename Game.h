@@ -22,9 +22,14 @@ private:
     BoundingBox boundingBoxMario;
     
     std::vector<sf::FloatRect> obstacleBounds;
+    std::vector<sf::FloatRect> damagingObstacleBounds;
 
     Levels& levels;
-    GameStats gameStats;
+    
+    GameStats playerStats;
+
+    bool isGameEnded;
+
 
 public:
     Game(sf::RenderWindow& window, Levels& levels);
@@ -36,6 +41,10 @@ public:
 
     void handleCollisions(); //  A separate function for collision handling
 
+    void savePlayerStats();
+    void loadPlayerStats();
+
+    void endGame();
 
 };
 

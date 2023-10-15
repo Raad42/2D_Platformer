@@ -27,16 +27,7 @@ int main() {
     // Create the Game object, passing both sf::RenderWindow and Levels objects
     Game game(window, levels);
 
-    // Initialize the GameStats class
-    GameStats gameStats;
-
     game.run();
-
-    // Load the game statistics from the JSON file
-    gameStats.loadStats("game_stats.json");
-
-    // Print the loaded JSON data to the terminal
-    std::cout << "Game Statistics:\n" << gameStats.getStatsJsonString() << std::endl;
 
     return 0;
 }

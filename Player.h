@@ -20,6 +20,7 @@ public:
 
     float gravity = 1;
 
+    bool isDead;
     bool isMovingLeft;
     bool isMovingRight;
     bool isJumping;

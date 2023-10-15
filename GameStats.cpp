@@ -1,87 +1,25 @@
 #include "GameStats.h"
-#include "json.hpp"
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <vector>
 
-using json = nlohmann::json;
 
 GameStats::GameStats()
     : enemies_killed(0), high_score(0), deaths(0) {
-    // Load existing stats when the GameStats object is created
-    loadStats("game_stats.json");
 }
-
-void GameStats::loadStats(const std::string& filename) {
-    std::ifstream inputFile(filename);
-    if (inputFile.is_open()) {
-        json gameData;
-        inputFile >> gameData;
-        inputFile.close();
-
-        // Update class members with loaded data
-        if (gameData.find("enemies_killed") != gameData.end()) {
-            enemies_killed = gameData["enemies_killed"];
-        }
-        if (gameData.find("high_score") != gameData.end()) {
-            high_score = gameData["high_score"];
-        }
-        if (gameData.find("deaths") != gameData.end()) {
-            deaths = gameData["deaths"];
-        }
-    }
-}
-
-void GameStats::saveStats(const std::string& filename) const {
-    json gameData;
-    gameData["enemies_killed"] = enemies_killed;
-    gameData["high_score"] = high_score;
-    gameData["deaths"] = deaths / 6;
-
-    std::ifstream inputFile(filename);
-    json existingData;
-
-    if (inputFile.is_open()) {
-        inputFile >> existingData;
-        inputFile.close();
-    }
-
-    existingData.push_back(gameData); // Append the new session's data to the existing data
-
-    std::ofstream outputFile(filename);
-    if (outputFile.is_open()) {
-        outputFile << std::setw(4) << existingData;
-        outputFile.close();
-    } else {
-        std::cout << "output failed" << std::endl;
-    }
-}
-
-std::string GameStats::getStatsJsonString() const {
-    json gameData;
-    gameData["enemies_killed"] = enemies_killed;
-    gameData["high_score"] = high_score;
-    gameData["deaths"] = deaths / 6;
-    
-    return gameData.dump(4); // Indent and return latest write
-}
-
-
 
 void GameStats::update_enemies_killed() {
     enemies_killed++;
-    saveStats("game_stats.json");
 }
 
 void GameStats::update_deaths() {
     deaths++;
-    saveStats("game_stats.json");
 }
 
 void GameStats::update_high_score(int score) {
     if (score > high_score) {
         high_score = score;
-        saveStats("game_stats.json");
     }
 }
 
@@ -90,5 +28,56 @@ int GameStats::getKills() {
 }
 
 int GameStats::getDeaths() {
-    return deaths / 6;
+    return deaths / 36;
+}
+
+int GameStats::getScore() {
+    return high_score;
+}
+
+void GameStats::saveToFile(const std::string& filename) {
+    std::ofstream outputFile(filename, std::ios::app); // Open in append mode
+
+    if (outputFile.is_open()) {
+        outputFile << "Enemies Killed: " << getKills() << "; " << "Deaths: " << getDeaths() << "; " << "High Score: " << getScore() << "\n";
+        outputFile.close();
+    } else {
+        std::cout << "Error: Could not open the file for writing." << std::endl;
+    }
+}
+
+void GameStats::loadFromFile(const std::string& filename) {
+    std::ifstream inputFile(filename);
+
+    if (inputFile.is_open()) {
+        inputFile >> enemies_killed >> high_score >> deaths;
+        inputFile.close();
+    } else {
+        std::cout << "Error: Could not open the file for reading." << std::endl;
+    }
+}
+
+void GameStats::printLast10GameStats(const std::string& filename) {
+    std::ifstream inputFile(filename);
+
+    if (inputFile.is_open()) {
+        std::string line;
+        std::vector<std::string> gameStats;
+        bool inGameEntry = false;
+
+        while (std::getline(inputFile, line)) {
+                gameStats.push_back(line);
+                inGameEntry = true;
+            }
+
+        // Print the last 10 game stats
+        int startIndex = std::max(0, static_cast<int>(gameStats.size()) - 10);
+        for (int i = startIndex; i < gameStats.size(); ++i) {
+            std::cout << gameStats[i] << std::endl;
+        }
+
+        inputFile.close();
+    } else {
+        std::cout << "Error: Could not open the file for reading." << std::endl;
+    }
 }

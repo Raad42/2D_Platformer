@@ -8,7 +8,7 @@
 
 Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(levels),
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
-    boundingBoxMario(mario.getSprite()) { 
+    boundingBoxMario(mario.getSprite()), playerStats(playerStats) { 
 
     mario.set_texture("MarioIdle.png");
     mario.x = 0;
@@ -55,15 +55,28 @@ void Game::run() {
 
 void Game::handleInput() {
     sf::Event event;
+    bool loadStats = false; 
+
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
+            endGame();
             window.close();
         }
-        // Handle other user input events here.
+        if (isGameEnded) {
+            savePlayerStats();
+        }
+
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::H) {
+            loadStats = true; // Set the flag when 'H' key is pressed
+        }
     }
 
     // Handle input for player and other game entities.
     mario.handleInput();
+    
+    if (loadStats) {
+        loadPlayerStats(); // Call loadPlayerStats here if the flag is set
+    }
 }
 
 void Game::update() {
@@ -90,9 +103,19 @@ void Game::handleCollisions() {
     std::vector<Obstacle*>& obstacles = levels.getObstacles();
     std::vector<BoundingBox*>& obstacleBoundingBoxes = levels.getBoundingBoxes();
 
+    std::vector<DamagingObstacle*>& damagingObstacles = levels.getDamagingObstacles();
+    std::vector<BoundingBox*>& BoundingBoxesDamagingObstacles = levels.getBoundingBoxesDamagingObstacles();
+
+    std::vector<PowerUpBlock*>& PowerUpBlocks = levels.getPowerUpBlocks();
+    std::vector<BoundingBox*>& BoundingBoxesPowerUpBlocks = levels.getBoundingBoxesPowerUpBlocks();
+   
     // Calculate and add sf::FloatRect for each obstacle's bounding box
     for (auto obstacle : obstacles) {
         obstacleBounds.push_back(obstacle->getBoundingbox());
+    }
+
+    for (auto damagingObstacle: damagingObstacles) {
+        damagingObstacleBounds.push_back(damagingObstacle->getBoundingbox());
     }
 
     if (movingObstacleBounds1.intersects(movingObstacleBounds2)){
@@ -100,9 +123,37 @@ void Game::handleCollisions() {
     }
 
     for (size_t i = 0; i < obstacles.size(); ++i) {
+        if (i % 2 == 0) {
+            if (marioBounds.intersects(obstacleBounds[i])) {
+            mario.velocityY = 2;
+            }
+        } else {
+            if (marioBounds.intersects(obstacleBounds[i])) {
+                mario.isGrounded = true;
+                mario.isJumping = false;
+                float brickTopY;
+                brickTopY = obstacleBounds[i].top + 1;
+                // Set Mario's position to the top of the brick
+                mario.y = brickTopY - marioBounds.height;
+                mario.velocityY = -1; // Oppose gravity
+            }
+        }
+    }
+
+    for (size_t i = 0; i < damagingObstacles.size(); ++i){
+        if (marioBounds.intersects(damagingObstacleBounds[i])) {
+            int health = mario.get_health();
+            //mario.x = 0;
+            playerStats.update_deaths();
+            mario.set_texture("MarioDeath.png");
+            mario.isDead = true; 
+            }
+        }
+    
+
 
         // powerup Block
-        if (marioBounds.intersects(obstacleBounds[6]) && powerUpCollected[0] == false){
+        /*if (marioBounds.intersects(obstacleBounds[6]) && powerUpCollected[0] == false){
             powerUpCollected[0] = true;
             if (marioBounds.top > (obstacleBounds[6].width)) {
                 mario.velocityY = 4;
@@ -113,8 +164,8 @@ void Game::handleCollisions() {
                 }
 
             }
-        }
-        // When he hits his head on the bottom
+        }*/
+        /*// When he hits his head on the bottom
         if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])||marioBounds.intersects(movingObstacleBounds2)) {
             mario.velocityY = 2;
         }
@@ -143,7 +194,7 @@ void Game::handleCollisions() {
         //If mario collides with spike, mario dies and sprite chnages
         if (marioBounds.intersects(obstacleBounds[4])) {
             int health = mario.get_health();
-            mario.x = 0;
+            //mario.x = 0;
             gameStats.update_deaths();
             if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
                 // Access the get_damage function through the obstacle
@@ -151,25 +202,25 @@ void Game::handleCollisions() {
                 health -= damage;
                 mario.set_health(health);
                 mario.set_texture("MarioDeath.png");
+                mario.isDead = true; 
 
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
-        }
-        //when mario hits flag, and user presses "n," level will change
-        text1.setFillColor(sf::Color::Transparent);
-        if (marioBounds.intersects(obstacleBounds[5])){
-            text1.setPosition(9800.f, 250.f);
-            text1.setFillColor(sf::Color::Red);
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
-                std::cout << "Deaths on level 1: " << gameStats.getDeaths() << std::endl; 
-                levels.ClearLevel();
-                obstacleBounds.clear();
-                mario.x = 0;
-                levels.levelLoadFunctions[1]();
-            }
-        }
+        }*/
+        // text1.setFillColor(sf::Color::Transparent);
+        // if (marioBounds.intersects(obstacleBounds[5])){
+        //     text1.setPosition(9800.f, 250.f);
+        //     text1.setFillColor(sf::Color::Red);
+        //     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
+        //         levels.ClearLevel();
+        //         obstacleBounds.clear();
+        //         mario.x = 0;
+        //         levels.levelLoadFunctions[1]();
+        //     }
+        // }
+
     }
-}
+
 
 void Game::render() {
     window.clear();
@@ -184,4 +235,16 @@ void Game::render() {
     window.draw(text2);
 
     window.display();
+}
+
+void Game::savePlayerStats() {
+    playerStats.saveToFile("player_stats.txt");
+}
+
+void Game::loadPlayerStats() {
+    playerStats.printLast10GameStats("player_stats.txt");
+}
+
+void Game::endGame() {
+    isGameEnded = true;
 }

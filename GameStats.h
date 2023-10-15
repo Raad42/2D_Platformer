@@ -1,8 +1,7 @@
 #ifndef GAMESTATS_H
 #define GAMESTATS_H
 
-#include "json.hpp"
-#include <cstring>
+#include <string>
 
 class GameStats {
 private:
@@ -10,19 +9,25 @@ private:
     int high_score;
     int deaths;
 
+
 public:
     GameStats();
-    
-    // Methods to load and save stats
-    void loadStats(const std::string& filename);
-    void saveStats(const std::string& filename) const;
-    std::string getStatsJsonString() const;
 
     void update_enemies_killed();
     void update_deaths();
     void update_high_score(int score);
+
     int getKills();
     int getDeaths();
+    int getScore();
+
+    // Function to save game statistics to a file
+    void saveToFile(const std::string& filename);
+
+    // Function to load game statistics from a file
+    void loadFromFile(const std::string& filename);
+
+    void printLast10GameStats(const std::string& filename);
 };
 
 
