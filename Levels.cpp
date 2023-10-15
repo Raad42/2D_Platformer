@@ -57,6 +57,11 @@ void Levels::LoadLevel1() {
     DamagingObstacle* muncher2 = new DamagingObstacle(400, 600, 64, 64, window, 10);            
     DamagingObstacle* lava1 = new DamagingObstacle(400, 600, 64, 64, window, 10);
     DamagingObstacle* lava2 = new DamagingObstacle(400, 600, 10, 64, window, 10);
+    DamagingObstacle* lava3 = new DamagingObstacle(400, 600, 10, 64, window, 10);
+    DamagingObstacle* lava4 = new DamagingObstacle(400, 600, 10, 64, window, 10);
+    DamagingObstacle* lava5 = new DamagingObstacle(400, 600, 10, 64, window, 10);
+    DamagingObstacle* lava6 = new DamagingObstacle(400, 600, 10, 64, window, 10);
+    DamagingObstacle* lava7 = new DamagingObstacle(400, 600, 10, 64, window, 10);
 
     PowerUpBlock* powerUpBlock = new PowerUpBlock(1500, 600, 64, 64, window, 99);
 
@@ -108,6 +113,11 @@ void Levels::LoadLevel1() {
     damagingObstacles.push_back(muncher2);
     damagingObstacles.push_back(lava1);
     damagingObstacles.push_back(lava2);
+    damagingObstacles.push_back(lava3);
+    damagingObstacles.push_back(lava4);
+    damagingObstacles.push_back(lava5);
+    damagingObstacles.push_back(lava6);
+    damagingObstacles.push_back(lava7);
     obstacles.push_back(flag);
     PowerUpBlocks.push_back(powerUpBlock);
     
@@ -168,6 +178,11 @@ void Levels::LoadLevel1() {
     muncher2->set_texture("muncher.png");
     lava1->set_texture("lava.png");
     lava2->set_texture("lava.png");
+    lava3->set_texture("lava.png");
+    lava4->set_texture("lava.png");
+    lava5->set_texture("lava.png");
+    lava6->set_texture("lava.png");
+    lava7->set_texture("lava.png");
     flag->set_texture("pole.png");
     powerUpBlock->set_texture("QuestionBlock.png");
 
@@ -269,7 +284,7 @@ void Levels::LoadLevel1() {
     movingObstacles[1]->getSprite().setPosition(8800, 253);
 
     spike1->getSprite().setScale(1.f, 1.f);
-    spike1->getSprite().setPosition(700, 700);
+    spike1->getSprite().setPosition(4500, 700);
 
     spike2->getSprite().setScale(3.f, 3.f);
     spike2->getSprite().setPosition(450, 750);
@@ -281,19 +296,34 @@ void Levels::LoadLevel1() {
     spike4->getSprite().setPosition(2300, 770);
 
     spike5->getSprite().setScale(3.f, 3.f);
-    spike5->getSprite().setPosition(2600, 770);
+    spike5->getSprite().setPosition(3000, 770);
 
     muncher1->getSprite().setScale(3.5f, 3.5f);
     muncher1->getSprite().setPosition(1700, 750);
 
     muncher2->getSprite().setScale(4.f, 4.f);
-    muncher2->getSprite().setPosition(2500, 750);
+    muncher2->getSprite().setPosition(3200, 530);
 
     lava1->getSprite().setScale(1.f, 1.f);
     lava1->getSprite().setPosition(700, 790);
 
     lava2->getSprite().setScale(0.15f, 1.f);
     lava2->getSprite().setPosition(2000, 790);
+
+    lava3->getSprite().setScale(1.f, 1.f);
+    lava3->getSprite().setPosition(6200, 790);
+
+    lava4->getSprite().setScale(1.f, 1.f);
+    lava4->getSprite().setPosition(8000, 790);
+
+    lava5->getSprite().setScale(1.f, 1.f);
+    lava5->getSprite().setPosition(8800, 790);
+
+    lava6->getSprite().setScale(0.15f, 1.f);
+    lava6->getSprite().setPosition(2000, 790);
+
+    lava7->getSprite().setScale(0.15f, 1.f);
+    lava7->getSprite().setPosition(2000, 790);
 
     flag->getSprite().setPosition(9900, 530);
     
