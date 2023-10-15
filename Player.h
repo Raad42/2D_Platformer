@@ -29,6 +29,7 @@ public:
     bool isGrounded;
     
     sf::RenderWindow& window;
+    sf::Clock powerUpTimer;
 
     BoundingBox boundingBox;
 

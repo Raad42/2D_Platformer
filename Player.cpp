@@ -176,6 +176,16 @@ void Player::update() {
         velocityX = 0; // Stop horizontal movement when right key is released
     }
 
+
+    if (isPowerUp == true && isDead == false){
+        sf::Time powerUpDuration = powerUpTimer.getElapsedTime();
+        if (powerUpDuration.asSeconds() >= 10) { // 10 seconds duration
+            runSpeed = 4; 
+            jumpVelocity = -35; 
+            set_texture("MarioIdle.png");
+            isPowerUp = false;
+        }
+    }
     // Check for collisions with the ground or obstacles and handle accordingly.
     // You'll need to implement collision detection and response here.
 
@@ -194,6 +204,7 @@ void Player::reset () {
     jumpVelocity = -35; 
     set_texture("MarioIdle.png");
     isDead = false; 
+    isPowerUp = false;
 }
 void Player::PowerUp(){
     jumpVelocity = -50;
@@ -201,4 +212,5 @@ void Player::PowerUp(){
     isPowerUp = true; 
     set_texture("BigMarioCrouch.png");
     boundingBox.update(sprite);
+    powerUpTimer.restart();
 }
