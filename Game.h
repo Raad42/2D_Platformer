@@ -15,21 +15,25 @@ private:
     sf::Font font;
     sf::Text text1;
     sf::Text text2;
+    sf::Text deathText;
+    sf::Text highScoreText;
 
     bool powerUpCollected[5];
 
     Player mario;
     BoundingBox boundingBoxMario;
-
-    Enemy goomba;
-
+    
     std::vector<sf::FloatRect> obstacleBounds;
     std::vector<sf::FloatRect> damagingObstacleBounds;
     std::vector<sf::FloatRect> powerUpBlocksBounds;
     MovingObstacle** movingObstacleBounds;
 
     Levels& levels;
-    GameStats gameStats;
+    
+    GameStats playerStats;
+
+    bool isGameEnded;
+    
 
 public:
     Game(sf::RenderWindow& window, Levels& levels);
@@ -41,8 +45,13 @@ public:
 
     void handleCollisions(); //  A separate function for collision handling
 
+    void savePlayerStats();
+    void loadPlayerStats();
+
+    void endGame();
 
 };
 
 
 #endif
+

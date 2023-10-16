@@ -8,7 +8,9 @@
 
 Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(levels),
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
-    boundingBoxMario(mario.getSprite()), goomba(500, 300, 32, 32, 100, 10, "Goomba", "goomba.png") {
+    boundingBoxMario(mario.getSprite()), playerStats(playerStats) { 
+
+    playerStats.setKills(0);
 
     mario.set_texture("MarioIdle.png");
     mario.x = 0;
@@ -32,10 +34,22 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     text2.setStyle(sf::Text::Bold | sf::Text::Underlined);
     text2.setPosition(5000.f, 300.f);
 
+    deathText.setFont(font);
+    deathText.setCharacterSize(30);
+    deathText.setFillColor(sf::Color::Red);
+    deathText.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    deathText.setPosition(-450.f, -100.f);
+
+    highScoreText.setFont(font);
+    highScoreText.setCharacterSize(30);
+    highScoreText.setFillColor(sf::Color::Red);
+    highScoreText.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    highScoreText.setPosition(-450.f, -50.f);
+    
+
     for (int i = 0; i < 5; i++){
         powerUpCollected[i] = false; 
     }
-    //mario.getSprite().setScale(5.f, 5.f);
 }
 
 
@@ -54,15 +68,25 @@ void Game::run() {
 
 void Game::handleInput() {
     sf::Event event;
+    bool loadStats = false; 
+
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
+            endGame();
             window.close();
         }
-        // Handle other user input events here.
+
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::H) {
+            loadStats = true; // Set the flag when 'H' key is pressed
+        }
     }
 
     // Handle input for player and other game entities.
     mario.handleInput();
+    
+    if (loadStats) {
+        loadPlayerStats(); // Call loadPlayerStats here if the flag is set
+    }
 }
 
 void Game::update() {
@@ -72,9 +96,15 @@ void Game::update() {
 
     boundingBoxMario.update(mario.getSprite());
 
-    goomba.move();
-
     levels.Update();
+
+    playerStats.update_high_score(mario.x);
+
+    deathText.setPosition(mario.x - 450, -100.f);
+    deathText.setString("Deaths: " + std::to_string(playerStats.getDeaths()));
+
+    highScoreText.setPosition(mario.x - 450, -50.f);
+    highScoreText.setString("High Score: " + std::to_string(static_cast<int>(playerStats.getScore())));
 
     handleCollisions();
 }
@@ -87,12 +117,6 @@ void Game::handleCollisions() {
     sf::FloatRect movingObstacleBounds1 = movingObstacles[0]->getBoundingbox();
     sf::FloatRect movingObstacleBounds2 = movingObstacles[1]->getBoundingbox();
     float movingX; 
-
-    // Check for collision with Goomba
-    if (marioBounds.intersects(goomba.getSprite().getGlobalBounds()) && goomba.alive()) {
-        mario.set_health(mario.get_health() - 10);  // Reduce Mario's health by 10, for example
-        goomba.setAlive(false);  // Set Goomba as defeated
-    }
 
     // Access obstacles and their bounding boxes through levels
     std::vector<Obstacle*>& obstacles = levels.getObstacles();
@@ -161,6 +185,10 @@ void Game::handleCollisions() {
         if (marioBounds.intersects(damagingObstacleBounds[i])&&mario.isPowerUp == false) {
             int health = mario.get_health();
             //mario.x = 0;
+            if (mario.deathAlreadyChecked == false){
+                playerStats.update_deaths();
+                mario.deathAlreadyChecked = true; 
+            }   
             
             mario.set_texture("MarioDeath.png");
             mario.isDead = true; 
@@ -176,11 +204,11 @@ void Game::handleCollisions() {
     }
 
      text1.setFillColor(sf::Color::Transparent);
-        if (marioBounds.intersects(obstacleBounds[5])){
+        if (marioBounds.intersects(obstacleBounds[31])){
             text1.setPosition(9800.f, 250.f);
             text1.setFillColor(sf::Color::Red);
             if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
-                std::cout << "Deaths on level 1: " << gameStats.getDeaths() << std::endl; 
+                std::cout << "Deaths on level 1: " << playerStats.getDeaths() << std::endl; 
                 levels.ClearLevel();
                 obstacleBounds.clear();
                 mario.x = 0;
@@ -226,6 +254,7 @@ void Game::handleCollisions() {
             mario.y = brickTopY - marioBounds.height;
             mario.velocityY = -1; //Oppose gravity
         }
+
         //If mario collides with spike, mario dies and sprite chnages
         if (marioBounds.intersects(obstacleBounds[4])) {
             int health = mario.get_health();
@@ -251,8 +280,6 @@ void Game::render() {
     window.clear();
 
     levels.Render(window);
-    goomba.draw(window);
-
 
     window.draw(mario.getSprite());
 
@@ -260,6 +287,22 @@ void Game::render() {
 
     window.draw(text1);
     window.draw(text2);
+    
+    window.draw(deathText);
+    window.draw(highScoreText);
 
     window.display();
+}
+
+void Game::savePlayerStats() {
+    playerStats.saveToFile("player_stats.txt");
+}
+
+void Game::loadPlayerStats() {
+    playerStats.printLast10GameStats("player_stats.txt");
+}
+
+void Game::endGame() {
+    savePlayerStats();
+    isGameEnded = true;
 }

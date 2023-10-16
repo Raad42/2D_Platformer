@@ -28,6 +28,7 @@ Player::Player(int x, int y, int width, int height, float scale, int health, int
     isMovingRight = false;
     isJumping = false;
     isGrounded = true;
+    deathAlreadyChecked = false;
 
 }
 
@@ -211,6 +212,7 @@ void Player::reset () {
     isPowerUp = false;
     gameStats.update_deaths();
     std::cout << gameStats.getDeaths();
+    deathAlreadyChecked = false;
 }
 void Player::PowerUp(){
     jumpVelocity = -50;

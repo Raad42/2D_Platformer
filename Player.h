@@ -28,6 +28,7 @@ public:
     bool isMovingRight;
     bool isJumping;
     bool isGrounded;
+    bool deathAlreadyChecked;
     
     sf::RenderWindow& window;
     sf::Clock powerUpTimer;
