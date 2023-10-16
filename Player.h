@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "Character.h"
+#include "GameStats.h"
 #include "BoundingBox.h"
 #include <SFML/Graphics.hpp>
 
@@ -30,7 +31,8 @@ public:
     
     sf::RenderWindow& window;
     sf::Clock powerUpTimer;
-
+    
+    GameStats gameStats;
     BoundingBox boundingBox;
 
 public:

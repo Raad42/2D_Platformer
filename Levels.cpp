@@ -307,7 +307,7 @@ void Levels::LoadLevel1() {
     lava1->getSprite().setScale(1.f, 1.f);
     lava1->getSprite().setPosition(700, 790);
 
-    lava2->getSprite().setScale(0.15f, 1.f);
+    lava2->getSprite().setScale(0.1f, 1.f);
     lava2->getSprite().setPosition(2000, 790);
 
     lava3->getSprite().setScale(1.f, 1.f);
@@ -491,10 +491,21 @@ void Levels::ClearLevel() {
     for (auto obstacle : obstacles) {
         delete obstacle;
     }
+
     obstacles.clear();
 
     for (auto boundingBox : BoundingBoxes) {
         delete boundingBox;
     }
+
+    for (auto damagingObstacle : damagingObstacles) {
+        delete damagingObstacle;
+    }
+    
+    damagingObstacles.clear();
+
+
+
+    
     BoundingBoxes.clear();
 }

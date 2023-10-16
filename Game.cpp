@@ -11,8 +11,7 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     boundingBoxMario(mario.getSprite()), goomba(500, 300, 32, 32, 100, 10, "Goomba", "goomba.png") {
 
     mario.set_texture("MarioIdle.png");
-    mario.x = 1500;
-
+    mario.x = 0;
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {
         std::cout << "faield to load font" << std::endl;
@@ -84,6 +83,7 @@ void Game::update() {
 void Game::handleCollisions() {
     sf::FloatRect marioBounds = mario.getBoundingbox();
     MovingObstacle** movingObstacles = levels.getmovingObstacles();
+  
     sf::FloatRect movingObstacleBounds1 = movingObstacles[0]->getBoundingbox();
     sf::FloatRect movingObstacleBounds2 = movingObstacles[1]->getBoundingbox();
     float movingX; 
@@ -139,11 +139,29 @@ void Game::handleCollisions() {
         }
     }
 
+    for (int i = 0; i < 2; i++){
+        if (i % 2 != 0) {
+            if (marioBounds.intersects(movingObstacles[i]->getBoundingbox())) {
+            mario.velocityY = 2;
+            }
+        } else {
+            if (marioBounds.intersects(movingObstacles[i]->getBoundingbox())) {
+                mario.isGrounded = true;
+                mario.isJumping = false;
+                float brickTopY;
+                brickTopY = movingObstacles[i]->getBoundingbox().top + 1;
+                // Set Mario's position to the top of the brick
+                mario.y = brickTopY - marioBounds.height;
+                mario.velocityY = -1; // Oppose gravity
+            }
+        }
+    }
+
     for (size_t i = 0; i < damagingObstacles.size(); ++i){
         if (marioBounds.intersects(damagingObstacleBounds[i])&&mario.isPowerUp == false) {
             int health = mario.get_health();
             //mario.x = 0;
-            gameStats.update_deaths();
+            
             mario.set_texture("MarioDeath.png");
             mario.isDead = true; 
         }
@@ -156,6 +174,19 @@ void Game::handleCollisions() {
             PowerUpBlocks[i]->dropPowerUp();
         }
     }
+
+     text1.setFillColor(sf::Color::Transparent);
+        if (marioBounds.intersects(obstacleBounds[5])){
+            text1.setPosition(9800.f, 250.f);
+            text1.setFillColor(sf::Color::Red);
+            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
+                std::cout << "Deaths on level 1: " << gameStats.getDeaths() << std::endl; 
+                levels.ClearLevel();
+                obstacleBounds.clear();
+                mario.x = 0;
+                levels.levelLoadFunctions[1]();
+            }
+        }
 
         // powerup Block
         /*if (marioBounds.intersects(obstacleBounds[6]) && powerUpCollected[0] == false){
@@ -211,18 +242,7 @@ void Game::handleCollisions() {
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
         }*/
-        /*text1.setFillColor(sf::Color::Transparent);
-        if (marioBounds.intersects(obstacleBounds[5])){
-            text1.setPosition(9800.f, 250.f);
-            text1.setFillColor(sf::Color::Red);
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
-                std::cout << "Deaths on level 1: " << gameStats.getDeaths() << std::endl; 
-                levels.ClearLevel();
-                obstacleBounds.clear();
-                mario.x = 0;
-                levels.levelLoadFunctions[1]();
-            }
-        }*/
+       
 
     }
 

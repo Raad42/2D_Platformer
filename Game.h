@@ -26,6 +26,7 @@ private:
     std::vector<sf::FloatRect> obstacleBounds;
     std::vector<sf::FloatRect> damagingObstacleBounds;
     std::vector<sf::FloatRect> powerUpBlocksBounds;
+    MovingObstacle** movingObstacleBounds;
 
     Levels& levels;
     GameStats gameStats;
