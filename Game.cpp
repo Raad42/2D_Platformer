@@ -145,8 +145,8 @@ void Game::handleCollisions() {
         text1.setFillColor(sf::Color::Red);
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
             //levels.~Levels();
-            //levels.ClearLevel();
-            obstacleBounds.clear();
+            levels.ClearLevel();
+            //obstacleBounds.clear();
             mario.x = 0;
             mario.reset();
             levels.levelLoadFunctions[1]();
@@ -157,7 +157,6 @@ void Game::handleCollisions() {
         if (marioBounds.intersects(damagingObstacleBounds[i])&&mario.isPowerUp == false) {
             int health = mario.get_health();
             //mario.x = 0;
-            playerStats.update_deaths();
             mario.set_texture("MarioDeath.png");
             mario.isDead = true; 
         }

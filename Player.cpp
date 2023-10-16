@@ -3,10 +3,11 @@
 #include "BoundingBox.h"
 #include "Entity.h"
 #include "Levels.h"
+#include "GameStats.h"
 
 
 Player::Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window)
-    : Character(x, y, width, height, health, damage, name), scale(scale), window(window), boundingBox(sprite) {
+    : Character(x, y, width, height, health, damage, name), scale(scale), window(window), boundingBox(sprite), playerStats(playerStats) {
     x = 0;
     y = 0;
     jumpVelocity = -35;
@@ -205,6 +206,8 @@ void Player::reset () {
     set_texture("MarioIdle.png");
     isDead = false; 
     isPowerUp = false;
+    playerStats.update_deaths();
+
 }
 void Player::PowerUp(){
     jumpVelocity = -50;

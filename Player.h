@@ -3,6 +3,7 @@
 
 #include "Character.h"
 #include "BoundingBox.h"
+#include "GameStats.h"
 #include <SFML/Graphics.hpp>
 
 class Player : public Character {
@@ -32,6 +33,8 @@ public:
     sf::Clock powerUpTimer;
 
     BoundingBox boundingBox;
+
+    GameStats playerStats;
 
 public:
     Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window);

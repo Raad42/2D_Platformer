@@ -760,10 +760,19 @@ void Levels::ClearLevel() {
     for (auto obstacle : obstacles) {
         delete obstacle;
     }
-    obstacles.clear();
-
     for (auto boundingBox : BoundingBoxes) {
         delete boundingBox;
     }
+
+    for (int i = 0; i < 2; i++){
+        delete movingObstacles[i];
+        delete movingObstacleBoundingbox[i];
+    }
+
+    for (auto powerUpBlock : PowerUpBlocks) {
+        delete powerUpBlock;
+    }
     BoundingBoxes.clear();
+    BoundingBoxesDamagingObstacles.clear();
+    BoundingBoxesPowerUpBlocks.clear();
 }

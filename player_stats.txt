@@ -8,3 +8,7 @@ Enemies Killed: -1104743128; Deaths: -30687454; High Score: 32602
 Enemies Killed: 603563304; Deaths: 16765509; High Score: 32640
 Enemies Killed: 1985672488; Deaths: 55157423; High Score: 32714
 Enemies Killed: -657570520; Deaths: -18265697; High Score: 32594
+Enemies Killed: -1140292312; Deaths: -31674932; High Score: 32762
+Enemies Killed: -730266328; Deaths: -20285321; High Score: 32686
+Enemies Killed: 2043155752; Deaths: 56754180; High Score: 32551
+Enemies Killed: -1393588952; Deaths: -38710950; High Score: 32728

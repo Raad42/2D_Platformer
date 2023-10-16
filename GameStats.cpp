@@ -14,6 +14,7 @@ void GameStats::update_enemies_killed() {
 }
 
 void GameStats::update_deaths() {
+    this->deaths = deaths;
     deaths++;
 }
 
