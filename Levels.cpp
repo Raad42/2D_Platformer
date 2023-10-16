@@ -26,7 +26,7 @@ void Levels::LoadLevel1() {
     DamagingObstacle* spike1 = new DamagingObstacle(400, 600, 64, 64, window, 10);
     DamagingObstacle* lava1 = new DamagingObstacle(400, 600, 64, 64, window, 10);
 
-    PowerUpBlock* powerUpBlock = new PowerUpBlock(400, 600, 64, 64, window, 99);
+    PowerUpBlock* powerUpBlock = new PowerUpBlock(1500, 600, 64, 64, window, 99);
 
     movingObstacles = new MovingObstacle*[2];
     movingObstacles[0] = new MovingObstacle(700, 500, 64, 64, window, 2, 0, 90, 600);
@@ -115,7 +115,7 @@ void Levels::LoadLevel1() {
     flag->getSprite().setPosition(1000, 530);
     
     powerUpBlock->getSprite().setScale(3.0f, 3.0f);
-    powerUpBlock->getSprite().setPosition(1000, 600);
+    powerUpBlock->getSprite().setPosition(1500, 600);
 
     
     if (!backgroundTexture.loadFromFile("Level2BG.png")) {
