@@ -11,7 +11,7 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     boundingBoxMario(mario.getSprite()), playerStats(playerStats) { 
 
     mario.set_texture("MarioIdle.png");
-    mario.x = 0;
+    mario.x = 1500;
 
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {
@@ -36,7 +36,6 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     for (int i = 0; i < 5; i++){
         powerUpCollected[i] = false; 
     }
-    //mario.getSprite().setScale(5.f, 5.f);
 }
 
 
@@ -61,9 +60,6 @@ void Game::handleInput() {
         if (event.type == sf::Event::Closed) {
             endGame();
             window.close();
-        }
-        if (isGameEnded) {
-            savePlayerStats();
         }
 
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::H) {
@@ -143,6 +139,19 @@ void Game::handleCollisions() {
             }
         }
     }
+    text1.setFillColor(sf::Color::Transparent);
+    if (marioBounds.intersects(obstacleBounds[4])){
+        text1.setPosition(9800.f, 250.f);
+        text1.setFillColor(sf::Color::Red);
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
+            //levels.~Levels();
+            //levels.ClearLevel();
+            obstacleBounds.clear();
+            mario.x = 0;
+            mario.reset();
+            levels.levelLoadFunctions[1]();
+        }
+    }
 
     for (size_t i = 0; i < damagingObstacles.size(); ++i){
         if (marioBounds.intersects(damagingObstacleBounds[i])&&mario.isPowerUp == false) {
@@ -217,17 +226,6 @@ void Game::handleCollisions() {
             }
             // std::cout << "Collision " << mario.get_health() << std::endl;
         }*/
-        // text1.setFillColor(sf::Color::Transparent);
-        // if (marioBounds.intersects(obstacleBounds[5])){
-        //     text1.setPosition(9800.f, 250.f);
-        //     text1.setFillColor(sf::Color::Red);
-        //     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
-        //         levels.ClearLevel();
-        //         obstacleBounds.clear();
-        //         mario.x = 0;
-        //         levels.levelLoadFunctions[1]();
-        //     }
-        // }
 
     }
 
@@ -256,5 +254,6 @@ void Game::loadPlayerStats() {
 }
 
 void Game::endGame() {
+    savePlayerStats();
     isGameEnded = true;
 }

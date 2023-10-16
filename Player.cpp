@@ -10,7 +10,7 @@ Player::Player(int x, int y, int width, int height, float scale, int health, int
     x = 0;
     y = 0;
     jumpVelocity = -35;
-    runSpeed = 4; 
+    runSpeed = 5; 
     velocityX = 0;
     velocityY = 0;
     accelerationX = 0;
@@ -179,8 +179,8 @@ void Player::update() {
 
     if (isPowerUp == true && isDead == false){
         sf::Time powerUpDuration = powerUpTimer.getElapsedTime();
-        if (powerUpDuration.asSeconds() >= 10) { // 10 seconds duration
-            runSpeed = 4; 
+        if (powerUpDuration.asSeconds() >= 1000) { // 10 seconds duration
+            runSpeed = 5; 
             jumpVelocity = -35; 
             set_texture("MarioIdle.png");
             isPowerUp = false;
@@ -200,7 +200,7 @@ void Player::update() {
 void Player::reset () {
     x = 0; 
     y = 100;
-    runSpeed = 4; 
+    runSpeed = 5; 
     jumpVelocity = -35; 
     set_texture("MarioIdle.png");
     isDead = false; 
