@@ -1,32 +1,16 @@
 #include "Enemy.h"
 #include <iostream>
 
-Enemy::Enemy(int x, int y, int width, int height, int health, int damage, const std::string& name, const std::string& texturePath)
-    : Character(x, y, width, height, health, damage, name), isAlive(true) {
-    if(!texture.loadFromFile(texturePath)) {
-        std::cerr << "Error loading texture from " << texturePath << std::endl;
-    }
-    sprite.setTexture(texture);
-    sprite.setPosition(x, y);
-}
-
-Enemy::Enemy() : Character(0, 0, 0, 0, 0, 0, ""), isAlive(true) {
-    // The default constructor remains empty since you don't have specific logic here.
+Enemy::Enemy(int x, int y, int width, int height, sf::RenderWindow& window)
+    : Obstacle(x, y, width, height, window), isAlive(true) {
 }
 
 void Enemy::move() {
-    sprite.move(-1, 0);
-    if (sprite.getPosition().x + sprite.getGlobalBounds().width < 0) {
-        isAlive = false;
-    }
-}
-
-void Enemy::attack() {
-    // Logic for enemy attack (not implemented here)
+    // Implement enemy movement logic here
 }
 
 void Enemy::draw(sf::RenderWindow& window) {
-    window.draw(sprite);
+    window.draw(getSprite());
 }
 
 void Enemy::setAlive(bool status) {

@@ -6,7 +6,7 @@
 class GameStats {
 private:
     int enemies_killed;
-    int high_score;
+    float high_score;
     int deaths;
 
 
@@ -15,11 +15,13 @@ public:
 
     void update_enemies_killed();
     void update_deaths();
-    void update_high_score(int score);
+    void update_high_score(float score);
 
     int getKills();
     int getDeaths();
-    int getScore();
+    float getScore();
+
+    void setKills(int enemies_killedIn);
 
     // Function to save game statistics to a file
     void saveToFile(const std::string& filename);

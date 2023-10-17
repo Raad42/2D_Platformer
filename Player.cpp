@@ -5,20 +5,22 @@
 #include "Levels.h"
 #include "GameStats.h"
 
+#include <iostream>
+
 
 Player::Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window)
     : Character(x, y, width, height, health, damage, name), scale(scale), window(window), boundingBox(sprite), playerStats(playerStats) {
     x = 0;
     y = 0;
-    jumpVelocity = -35;
+    jumpVelocity = -40;
     runSpeed = 5; 
     velocityX = 0;
     velocityY = 0;
     accelerationX = 0;
     accelerationY = 0;
     
-    
     gravity = 1;
+
 
     isDead = false; 
     isPowerUp = false; 
@@ -26,6 +28,7 @@ Player::Player(int x, int y, int width, int height, float scale, int health, int
     isMovingRight = false;
     isJumping = false;
     isGrounded = true;
+    deathAlreadyChecked = false;
 
 }
 
@@ -98,6 +101,7 @@ void Player::handleInput() {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)&& isDead == true){
        reset();
+
     }
     // You can add more input handling here for other actions.
 
@@ -182,7 +186,7 @@ void Player::update() {
         sf::Time powerUpDuration = powerUpTimer.getElapsedTime();
         if (powerUpDuration.asSeconds() >= 1000) { // 10 seconds duration
             runSpeed = 5; 
-            jumpVelocity = -35; 
+            jumpVelocity = -40; 
             set_texture("MarioIdle.png");
             isPowerUp = false;
         }
@@ -202,12 +206,13 @@ void Player::reset () {
     x = 0; 
     y = 100;
     runSpeed = 5; 
-    jumpVelocity = -35; 
+    jumpVelocity = -40; 
     set_texture("MarioIdle.png");
     isDead = false; 
     isPowerUp = false;
-    playerStats.update_deaths();
-
+    gameStats.update_deaths();
+    std::cout << gameStats.getDeaths();
+    deathAlreadyChecked = false;
 }
 void Player::PowerUp(){
     jumpVelocity = -50;

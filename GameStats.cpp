@@ -18,10 +18,14 @@ void GameStats::update_deaths() {
     deaths++;
 }
 
-void GameStats::update_high_score(int score) {
+void GameStats::update_high_score(float score) {
     if (score > high_score) {
         high_score = score;
     }
+}
+
+void GameStats::setKills(int enemies_killedIn) {
+    enemies_killed = enemies_killedIn;
 }
 
 int GameStats::getKills() {
@@ -29,10 +33,10 @@ int GameStats::getKills() {
 }
 
 int GameStats::getDeaths() {
-    return deaths / 36;
+    return deaths ;
 }
 
-int GameStats::getScore() {
+float GameStats::getScore() {
     return high_score;
 }
 

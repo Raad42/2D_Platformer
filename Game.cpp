@@ -10,9 +10,10 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
     boundingBoxMario(mario.getSprite()), playerStats(playerStats) { 
 
-    mario.set_texture("MarioIdle.png");
-    mario.x = 1500;
+    playerStats.setKills(0);
 
+    mario.set_texture("MarioIdle.png");
+    mario.x = 0;
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {
         std::cout << "faield to load font" << std::endl;
@@ -32,6 +33,19 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     text2.setFillColor(sf::Color::Red);
     text2.setStyle(sf::Text::Bold | sf::Text::Underlined);
     text2.setPosition(5000.f, 300.f);
+
+    deathText.setFont(font);
+    deathText.setCharacterSize(30);
+    deathText.setFillColor(sf::Color::Red);
+    deathText.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    deathText.setPosition(-450.f, -100.f);
+
+    highScoreText.setFont(font);
+    highScoreText.setCharacterSize(30);
+    highScoreText.setFillColor(sf::Color::Red);
+    highScoreText.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    highScoreText.setPosition(-450.f, -50.f);
+    
 
     for (int i = 0; i < 5; i++){
         powerUpCollected[i] = false; 
@@ -84,6 +98,14 @@ void Game::update() {
 
     levels.Update();
 
+    playerStats.update_high_score(mario.x);
+
+    deathText.setPosition(mario.x - 450, -100.f);
+    deathText.setString("Deaths: " + std::to_string(playerStats.getDeaths()));
+
+    highScoreText.setPosition(mario.x - 450, -50.f);
+    highScoreText.setString("High Score: " + std::to_string(static_cast<int>(playerStats.getScore())));
+
     handleCollisions();
 }
 
@@ -91,8 +113,10 @@ void Game::update() {
 void Game::handleCollisions() {
     sf::FloatRect marioBounds = mario.getBoundingbox();
     MovingObstacle** movingObstacles = levels.getmovingObstacles();
+  
     sf::FloatRect movingObstacleBounds1 = movingObstacles[0]->getBoundingbox();
     sf::FloatRect movingObstacleBounds2 = movingObstacles[1]->getBoundingbox();
+    sf::FloatRect movingObstacleBounds3 = movingObstacles[2]->getBoundingbox();
     float movingX; 
 
     // Access obstacles and their bounding boxes through levels
@@ -139,17 +163,22 @@ void Game::handleCollisions() {
             }
         }
     }
-    text1.setFillColor(sf::Color::Transparent);
-    if (marioBounds.intersects(obstacleBounds[4])){
-        text1.setPosition(9800.f, 250.f);
-        text1.setFillColor(sf::Color::Red);
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
-            //levels.~Levels();
-            levels.ClearLevel();
-            //obstacleBounds.clear();
-            mario.x = 0;
-            mario.reset();
-            levels.levelLoadFunctions[1]();
+
+    for (int i = 0; i < 2; i++){
+        if (i % 2 != 0) {
+            if (marioBounds.intersects(movingObstacles[i]->getBoundingbox())) {
+            mario.velocityY = 2;
+            }
+        } else {
+            if (marioBounds.intersects(movingObstacles[i]->getBoundingbox())) {
+                mario.isGrounded = true;
+                mario.isJumping = false;
+                float brickTopY;
+                brickTopY = movingObstacles[i]->getBoundingbox().top + 1;
+                // Set Mario's position to the top of the brick
+                mario.y = brickTopY - marioBounds.height;
+                mario.velocityY = -1; // Oppose gravity
+            }
         }
     }
 
@@ -157,6 +186,11 @@ void Game::handleCollisions() {
         if (marioBounds.intersects(damagingObstacleBounds[i])&&mario.isPowerUp == false) {
             int health = mario.get_health();
             //mario.x = 0;
+            if (mario.deathAlreadyChecked == false){
+                playerStats.update_deaths();
+                mario.deathAlreadyChecked = true; 
+            }   
+            
             mario.set_texture("MarioDeath.png");
             mario.isDead = true; 
         }
@@ -170,63 +204,19 @@ void Game::handleCollisions() {
         }
     }
 
-        // powerup Block
-        /*if (marioBounds.intersects(obstacleBounds[6]) && powerUpCollected[0] == false){
-            powerUpCollected[0] = true;
-            if (marioBounds.top > (obstacleBounds[6].width)) {
-                mario.velocityY = 4;
-                int health = dynamic_cast<PowerUpBlock*>(obstacles[6])->get_health();
-                health = health - 10;
-                if (health <= 0) {
-                    dynamic_cast<PowerUpBlock*>(obstacles[6])->dropPowerUp();
-                }
-
+     text1.setFillColor(sf::Color::Transparent);
+        if (marioBounds.intersects(obstacleBounds[31])){
+            text1.setPosition(9800.f, 250.f);
+            text1.setFillColor(sf::Color::Red);
+            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::N))) {
+                std::cout << "Deaths on level 1: " << playerStats.getDeaths() << std::endl; 
+                levels.ClearLevel();
+                obstacleBounds.clear();
+                mario.x = 0;
+                levels.levelLoadFunctions[1]();
             }
-        }*/
-        /*// When he hits his head on the bottom
-        if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])||marioBounds.intersects(movingObstacleBounds2)) {
-            mario.velocityY = 2;
         }
-        // When he lands on the brick
-        if (marioBounds.intersects(obstacleBounds[1])||marioBounds.intersects(obstacleBounds[3])||marioBounds.intersects(movingObstacleBounds1)) {
-            mario.isGrounded = true;
-            mario.isJumping = false;
-            float brickTopY;
-        
-            if (marioBounds.intersects(obstacleBounds[1])){
-                brickTopY = obstacleBounds[1].top+1;
-            }
-
-            else  if (marioBounds.intersects(movingObstacleBounds1)){
-                brickTopY = movingObstacleBounds1.top+1;
-            }
-            else{
-                brickTopY = obstacleBounds[3].top+1;
-            }
-        
-            // Set Mario's position to the top of the brick
-            mario.y = brickTopY - marioBounds.height;
-            mario.velocityY = -1; //Oppose gravity
-        }
-
-        //If mario collides with spike, mario dies and sprite chnages
-        if (marioBounds.intersects(obstacleBounds[4])) {
-            int health = mario.get_health();
-            //mario.x = 0;
-            gameStats.update_deaths();
-            if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
-                // Access the get_damage function through the obstacle
-                int damage = dynamic_cast<DamagingObstacle*>(obstacles[4])->get_damage();
-                health -= damage;
-                mario.set_health(health);
-                mario.set_texture("MarioDeath.png");
-                mario.isDead = true; 
-
-            }
-            // std::cout << "Collision " << mario.get_health() << std::endl;
-        }*/
-
-    }
+}
 
 
 void Game::render() {
@@ -240,6 +230,9 @@ void Game::render() {
 
     window.draw(text1);
     window.draw(text2);
+    
+    window.draw(deathText);
+    window.draw(highScoreText);
 
     window.display();
 }

@@ -33,8 +33,6 @@ private:
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
 
-    Enemy goomba;
-
 public:
     Levels(sf::RenderWindow& window);
     ~Levels();

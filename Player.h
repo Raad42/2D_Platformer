@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "Character.h"
+#include "GameStats.h"
 #include "BoundingBox.h"
 #include "GameStats.h"
 #include <SFML/Graphics.hpp>
@@ -28,10 +29,12 @@ public:
     bool isMovingRight;
     bool isJumping;
     bool isGrounded;
+    bool deathAlreadyChecked;
     
     sf::RenderWindow& window;
     sf::Clock powerUpTimer;
-
+    
+    GameStats gameStats;
     BoundingBox boundingBox;
 
     GameStats playerStats;

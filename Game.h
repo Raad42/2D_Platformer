@@ -15,6 +15,8 @@ private:
     sf::Font font;
     sf::Text text1;
     sf::Text text2;
+    sf::Text deathText;
+    sf::Text highScoreText;
 
     bool powerUpCollected[5];
 
@@ -24,13 +26,14 @@ private:
     std::vector<sf::FloatRect> obstacleBounds;
     std::vector<sf::FloatRect> damagingObstacleBounds;
     std::vector<sf::FloatRect> powerUpBlocksBounds;
+    MovingObstacle** movingObstacleBounds;
 
     Levels& levels;
     
     GameStats playerStats;
 
     bool isGameEnded;
-
+    
 
 public:
     Game(sf::RenderWindow& window, Levels& levels);
