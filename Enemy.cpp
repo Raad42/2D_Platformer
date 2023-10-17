@@ -6,7 +6,8 @@ Enemy::Enemy(int x, int y, int width, int height, sf::RenderWindow& window)
 }
 
 void Enemy::move() {
-    // Implement enemy movement logic here
+    // moves by 1 
+    sprite.move(1,0);
 }
 
 void Enemy::draw(sf::RenderWindow& window) {

@@ -8,6 +8,7 @@ PowerUpBlock::PowerUpBlock(int x, int y, int width, int height, sf::RenderWindow
 void PowerUpBlock::onCollision(Player& player) {
 }
 
+// move sprite out of bounds when powerup drops
 void PowerUpBlock::dropPowerUp(){
     sprite.setPosition(0.f, -1000.f);
     isCollected = true; 
@@ -25,6 +26,7 @@ bool PowerUpBlock::get_IsCollected(){
     return isCollected; 
 }
 
+// change when powerup is collected
 void PowerUpBlock::set_IsCollected(bool isCollected){
     this->isCollected = isCollected;
 }

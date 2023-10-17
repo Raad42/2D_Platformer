@@ -20,4 +20,4 @@ public:
     Obstacle brick;
 };
 
-#endif  // GAME_H
+#endif

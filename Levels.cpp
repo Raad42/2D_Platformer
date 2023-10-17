@@ -383,7 +383,7 @@ void Levels::Render(sf::RenderWindow& window) {
     for (size_t i = 0; i < obstacles.size(); ++i) {
         window.draw(obstacles[i]->getSprite()); // Draw the obstacle sprite
 
-        // Draw the bounding box using your BoundingBox class
+        // Draw the bounding box using BoundingBox class
         BoundingBoxes[i]->draw(window);
 
     }
@@ -391,7 +391,7 @@ void Levels::Render(sf::RenderWindow& window) {
     for (size_t i = 0; i < damagingObstacles.size(); ++i) {
         window.draw(damagingObstacles[i]->getSprite()); // Draw the obstacle sprite
 
-        // Draw the bounding box using your BoundingBox class
+        // Draw the bounding box using BoundingBox class
         BoundingBoxesDamagingObstacles[i]->draw(window);
     }
 
@@ -406,6 +406,7 @@ void Levels::Render(sf::RenderWindow& window) {
     }
 }
 
+// destructor deletes everything
 Levels::~Levels(){
     for (auto obstacle : obstacles) {
         delete obstacle;

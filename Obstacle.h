@@ -6,6 +6,7 @@
 
 class Obstacle : public Entity {
 private:
+    // allows obstacles to be displayed in window
     sf::RenderWindow& window;
 public:
     Obstacle();

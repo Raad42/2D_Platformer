@@ -35,6 +35,7 @@ int Entity::get_height() {
     return this->height;
 }
 
+// loads texture and applies it to the sprite
 void Entity::set_texture(const std::string& texturePath) {
     if (!texture.loadFromFile(texturePath)) {
         std::cout << "Failed to load texture from file: " << texturePath << std::endl;

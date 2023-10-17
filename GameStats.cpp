@@ -41,7 +41,7 @@ float GameStats::getScore() {
 }
 
 void GameStats::saveToFile(const std::string& filename) {
-    std::ofstream outputFile(filename, std::ios::app); // Open in append mode
+    std::ofstream outputFile(filename, std::ios::app); // open file in append mode
 
     if (outputFile.is_open()) {
         outputFile << "Enemies Killed: " << getKills() << "; " << "Deaths: " << getDeaths() << "; " << "High Score: " << getScore() << "\n";
@@ -70,6 +70,7 @@ void GameStats::printLast10GameStats(const std::string& filename) {
         std::vector<std::string> gameStats;
         bool inGameEntry = false;
 
+        // adds all entries into vector
         while (std::getline(inputFile, line)) {
                 gameStats.push_back(line);
                 inGameEntry = true;

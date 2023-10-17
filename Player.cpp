@@ -21,13 +21,12 @@ Player::Player(int x, int y, int width, int height, float scale, int health, int
     
     gravity = 1;
 
-
     isDead = false; 
     isPowerUp = false; 
     isMovingLeft = false;
     isMovingRight = false;
     isJumping = false;
-    isGrounded = true;
+    isGrounded = true; // true as he starts on the ground
     deathAlreadyChecked = false;
 
 }
@@ -50,19 +49,14 @@ void Player::moveRight() {
 
 void Player::jump() {
     if (!isJumping) {  // Check if the player is not already jumping
-        velocityY = jumpVelocity; // Adjust the jump velocity as needed
+        velocityY = jumpVelocity; // moves upwards
         isJumping = true;
         isGrounded = false;
     }
 }
 
 void Player::fall() {
-    velocityY = gravity;
-}
-
-
-void Player::attack() {
-    // Implement attack logic here.
+    velocityY = gravity; // falls down
 }
 
 bool Player::getIsMovingLeft() { 
@@ -88,24 +82,17 @@ void Player::handleInput() {
             // If neither left nor right keys are pressed, stop horizontal movement.
             velocityX = 0;
         }
-
+        // flag that stops repeated jumping if spamming/holding space
         static bool spacePressedLastFrame = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !spacePressedLastFrame) {
             jump();
         }
         spacePressedLastFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-            attack();
-        }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)&& isDead == true){
        reset();
 
     }
-    // You can add more input handling here for other actions.
-
-    // Update other player-specific input handling if needed.
 }
 
 void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
@@ -115,6 +102,7 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
     if (y < window.getSize().y && !isGrounded) {
         velocityY += gravity;
     }
+    // stops from falling through floor
     else if (y >= window.getSize().y) {
         y = window.getSize().y;
         velocityY = 0;  // Stop vertical movement when the sprite hits the ground
@@ -140,7 +128,7 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
         velocityY = 0;  // Stop vertical movement when the sprite hits the bottom border
         isJumping = false;
     }
-    
+    // updates collision box when he moves
     boundingBox.update(sprite);
     }
     
@@ -166,6 +154,7 @@ void Player::update() {
     }
     spacePressedLastFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
+    // update sprite width and height
     float playerWidth = sprite.getLocalBounds().width * scale;
     float playerHeight = sprite.getLocalBounds().height * scale;
 
@@ -181,7 +170,7 @@ void Player::update() {
         velocityX = 0; // Stop horizontal movement when right key is released
     }
 
-
+    // powerup 
     if (isPowerUp == true && isDead == false){
         sf::Time powerUpDuration = powerUpTimer.getElapsedTime();
         if (powerUpDuration.asSeconds() >= 1000) { // 10 seconds duration
@@ -191,17 +180,17 @@ void Player::update() {
             isPowerUp = false;
         }
     }
-    // Check for collisions with the ground or obstacles and handle accordingly.
-    // You'll need to implement collision detection and response here.
 
-    // Update other game-specific logic, animations, etc.
+    // Update sprite scale
     sprite.setScale(scale, scale);
 
+    // updates movement and sets sprite position accordingly
     updateMovement(sprite, window);
     sprite.setPosition(x,y);
 
 }
 
+// function to reset player to default settings after death
 void Player::reset () {
     x = 0; 
     y = 100;
@@ -214,6 +203,8 @@ void Player::reset () {
     std::cout << gameStats.getDeaths();
     deathAlreadyChecked = false;
 }
+
+// function that alters marios attributes and changes texture
 void Player::PowerUp(){
     jumpVelocity = -50;
     runSpeed = 6; 
