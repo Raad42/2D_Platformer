@@ -9,6 +9,7 @@
 
 class Player : public Character {
 public:
+    // attributes for mario position, size, movement etc
     float x;
     float y;
     float xBefore; 
@@ -21,8 +22,10 @@ public:
     float runSpeed; 
     float scale; 
 
+    // gravity value (change if more gravity wanted)
     float gravity = 1;
 
+    // flags to check for mario specific actions
     bool isDead;
     bool isPowerUp; 
     bool isMovingLeft;
@@ -43,23 +46,26 @@ public:
     Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window);
     Player();
 
+    // movement functions
     void moveLeft();
     void moveRight();
     void jump();
     void fall();
-    //void takeDamage();
-    void attack(); 
-    void die(); //Code this part
+
+    // functions altering marios position when dying or using powerup
     void reset();
     void PowerUp();
 
+    // handle input and update mario
     void handleInput();
     void update();
 
+    // flags that allow for movement
     bool getIsMovingLeft();
     bool getIsMovingRight();
     bool getIsJumping();
 
+    // updates mario when he moves
     void updateMovement(sf::Sprite& sprite, sf::RenderWindow& window);
 
     // Getter function to get the local bounds

@@ -6,13 +6,12 @@
 class DamagingObstacle : public Obstacle {
 private:
     int damage;
-    // Add damaging obstacle-specific members here.
 public:
     DamagingObstacle(int x, int y, int width, int height, sf::RenderWindow& window, int damageIn);
     
+    // getters and setters
     void set_damage(int damageIn);
     int  get_damage();
-    // Additional attributes and methods for damaging obstacles.
 };
 
 

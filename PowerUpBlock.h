@@ -18,8 +18,6 @@ public:
 
     bool get_IsCollected();
     void set_IsCollected(bool isCollected);
-    // Additional attributes and methods specific to power-up blocks.
-
 };
 
 #endif

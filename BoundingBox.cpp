@@ -1,6 +1,7 @@
 #include "BoundingBox.h"
 
 BoundingBox::BoundingBox(const sf::Sprite& sprite) {
+    // gets the box bounds and creates a bounding box
     rect = sprite.getGlobalBounds();
     shape.setSize(sf::Vector2f(rect.width, rect.height));
     shape.setPosition(rect.left, rect.top);
@@ -10,6 +11,7 @@ BoundingBox::BoundingBox(const sf::Sprite& sprite) {
 }
 
 void BoundingBox::update(const sf::Sprite& sprite) {
+    // changes to bounding box gets updated when moved
     rect = sprite.getGlobalBounds();
     shape.setSize(sf::Vector2f(rect.width, rect.height));
     shape.setPosition(rect.left, rect.top);

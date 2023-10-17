@@ -5,14 +5,15 @@
 
 class GameStats {
 private:
+    // stats being tracked
     int enemies_killed;
     float high_score;
     int deaths;
 
-
 public:
     GameStats();
 
+    // getters and setters
     void update_enemies_killed();
     void update_deaths();
     void update_high_score(float score);
@@ -21,6 +22,7 @@ public:
     int getDeaths();
     float getScore();
 
+    // to initialise kills (doesnt track otherwise)
     void setKills(int enemies_killedIn);
 
     // Function to save game statistics to a file
