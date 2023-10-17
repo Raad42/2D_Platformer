@@ -17,7 +17,7 @@ private:
     sf::Text text2;
     sf::Text deathText;
     sf::Text highScoreText;
-    sf::Sprite mainMenuSprite;
+    sf::Text menu;
 
     bool powerUpCollected[5];
 
@@ -34,6 +34,9 @@ private:
     GameStats playerStats;
 
     bool isGameEnded;
+    bool isLevelOver;
+    bool secondLevelStart; 
+    bool showText;
     
 
 public:

@@ -1,5 +1,5 @@
 #include "MovingObstacle.h"
-
+#include <cmath>
 #include <SFML/Graphics.hpp>
 
 MovingObstacle::MovingObstacle(int x, int y, int width, int height,
@@ -13,6 +13,7 @@ MovingObstacle::MovingObstacle(int x, int y, int width, int height,
       minPosition(minPosition) {
   moveUp = true;
   enemy = enemyIn;
+  isDead = false; 
   // Initialize moving obstacle-specific members here.
 }
 
@@ -42,6 +43,7 @@ void MovingObstacle::update(float marioX) {
   }
 
   else{
+    if (std::abs(marioX - get_x_position()) < 1000)
     if (marioX > get_x_position()){
         set_x_position(get_x_position() + velocityX);
     }
@@ -54,6 +56,13 @@ void MovingObstacle::update(float marioX) {
         set_x_position(get_x_position());
     }
   }
+  
+  getSprite().setPosition(get_x_position(), get_y_position());
+}
+
+void MovingObstacle::die(){
+  isDead == true;
+  set_y_position(-10000);
 
   getSprite().setPosition(get_x_position(), get_y_position());
 }

@@ -46,6 +46,7 @@ public:
     
     void Update(float marioX);
     void Render(sf::RenderWindow& window);
+    void Reset();
 
     std::vector<Obstacle*>& getObstacles() { return obstacles; }
     std::vector<BoundingBox*>& getBoundingBoxes() { return BoundingBoxes; }

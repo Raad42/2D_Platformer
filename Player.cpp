@@ -99,17 +99,13 @@ void Player::handleInput() {
             attack();
         }
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)&& isDead == true){
-       reset();
-
-    }
     // You can add more input handling here for other actions.
 
     // Update other player-specific input handling if needed.
 }
 
 void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
-    if (isDead == false){
+    if (isDead == false){ //No movement if character dies
 
     // Add gravity
     if (y < window.getSize().y && !isGrounded) {
@@ -149,6 +145,14 @@ void Player::updateMovement(sf::Sprite& sprite, sf::RenderWindow& window) {
 
 
 void Player::update() {
+    //If character dies animation occurs
+    if (isDead == true) { 
+        gravity = 0.1;
+    }
+
+    else {
+        gravity = 1; 
+    }
 
     // Update the player's position and physics.
     // Apply acceleration and gravity.
@@ -184,7 +188,7 @@ void Player::update() {
 
     if (isPowerUp == true && isDead == false){
         sf::Time powerUpDuration = powerUpTimer.getElapsedTime();
-        if (powerUpDuration.asSeconds() >= 1000) { // 10 seconds duration
+        if (powerUpDuration.asSeconds() >= 8) { // 8 seconds duration
             runSpeed = 5; 
             jumpVelocity = -40; 
             set_texture("MarioIdle.png");
@@ -211,7 +215,7 @@ void Player::reset () {
     isDead = false; 
     isPowerUp = false;
     gameStats.update_deaths();
-    std::cout << gameStats.getDeaths();
+    
     deathAlreadyChecked = false;
 }
 void Player::PowerUp(){
