@@ -12,12 +12,24 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
 
     playerStats.setKills(0);
 
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("bricks.png")) {
+        // Handle loading error, e.g., print an error message
+    }
+
+    mainMenuSprite.setTexture(backgroundTexture);
+
+    mainMenuSprite.setPosition(sf::Vector2f(100,100)); // Change position
+    mainMenuSprite.setScale(sf::Vector2f(1,1.5)); // Change scale
+
     mario.set_texture("MarioIdle.png");
     mario.x = 0;
 
     if (!font.loadFromFile("ClassicalDiary.ttf")) {
         std::cout << "faield to load font" << std::endl;
     }
+
+
     //gives instructions to user 
     text1.setFont(font);
     text1.setString("Press 'n' to progress");
@@ -290,6 +302,7 @@ void Game::render() {
     
     window.draw(deathText);
     window.draw(highScoreText);
+    window.draw(mainMenuSprite);
 
     window.display();
 }

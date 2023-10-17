@@ -17,6 +17,7 @@ private:
     sf::Text text2;
     sf::Text deathText;
     sf::Text highScoreText;
+    sf::Sprite mainMenuSprite;
 
     bool powerUpCollected[5];
 
