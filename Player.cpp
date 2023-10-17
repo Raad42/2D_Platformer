@@ -178,7 +178,7 @@ void Player::update() {
     // powerup 
     if (isPowerUp == true && isDead == false){
         sf::Time powerUpDuration = powerUpTimer.getElapsedTime();
-        if (powerUpDuration.asSeconds() >= 8) { // 8 seconds duration
+        if (powerUpDuration.asSeconds() >= 10) { // 10 seconds duration
             runSpeed = 5; 
             jumpVelocity = -40; 
             set_texture("MarioIdle.png");

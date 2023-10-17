@@ -9,8 +9,7 @@
 #include "PowerUpBlock.h"
 
 Game::Game(sf::RenderWindow& window, Levels& levels)
-    : window(window),
-      levels(levels),
+    : window(window), levels(levels),
       mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
       boundingBoxMario(mario.getSprite()),
       playerStats(playerStats),
@@ -56,7 +55,7 @@ Game::Game(sf::RenderWindow& window, Levels& levels)
   menu.setFont(font);
   menu.setString(
       " Instructions:\n arrow keys to move left/right\n space to jump\n Q to "
-      "reset after dying\n H to print gamestats for last 10 games");
+      "reset after dying\n H to print gamestats for last 10 games\n P toggles these intructions");
   menu.setCharacterSize(30);
   menu.setFillColor(sf::Color::Red);
   menu.setStyle(sf::Text::Bold);
@@ -103,8 +102,6 @@ void Game::handleInput() {
 
     if (event.type == sf::Event::KeyPressed &&
         event.key.code == sf::Keyboard::N && isLevelOver == true) {
-      std::cout << "Deaths on level: " << playerStats.getDeaths() << std::endl;
-
       levels.ClearLevel();
       levels.LoadLevel2();
       mario.reset();

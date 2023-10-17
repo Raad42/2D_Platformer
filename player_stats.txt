@@ -102,3 +102,5 @@ Enemies Killed: 2; Deaths: 7; High Score: 19932
 Enemies Killed: 1; Deaths: 1; High Score: 19881
 Enemies Killed: 1; Deaths: 5; High Score: 10765
 Enemies Killed: 0; Deaths: 1; High Score: 4846
+Enemies Killed: 0; Deaths: 8; High Score: 8757
+Enemies Killed: 1; Deaths: 2; High Score: 12302
