@@ -44,7 +44,7 @@ public:
 
     std::vector<std::function<void()>> levelLoadFunctions;
     
-    void Update();
+    void Update(float marioX);
     void Render(sf::RenderWindow& window);
 
     std::vector<Obstacle*>& getObstacles() { return obstacles; }

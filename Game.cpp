@@ -91,6 +91,7 @@ void Game::handleInput() {
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::H) {
             loadStats = true; // Set the flag when 'H' key is pressed
         }
+
     }
 
     // Handle input for player and other game entities.
@@ -108,7 +109,7 @@ void Game::update() {
 
     boundingBoxMario.update(mario.getSprite());
 
-    levels.Update();
+    levels.Update(mario.x);
 
     playerStats.update_high_score(mario.x);
 
@@ -194,10 +195,17 @@ void Game::handleCollisions() {
         }
     }
 
+    if (marioBounds.intersects(movingObstacles[2]->getBoundingbox())){
+         if (mario.deathAlreadyChecked == false){
+                playerStats.update_deaths();
+                mario.deathAlreadyChecked = true; 
+            }   
+            
+            mario.set_texture("MarioDeath.png");
+            mario.isDead = true; 
+    }
     for (size_t i = 0; i < damagingObstacles.size(); ++i){
         if (marioBounds.intersects(damagingObstacleBounds[i])&&mario.isPowerUp == false) {
-            int health = mario.get_health();
-            //mario.x = 0;
             if (mario.deathAlreadyChecked == false){
                 playerStats.update_deaths();
                 mario.deathAlreadyChecked = true; 

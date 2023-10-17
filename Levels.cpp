@@ -67,9 +67,9 @@ void Levels::LoadLevel1() {
     PowerUpBlock* powerUpBlock = new PowerUpBlock(1500, 600, 64, 64, window, 99);
 
     movingObstacles = new MovingObstacle*[3];
-    movingObstacles[0] = new MovingObstacle(8800, 250, 64, 64, window, 2, 0, 8400, 9300);
-    movingObstacles[1] = new MovingObstacle(8800, 250, 64, 64, window, 0, 0, 8400, 9300);
-    movingObstacles[2] = new MovingObstacle(1000, 250, 64, 64, window, 1, 0, 1000, 2000);
+    movingObstacles[0] = new MovingObstacle(8800, 250, 64, 64, window, 2, 0, 8400, 9300, false);
+    movingObstacles[1] = new MovingObstacle(8800, 250, 64, 64, window, 0, 0, 8400, 9300, false);
+    movingObstacles[2] = new MovingObstacle(1000, 730, 64, 64, window, 1, 0, 1000, 2000, true);
 
     movingObstacleBoundingbox = new BoundingBox*[3];
     movingObstacleBoundingbox[0] = new BoundingBox(movingObstacles[0]->getSprite());
@@ -290,7 +290,7 @@ void Levels::LoadLevel1() {
     movingObstacles[1]->getSprite().setPosition(8800, 253);
 
     movingObstacles[2]->getSprite().setScale(0.3f, 0.3f);
-    movingObstacles[2]->getSprite().setPosition(1000, 600);
+    movingObstacles[2]->getSprite().setPosition(1000, 730);
 
     spike1->getSprite().setScale(1.f, 1.f);
     spike1->getSprite().setPosition(4500, 700);
@@ -357,7 +357,7 @@ void Levels::LoadLevel2() {
 
 
 
-void Levels::Update() {
+void Levels::Update(float marioX) {
     // Update objects and handle game logic for this level
     for (size_t i = 0; i < obstacles.size(); ++i) {
         BoundingBoxes[i]->update(obstacles[i]->getSprite());
@@ -372,7 +372,7 @@ void Levels::Update() {
     }
 
     for (int i = 0; i < 3; i++){
-        movingObstacles[i]->update();
+        movingObstacles[i]->update(marioX);
         movingObstacleBoundingbox[i]->update(movingObstacles[i]->getSprite());
     }
 }

@@ -45,3 +45,16 @@ Enemies Killed: 0; Deaths: 1; High Score: 1025
 Enemies Killed: 0; Deaths: 1; High Score: 1310
 Enemies Killed: 0; Deaths: 1; High Score: 6730
 Enemies Killed: 0; Deaths: 1; High Score: 1660
+Enemies Killed: 0; Deaths: 1; High Score: 2750
+Enemies Killed: 0; Deaths: 2; High Score: 1450
+Enemies Killed: 0; Deaths: 0; High Score: 470
+Enemies Killed: 0; Deaths: 0; High Score: 425
+Enemies Killed: 0; Deaths: 1; High Score: 415
+Enemies Killed: 0; Deaths: 0; High Score: 390
+Enemies Killed: 0; Deaths: 0; High Score: 430
+Enemies Killed: 0; Deaths: 2; High Score: 1940
+Enemies Killed: 0; Deaths: 13; High Score: 265
+Enemies Killed: 0; Deaths: 1; High Score: 4.56697e-41
+Enemies Killed: 0; Deaths: 2; High Score: 550
+Enemies Killed: 0; Deaths: 3; High Score: 665
+Enemies Killed: 0; Deaths: 0; High Score: 9883
