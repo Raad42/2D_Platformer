@@ -128,6 +128,7 @@ void Game::handleCollisions() {
   
     sf::FloatRect movingObstacleBounds1 = movingObstacles[0]->getBoundingbox();
     sf::FloatRect movingObstacleBounds2 = movingObstacles[1]->getBoundingbox();
+    sf::FloatRect movingObstacleBounds3 = movingObstacles[2]->getBoundingbox();
     float movingX; 
 
     // Access obstacles and their bounding boxes through levels
@@ -227,65 +228,7 @@ void Game::handleCollisions() {
                 levels.levelLoadFunctions[1]();
             }
         }
-
-        // powerup Block
-        /*if (marioBounds.intersects(obstacleBounds[6]) && powerUpCollected[0] == false){
-            powerUpCollected[0] = true;
-            if (marioBounds.top > (obstacleBounds[6].width)) {
-                mario.velocityY = 4;
-                int health = dynamic_cast<PowerUpBlock*>(obstacles[6])->get_health();
-                health = health - 10;
-                if (health <= 0) {
-                    dynamic_cast<PowerUpBlock*>(obstacles[6])->dropPowerUp();
-                }
-
-            }
-        }*/
-        /*// When he hits his head on the bottom
-        if (marioBounds.intersects(obstacleBounds[0])||marioBounds.intersects(obstacleBounds[2])||marioBounds.intersects(movingObstacleBounds2)) {
-            mario.velocityY = 2;
-        }
-        // When he lands on the brick
-        if (marioBounds.intersects(obstacleBounds[1])||marioBounds.intersects(obstacleBounds[3])||marioBounds.intersects(movingObstacleBounds1)) {
-            mario.isGrounded = true;
-            mario.isJumping = false;
-            float brickTopY;
-        
-            if (marioBounds.intersects(obstacleBounds[1])){
-                brickTopY = obstacleBounds[1].top+1;
-            }
-
-            else  if (marioBounds.intersects(movingObstacleBounds1)){
-                brickTopY = movingObstacleBounds1.top+1;
-            }
-            else{
-                brickTopY = obstacleBounds[3].top+1;
-            }
-        
-            // Set Mario's position to the top of the brick
-            mario.y = brickTopY - marioBounds.height;
-            mario.velocityY = -1; //Oppose gravity
-        }
-
-        //If mario collides with spike, mario dies and sprite chnages
-        if (marioBounds.intersects(obstacleBounds[4])) {
-            int health = mario.get_health();
-            //mario.x = 0;
-            gameStats.update_deaths();
-            if (dynamic_cast<DamagingObstacle*>(obstacles[4])) {
-                // Access the get_damage function through the obstacle
-                int damage = dynamic_cast<DamagingObstacle*>(obstacles[4])->get_damage();
-                health -= damage;
-                mario.set_health(health);
-                mario.set_texture("MarioDeath.png");
-                mario.isDead = true; 
-
-            }
-            // std::cout << "Collision " << mario.get_health() << std::endl;
-        }*/
-       
-
-    }
+}
 
 
 void Game::render() {

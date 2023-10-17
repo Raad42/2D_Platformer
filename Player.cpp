@@ -9,7 +9,7 @@
 
 
 Player::Player(int x, int y, int width, int height, float scale, int health, int damage, const std::string& name, sf::RenderWindow& window)
-    : Character(x, y, width, height, health, damage, name), scale(scale), window(window), boundingBox(sprite) {
+    : Character(x, y, width, height, health, damage, name), scale(scale), window(window), boundingBox(sprite), playerStats(playerStats) {
     x = 0;
     y = 0;
     jumpVelocity = -40;
