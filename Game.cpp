@@ -8,19 +8,9 @@
 
 Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(levels),
     mario(100, 300, 32, 32, 4.0, 100, 10, "Mario", window),
-    boundingBoxMario(mario.getSprite()), playerStats(playerStats) { 
+    boundingBoxMario(mario.getSprite()), playerStats(playerStats), showText(true) { 
 
     playerStats.setKills(0);
-
-    sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("bricks.png")) {
-        // Handle loading error, e.g., print an error message
-    }
-
-    mainMenuSprite.setTexture(backgroundTexture);
-
-    mainMenuSprite.setPosition(sf::Vector2f(100,100)); // Change position
-    mainMenuSprite.setScale(sf::Vector2f(1,1.5)); // Change scale
 
     mario.set_texture("MarioIdle.png");
     mario.x = 0;
@@ -57,6 +47,13 @@ Game::Game(sf::RenderWindow& window, Levels& levels) : window(window), levels(le
     highScoreText.setFillColor(sf::Color::Red);
     highScoreText.setStyle(sf::Text::Bold | sf::Text::Underlined);
     highScoreText.setPosition(-450.f, -50.f);
+
+    menu.setFont(font);
+    menu.setString(" Instructions:\n arrow keys to move left/right\n space to jump\n Q to reset after dying\n H to print gamestats for last 10 games");
+    menu.setCharacterSize(30);
+    menu.setFillColor(sf::Color::Red);
+    menu.setStyle(sf::Text::Bold);
+    menu.setPosition(0.f, -100.f);
     
 
     for (int i = 0; i < 5; i++){
@@ -90,6 +87,10 @@ void Game::handleInput() {
 
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::H) {
             loadStats = true; // Set the flag when 'H' key is pressed
+        }
+
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P) {
+            showText = !showText;
         }
     }
 
@@ -243,9 +244,12 @@ void Game::render() {
     window.draw(text1);
     window.draw(text2);
     
+    if (showText) {
+        window.draw(menu);
+    }
+    
     window.draw(deathText);
     window.draw(highScoreText);
-    window.draw(mainMenuSprite);
 
     window.display();
 }
