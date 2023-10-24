@@ -290,8 +290,6 @@ void Game::render() {
 
   window.draw(mario.getSprite());
 
-  boundingBoxMario.draw(window);
-
   window.draw(text1);
   window.draw(text2);
 

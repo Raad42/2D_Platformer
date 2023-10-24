@@ -713,7 +713,6 @@ void Levels::Render(sf::RenderWindow& window) {
         window.draw(obstacles[i]->getSprite()); // Draw the obstacle sprite
 
         // Draw the bounding box using BoundingBox class
-        BoundingBoxes[i]->draw(window);
 
     }
 
@@ -721,17 +720,14 @@ void Levels::Render(sf::RenderWindow& window) {
         window.draw(damagingObstacles[i]->getSprite()); // Draw the obstacle sprite
 
         // Draw the bounding box using BoundingBox class
-        BoundingBoxesDamagingObstacles[i]->draw(window);
     }
 
     for (size_t i = 0; i < PowerUpBlocks.size(); ++i) {
         window.draw(PowerUpBlocks[i]->getSprite());
-        BoundingBoxesPowerUpBlocks[i]->draw(window);
     }
 
     for (int i = 0; i < 3; i++){
         window.draw(movingObstacles[i]->getSprite());
-        movingObstacleBoundingbox[i]->draw(window);
     }
 }
 
